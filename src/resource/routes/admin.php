@@ -13,5 +13,6 @@ Extension::routes(function ($router) {
         $router->put('/menu/save-json', 'Menu@saveJson')->name('larke-admin-frontend-menu-save-json');
         
         $router->get('/frontend/menu', 'Frontend@menu')->name('larke-admin-frontend-menu');
+        $router->get('/frontend/roles', 'Frontend@roles')->name('larke-admin-frontend-roles');
     });
 });

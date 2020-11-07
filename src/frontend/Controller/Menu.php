@@ -23,9 +23,9 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request, MenuModel $model)
     {
-        $list = (new MenuModel())->getTree();
+        $list = $model->getTree();
         
         return $this->successJson(__('获取成功'), [
             'list' => $list,
@@ -38,14 +38,14 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function create(Request $request)
+    public function create(Request $request, MenuModel $model)
     {
         $data = $request->all();
         if (empty($data)) {
             return $this->errorJson(__('创建的菜单数据不能为空'));
         }
         
-        $insertStatus = (new MenuModel())->insert($data);
+        $insertStatus = $model->insert($data);
         if ($insertStatus === false) {
             return $this->errorJson(__('添加菜单失败'));
         }
@@ -59,16 +59,14 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function update(Request $request)
+    public function update(Request $request, MenuModel $model)
     {
         $id = $request->get('id');
         if (empty($id)) {
             return $this->errorJson(__('菜单ID不能为空'));
         }
         
-        $MenuModel = new MenuModel();
-        
-        $info = $MenuModel->find($id);
+        $info = $model->find($id);
         if (empty($info)) {
             return $this->errorJson(__('菜单不存在'));
         }
@@ -88,7 +86,7 @@ class Menu extends BaseController
         }
         
         // 更新信息
-        $status = $MenuModel->update($id, $data);
+        $status = $model->update($id, $data);
         if ($status === false) {
             return $this->errorJson(__('菜单修改失败'));
         }
@@ -102,21 +100,19 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function delete(Request $request)
+    public function delete(Request $request, MenuModel $model)
     {
         $id = $request->get('id');
         if (empty($id)) {
             return $this->errorJson(__('菜单ID不能为空'));
         }
         
-        $MenuModel = new MenuModel();
-        
-        $info = $MenuModel->find($id);
+        $info = $model->find($id);
         if (empty($info)) {
             return $this->errorJson(__('菜单不存在'));
         }
         
-        $status = $MenuModel->delete($id);
+        $status = $model->delete($id);
         if ($status === false) {
             return $this->errorJson(__('菜单删除失败'));
         }
@@ -130,9 +126,9 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function getJson(Request $request)
+    public function getJson(Request $request, MenuModel $model)
     {
-        $json = (new MenuModel())->getFileData();
+        $json = $model->getFileData();
         
         return $this->successJson(__('获取成功'), [
             'json' => $json,
@@ -145,7 +141,7 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function saveJson(Request $request)
+    public function saveJson(Request $request, MenuModel $model)
     {
         $json = $request->get('json');
         if (empty($json)) {
@@ -156,9 +152,7 @@ class Menu extends BaseController
             return $this->errorJson(__('json格式错误'));
         }
         
-        $MenuModel = new MenuModel();
-        
-        $status = $MenuModel->saveFileData($json);
+        $status = $model->saveFileData($json);
         if ($status === false) {
             return $this->errorJson(__('保存数据失败'));
         }

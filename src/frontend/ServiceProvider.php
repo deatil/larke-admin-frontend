@@ -23,6 +23,10 @@ class ServiceProvider extends BaseServiceProvider
             $this->publishes([
                 __DIR__.'/../resource/assets' => public_path('admin'),
             ], 'larke-admin-frontend-assets');
+            
+            $this->commands([
+                Command\ImportMenus::class,
+            ]);
         }
     }
     
