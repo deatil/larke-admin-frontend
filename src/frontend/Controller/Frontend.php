@@ -19,14 +19,31 @@ class Frontend extends BaseController
      * 菜单列表
      *
      * @param  Request  $request
+     * @param  MenuModel  $model
      * @return Response
      */
-    public function menu(Request $request, MenuModel $model)
+    public function menus(Request $request, MenuModel $model)
     {
-        $list = $model->getTree();
+        $list = $model->getAuthList();
         
         return $this->successJson(__('获取成功'), [
             'list' => $list,
+        ]);
+    }
+    
+    /**
+     * 菜单树
+     *
+     * @param  Request  $request
+     * @param  MenuModel  $model
+     * @return Response
+     */
+    public function menusTree(Request $request, MenuModel $model)
+    {
+        $tree = $model->getAuthTree();
+        
+        return $this->successJson(__('获取成功'), [
+            'list' => $tree,
         ]);
     }
     
@@ -38,7 +55,7 @@ class Frontend extends BaseController
      */
     public function roles(Request $request, MenuModel $model)
     {
-        $menus = $model->read();
+        $menus = $model->getAuthList();
         $list = collect($menus)
             ->pluck(config('frontend.role.id'))
             ->filter(function($data) {
@@ -53,6 +70,7 @@ class Frontend extends BaseController
                 
                 return false;
             })
+            ->unique()
             ->values();
         
         return $this->successJson(__('获取成功'), [

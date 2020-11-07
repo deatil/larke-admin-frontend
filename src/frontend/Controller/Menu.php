@@ -25,7 +25,7 @@ class Menu extends BaseController
      */
     public function index(Request $request, MenuModel $model)
     {
-        $list = $model->getTree();
+        $list = $model->getList();
         
         return $this->successJson(__('获取成功'), [
             'list' => $list,

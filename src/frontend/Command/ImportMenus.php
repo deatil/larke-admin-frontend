@@ -10,7 +10,7 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
 /**
  * 导入菜单数据
  *
- * php artisan larke-admin-frontend:import-menus
+ * php artisan larke-admin-frontend:import-menus --force
  */
 class ImportMenus extends Command
 {
@@ -19,7 +19,7 @@ class ImportMenus extends Command
      *
      * @var string
      */
-    protected $signature = 'larke-admin-frontend:import-menus';
+    protected $signature = 'larke-admin-frontend:import-menus {--force}';
 
     /**
      * The console command description.
@@ -49,6 +49,11 @@ class ImportMenus extends Command
             ->toArray();
         
         $menuModel = new MenuModel();
+        
+        if ($this->option('force')) {
+            $menuModel->save([]);
+        }
+        
         $menus = $menuModel->read();
         
         $menusByKey = collect($menus)->keyBy('id');

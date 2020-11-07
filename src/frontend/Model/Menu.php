@@ -212,7 +212,7 @@ class Menu
             return [];
         }
         
-        $menus = $this->read();
+        $menus = $this->getList();
         if (empty($menus)) {
             return [];
         }
@@ -220,7 +220,7 @@ class Menu
         // 根据 sort 键值正序排序
         $menus = collect($menus)->sortBy('sort')->toArray();
         
-        $menusTree = $this->list2tree($menus);
+        $menusTree = $this->list2tree($menus, 'id', 'pid', $childType);
         
         return $menusTree;
     }
@@ -255,6 +255,51 @@ class Menu
     }
     
     /**
+     * 获取权限菜单列表
+     */
+    public function getAuthList()
+    {
+        $menus = $this->getList();
+        if (empty($menus)) {
+            return [];
+        }
+        
+        $roles = app('larke.admin')->getRuleids();
+        $list = collect($menus)->filter(function($data) use($roles) {
+            if (in_array($data['id'], $roles)) {
+                return true;
+            }
+            
+            return false;
+        })->values();
+        
+        return $list;
+    }
+    
+    /**
+     * 获取权限菜单树
+     */
+    public function getAuthTree($childType = 'child')
+    {
+        if (empty($childType)) {
+            return [];
+        }
+        
+        $menus = $this->getAuthList();
+        if (empty($menus)) {
+            return [];
+        }
+        
+        // 根据 sort 键值正序排序
+        $menus = collect($menus)->sortBy('sort')->toArray();
+        
+        $menusTree = $this->list2tree($menus, 'id', 'pid', $childType);
+        
+        return $menusTree;
+        
+    }
+    
+    /**
      * 把返回的数据集转换成Tree
      */
     public function list2tree(
@@ -275,8 +320,6 @@ class Menu
             foreach ($list as $key => $data) {
                 // 判断是否存在parent
                 $parentId = $data[$pid];
-                
-                unset($list[$key]['sort'], $list[$key]['id'], $list[$key]['pid']);
                 
                 if ((string) $root == (string) $parentId) {
                     $tree[] = &$list[$key];
