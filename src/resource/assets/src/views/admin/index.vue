@@ -6,25 +6,25 @@
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询账号" clearable style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" placeholder="请输入查询账号" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
         
-        <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-left: 10px;">
+        <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
         
-        <el-select v-model="listQuery.order" style="width: 140px;margin-left: 10px;" class="filter-item" @change="handleFilter">
+        <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
         
-        <el-button v-waves class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
+        <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
         
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
         </el-button>
         
-        <el-button class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-switch-button" @click="handleLogout">
+        <el-button class="filter-item" style="margin-right: 10px;" type="danger" icon="el-icon-switch-button" @click="handleLogout">
           账号退出
         </el-button>        
       </div>
@@ -195,7 +195,7 @@ export default {
       })
     },
     handleFilter() {
-      this.listQuery.page = 0
+      this.listQuery.page = 1
       this.getList()
     },  
     handleDetail(index, row) {

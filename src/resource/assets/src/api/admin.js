@@ -62,7 +62,7 @@ export function disableAdmin(id) {
 export function updatePassword(id, data) {
   return request({
     url: `/admin/${id}/password`,
-    method: 'put',
+    method: 'patch',
     data
   })
 }
@@ -70,7 +70,7 @@ export function updatePassword(id, data) {
 export function updateAccess(id, data) {
   return request({
     url: `/admin/${id}/access`,
-    method: 'put',
+    method: 'patch',
     data
   })
 }

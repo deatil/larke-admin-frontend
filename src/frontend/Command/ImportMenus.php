@@ -50,16 +50,24 @@ class ImportMenus extends Command
         
         $menuModel = new MenuModel();
         
-        if ($this->option('force')) {
-            $menuModel->save([]);
+        // 覆盖
+        $force = $this->option('force');
+        
+        $rulesByKey = collect($rules)
+            ->keyBy('id')
+            ->toArray();
+            
+        $menus = $menuModel->read();
+        $menusByKey = collect($menus)
+            ->keyBy('id')
+            ->toArray();
+        
+        if ($force) {
+            $menusByKey = array_intersect_key($menusByKey, $rulesByKey);
         }
         
-        $menus = $menuModel->read();
-        
-        $menusByKey = collect($menus)->keyBy('id');
-        $rulesByKey = collect($rules)->keyBy('id');
-        $newMenus = collect($menusByKey)
-            ->merge($rulesByKey)
+        $newMenus = collect($rulesByKey)
+            ->merge($menusByKey)
             ->sortBy('slug')
             ->values()
             ->all();

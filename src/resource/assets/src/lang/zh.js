@@ -2,6 +2,10 @@ export default {
   route: {
     dashboard: '首页',
     profile: '我的信息',
+    
+    System: '系统配置',
+    Attachment: '附件管理',
+    
     Permission: '权限管理',
     Admin: '管理员',
     AdminIndex: '管理员列表',

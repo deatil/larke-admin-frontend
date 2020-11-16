@@ -95,6 +95,32 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/system',
+    component: Layout,
+    redirect: '/attachment/index',
+    alwaysShow: true, // will always show the root menu
+    name: 'System',
+    meta: {
+      title: 'System',
+      icon: 'user',
+      roles: ['larke-admin-attachment-index'] // you can set roles in root nav
+    },
+    children: [
+      // 附件管理
+      {
+        path: '/attachment/index',
+        component: () => import('@/views/attachment/index'),
+        name: 'Attachment',
+        meta: {
+          title: 'Attachment',
+          icon: 'user',
+          roles: ['larke-admin-attachment-index'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+
+  {
     path: '/permission',
     component: Layout,
     redirect: '/admin/index',

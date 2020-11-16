@@ -22,9 +22,10 @@ export function deleteLog(id) {
   })
 }
 
-export function clearLog() {
+export function clearLog(data) {
   return request({
     url: '/log/clear',
-    method: 'delete'
+    method: 'delete',
+    data,
   })
 }
