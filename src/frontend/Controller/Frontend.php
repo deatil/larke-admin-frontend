@@ -56,6 +56,7 @@ class Frontend extends BaseController
     public function roles(Request $request, MenuModel $model)
     {
         $menus = $model->getAuthList();
+        
         $list = collect($menus)
             ->pluck(config('frontend.role.id'))
             ->filter(function($data) {
