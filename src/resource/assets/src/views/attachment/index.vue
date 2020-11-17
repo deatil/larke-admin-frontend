@@ -50,7 +50,7 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="{row}">
-            <el-tag :type="row.status | statusFilter">
+            <el-tag :type="row.status | statusFilter" size="mini">
               {{ (row.status == 1) ? '启用' : '禁用'}}
             </el-tag>
           </template>
@@ -104,9 +104,6 @@ export default {
       }
       return statusMap[status]
     },  
-    renderSize(size) {
-      return renderSize(size)
-    }, 
   },
   data() {
     return {
@@ -168,50 +165,80 @@ export default {
             type: 'text',
           },          
           {
-            name: '账号ID',
-            content: data.admin_id,
+            name: '属于',
+            content: data.belong_type + '：' + data.belong_id,
             type: 'text',
           },
           {
-            name: '账号昵称',
-            content: data.admin_name,
+            name: '文件名',
+            content: data.name,
             type: 'text',
           },    
           {
-            name: '请求URL',
-            content: data.url,
-            type: 'text',
-          },  
-          {
-            name: '请求方式',
-            content: data.method,
+            name: '存储位置',
+            content: data.path,
             type: 'text',
           }, 
           {
-            name: '请求内容',
-            content: data.info,
+            name: '文件Mime',
+            content: data.mime,
             type: 'text',
           },                                       
           {
-            name: '请求信息',
-            content: data.useragent,
+            name: '文件类型',
+            content: data.extension,
             type: 'text',
           },
           {
-            name: '请求IP',
-            content: data.ip,
-            type: 'text',
-          },   
+            name: '文件大小',
+            content: data.size,
+            type: 'size',
+          },
           {
-            name: '请求时间',
-            content: data.create_time,
-            type: 'time',
-          },            
+            name: '文件md5',
+            content: data.md5,
+            type: 'text',
+          },
+          {
+            name: '文件sha1',
+            content: data.sha1,
+            type: 'text',
+          },  
+          {
+            name: '存储驱动',
+            content: data.driver,
+            type: 'text',
+          },                              
+          {
+            name: '附件URL',
+            content: data.url,
+            type: 'text',
+          },      
           {
             name: '激活状态',
             content: data.status,
             type: 'boolen',
-          },                  
+          }, 
+          {
+            name: '最后更新',
+            content: data.update_time,
+            type: 'time',
+          },    
+          {
+            name: '更新IP',
+            content: data.update_ip,
+            type: 'text',
+          },                             
+          {
+            name: '添加时间',
+            content: data.create_time,
+            type: 'time',
+          },    
+          {
+            name: '添加IP',
+            content: data.create_ip,
+            type: 'text',
+          },                                    
         ]
       })
     },

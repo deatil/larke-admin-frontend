@@ -17,7 +17,7 @@ export function getRoles() {
 export function changePassword(data) {
   return request({
     url: '/profile/password',
-    method: 'put',
+    method: 'patch',
     data
   })
 }
@@ -33,7 +33,7 @@ export function updateInfo(data) {
 export function updateAvatar(data) {
   return request({
     url: '/profile/avatar',
-    method: 'put',
+    method: 'patch',
     data
   })
 }

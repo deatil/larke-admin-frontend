@@ -27,7 +27,7 @@
           {{ $t('table.search') }}
         </el-button>
         
-        <el-button class="filter-item" style="margin-right: 10px;" type="danger" @click="handleClear">
+        <el-button class="filter-item" style="margin-right: 10px;" type="danger" icon="el-icon-delete" @click="handleClear">
           清空日志
         </el-button>
       </div>
@@ -72,7 +72,7 @@
 
         <el-table-column class-name="status-col" label="状态" width="110">
           <template slot-scope="{row}">
-            <el-tag :type="row.status | statusFilter">
+            <el-tag :type="row.status | statusFilter" size="mini">
               {{ (row.status == 1) ? '启用' : '禁用'}}
             </el-tag>
           </template>

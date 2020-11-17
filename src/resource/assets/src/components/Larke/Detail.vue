@@ -22,12 +22,26 @@
         </span>
 
         <span v-else-if="row.type == 'boolen'">
-          {{ row.content == '1' ? '是' : '否' }}
+          <template v-if="row.content == '1'">
+            <el-tag type="success" size="mini">
+              已激活
+            </el-tag>
+          </template>
+
+          <template v-else>
+            <el-tag type="danger" size="mini">
+              已禁用
+            </el-tag>
+          </template>
         </span>
 
         <span v-else-if="row.type == 'arr2str'">
           {{ row | parseArr2str }}
-        </span>        
+        </span>   
+
+        <span v-else-if="row.type == 'size'">
+          {{ row.content | renderSize }}
+        </span>               
 
         <span v-else>
           {{ row.content }}
