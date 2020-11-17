@@ -102,7 +102,7 @@ export const asyncRoutes = [
     name: 'System',
     meta: {
       title: 'System',
-      icon: 'user',
+      icon: 'el-icon-setting',
       roles: ['larke-admin-attachment-index'] // you can set roles in root nav
     },
     children: [
@@ -113,7 +113,7 @@ export const asyncRoutes = [
         name: 'Attachment',
         meta: {
           title: 'Attachment',
-          icon: 'user',
+          icon: 'el-icon-paperclip',
           roles: ['larke-admin-attachment-index'] // or you can only set roles in sub nav
         }
       }
@@ -128,7 +128,7 @@ export const asyncRoutes = [
     name: 'Permission',
     meta: {
       title: 'Permission',
-      icon: 'user',
+      icon: 'el-icon-s-management',
       roles: ['larke-admin-admin-index'] // you can set roles in root nav
     },
     children: [
@@ -139,7 +139,7 @@ export const asyncRoutes = [
         name: 'Admin',
         meta: {
           title: 'Admin',
-          icon: 'user',
+          icon: 'peoples',
           roles: ['larke-admin-admin-index'] // or you can only set roles in sub nav
         }
       },
@@ -175,7 +175,7 @@ export const asyncRoutes = [
         name: 'AdminLog',
         meta: {
           title: 'AdminLog',
-          icon: 'user',
+          icon: 'el-icon-document-add',
           roles: ['larke-admin-log-index'] 
         }
       },      
