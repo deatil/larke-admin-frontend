@@ -84,3 +84,10 @@ export function renderSize(value) {
   size = size.toFixed(2);//保留的小数位数
   return size + unitArr[index];
 }
+
+export function entityToString(entity) {
+  const div = document.createElement('div')
+  div.innerHTML = entity
+  const res = div.innerText || div.innerText
+  return res
+}

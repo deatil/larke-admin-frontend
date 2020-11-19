@@ -31,6 +31,9 @@
               {{ $t('navbar.profile') }}
             </el-dropdown-item>
           </router-link>
+          <el-dropdown-item @click.native="clearCache">
+            清空缓存
+          </el-dropdown-item>          
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
@@ -49,6 +52,7 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
+import { clearCache } from '@/api/system'
 
 export default {
   components: {
@@ -70,6 +74,15 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
+    },
+    clearCache() {
+      clearCache().then(() => {
+        this.$message({
+          message: '清空网站缓存成功',
+          type: 'success',
+          duration: 3 * 1000,
+        })        
+      })
     },
     async logout() {
       await this.$store.dispatch('user/logout')

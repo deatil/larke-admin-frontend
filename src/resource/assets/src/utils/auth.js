@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'Larke-Admin-Token'
-const TokenExpiredInKey = 'Larke-Admin-Expired-In'
+const TokenExpiresInKey = 'Larke-Admin-Expires-In'
 const RefreshTokenKey = 'Larke-Admin-Refresh-Token'
 
 export function getToken(type = 'local') {
@@ -34,33 +34,33 @@ export function removeToken() {
   }
 }
 
-export function getTokenExpiredIn(type = 'local') {
+export function getTokenExpiresIn(type = 'local') {
   if (type == 'local') {
-    return localStorage.getItem(TokenExpiredInKey) || ''
+    return localStorage.getItem(TokenExpiresInKey) || ''
   } else if (type == 'session') {
-    return sessionStorage.getItem(TokenExpiredInKey) || ''
+    return sessionStorage.getItem(TokenExpiresInKey) || ''
   } else {
-    return Cookies.get(TokenExpiredInKey)
+    return Cookies.get(TokenExpiresInKey)
   }
 }
 
-export function setTokenExpiredIn(time, type = 'local') {
+export function setTokenExpiresIn(time, type = 'local') {
   if (type == 'local') {
-    return localStorage.setItem(TokenExpiredInKey, time);
+    return localStorage.setItem(TokenExpiresInKey, time);
   } else if (type == 'session') {
-    return sessionStorage.setItem(TokenExpiredInKey, time);
+    return sessionStorage.setItem(TokenExpiresInKey, time);
   } else {
-    return Cookies.set(TokenExpiredInKey, time)
+    return Cookies.set(TokenExpiresInKey, time)
   }
 }
 
-export function removeTokenExpiredIn(type = 'local') {
+export function removeTokenExpiresIn(type = 'local') {
   if (type == 'local') {
-    return localStorage.removeItem(TokenExpiredInKey)
+    return localStorage.removeItem(TokenExpiresInKey)
   } else if (type == 'session') {
-    return sessionStorage.removeItem(TokenExpiredInKey)
+    return sessionStorage.removeItem(TokenExpiresInKey)
   } else {
-    return Cookies.remove(TokenExpiredInKey)
+    return Cookies.remove(TokenExpiresInKey)
   }
 }
 

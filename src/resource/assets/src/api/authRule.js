@@ -47,14 +47,22 @@ export function updateRule(id, data) {
   })
 }
 
-export function deleteRole(id) {
+export function deleteRule(id) {
   return request({
     url: `/auth/rule/${id}`,
     method: 'delete'
   })
 }
 
-export function updateRoleSort(id, data) {
+export function clearRule(data) {
+  return request({
+    url: '/auth/rule/clear',
+    method: 'delete',
+    data,
+  })
+}
+
+export function updateRuleSort(id, data) {
   return request({
     url: `/auth/rule/${id}/sort`,
     method: 'patch',

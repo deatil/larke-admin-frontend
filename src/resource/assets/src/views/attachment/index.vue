@@ -56,10 +56,14 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="170">
+        <el-table-column align="center" label="操作" width="250">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)">
               详情
+            </el-button>
+
+            <el-button type="warning" size="mini" @click="handleDownload(scope.row.id)">
+              下载
             </el-button>
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
@@ -89,7 +93,8 @@ import {
   deleteAttachment, 
   enableAttachment,
   disableAttachment,
-  getAttachmentDowncode
+  getAttachmentDowncode,
+  getAttachmentDownloadUrl
 } from '@/api/attachment'
 
 export default {
@@ -240,6 +245,23 @@ export default {
             type: 'text',
           },                                    
         ]
+      })
+    },
+    handleDownload(id) {
+      if (id == '') {
+        this.$message({
+          message: '请选择要下载的附件',
+          type: 'error',
+          duration: 3 * 1000,
+        })
+        return ;
+      }
+
+      getAttachmentDowncode(id).then((res) => {
+        const code = res.data.code
+        const url = getAttachmentDownloadUrl(code)
+
+        window.open(url, '_blank')
       })
     },
     handleDelete(index, row) {

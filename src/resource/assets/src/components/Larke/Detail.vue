@@ -35,6 +35,20 @@
           </template>
         </span>
 
+        <span v-else-if="row.type == 'status'">
+          <template v-if="row.content == '1'">
+            <el-tag type="success" size="mini">
+              是
+            </el-tag>
+          </template>
+
+          <template v-else>
+            <el-tag type="danger" size="mini">
+              否
+            </el-tag>
+          </template>
+        </span>
+
         <span v-else-if="row.type == 'arr2str'">
           {{ row | parseArr2str }}
         </span>   

@@ -39,7 +39,7 @@ module.exports = {
     // before: require('./mock/mock-server.js')
     proxy: {
         [process.env.VUE_APP_BASE_API]: {
-            target: 'http://larke.php1000.com.cn/admin-api/',
+            target: process.env.VUE_APP_BASE_API,
             changeOrigin: true,
             pathRewrite: {
                 ['^' + process.env.VUE_APP_BASE_API]: ''

@@ -71,7 +71,7 @@ service.interceptors.response.use(
         })
       }
 
-      // Token expired;
+      // Token expires;
       else if (res.code === 107) {
         // to re-login
         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {

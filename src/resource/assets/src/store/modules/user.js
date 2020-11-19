@@ -3,14 +3,14 @@ import { captcha, login, refreshToken, logout } from '@/api/passport'
 import { getInfo, getRoles, changePassword, updateInfo } from '@/api/user'
 import { 
   getToken, setToken, removeToken,
-  getTokenExpiredIn, setTokenExpiredIn, removeTokenExpiredIn,
+  getTokenExpiresIn, setTokenExpiresIn, removeTokenExpiresIn,
   getRefreshToken, setRefreshToken, removeRefreshToken  
 } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
-  expired_in: getTokenExpiredIn(),
+  expires_in: getTokenExpiresIn(),
   refresh_token: getRefreshToken(),
   name: '',
   nickname: '',
@@ -24,7 +24,7 @@ const mutations = {
     state.token = token
   },
   SET_EXPIRED_IN: (state, time) => {
-    state.expired_in = time
+    state.expires_in = time
   },
   SET_REFRESH_TOKEN: (state, refresh_token) => {
     state.refresh_token = refresh_token
@@ -70,13 +70,13 @@ const actions = {
       }).then(response => {
         const { data } = response
         const token = data.access_token.trim()
-        const expired_in = data.expired_in + Date.parse(new Date())
+        const expires_in = data.expires_in + Date.parse(new Date())
         const refresh_token = data.refresh_token
         commit('SET_TOKEN', token)
-        commit('SET_EXPIRED_IN', expired_in)
+        commit('SET_EXPIRED_IN', expires_in)
         commit('SET_REFRESH_TOKEN', refresh_token)
         setToken(token)
-        setTokenExpiredIn(expired_in)
+        setTokenExpiresIn(expires_in)
         setRefreshToken(refresh_token)
         resolve()
       }).catch(error => {
@@ -143,7 +143,7 @@ const actions = {
         commit('SET_ROLES', [])
     
         removeToken()
-        removeTokenExpiredIn()
+        removeTokenExpiresIn()
         removeRefreshToken()
 
         resetRouter()
@@ -168,13 +168,13 @@ const actions = {
       }).then(response => {
         const { data } = response
         const token = data.access_token.trim()
-        const expired_in = data.expired_in
+        const expires_in = data.expires_in
 
         commit('SET_TOKEN', token)
-        commit('SET_EXPIRED_IN', expired_in)
+        commit('SET_EXPIRED_IN', expires_in)
 
         setToken(token)
-        setTokenExpiredIn(expired_in)
+        setTokenExpiresIn(expires_in)
 
         resolve()
       }).catch(error => {
@@ -192,7 +192,7 @@ const actions = {
       commit('SET_ROLES', [])
 
       removeToken()
-      removeTokenExpiredIn()
+      removeTokenExpiresIn()
       removeRefreshToken()
       
       resolve()

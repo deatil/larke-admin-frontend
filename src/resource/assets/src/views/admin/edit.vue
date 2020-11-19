@@ -5,7 +5,7 @@
         <span>编辑管理员</span>
       </div>
 
-      <el-form>
+      <el-form label-width="100px">
         <el-form-item label="账号">
           <el-input v-model.trim="data.name" />
         </el-form-item>

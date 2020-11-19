@@ -42,3 +42,12 @@ export function getAttachmentDowncode(id) {
     method: 'get'
   })
 }
+
+export function getAttachmentDownloadUrl(code) {
+  const baseUrl = process.env.VUE_APP_BASE_API
+  if (baseUrl.substring(baseUrl.length, baseUrl.length - 1) == '/') {
+    return baseUrl.substring(0, baseUrl.length - 1) + '/attachment/download/' + code
+  } else {
+    return baseUrl + '/attachment/download/' + code
+  }
+}
