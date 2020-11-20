@@ -7,8 +7,8 @@
 
       <div class="filter-container">
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-          {{ $t('table.add') }}
-        </el-button>   
+          添加权限
+        </el-button>    
 
         <el-button class="filter-item" style="margin-right: 10px;" icon="tree" @click="handleIndex">
           全部权限
@@ -53,6 +53,12 @@
           </template>
         </el-table-column>
 
+        <el-table-column width="60px" align="center" label="排序">
+          <template slot-scope="scope">
+            <span>{{ scope.row.listorder }}</span>
+          </template>
+        </el-table-column>
+        
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -74,11 +80,9 @@
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
-            <router-link :to="'/auth/rule/edit/'+scope.row.id">
-              <el-button type="primary" size="mini" icon="el-icon-edit">
-                编辑
-              </el-button>
-            </router-link>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+              编辑
+            </el-button>
 
             <el-button type="primary" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
@@ -92,6 +96,14 @@
       </el-table>
     </el-card>
 
+    <el-dialog title="添加权限" :visible.sync="create.dialogVisible">
+      <create :item="create" />
+    </el-dialog>
+
+    <el-dialog title="编辑权限" :visible.sync="edit.dialogVisible">
+      <edit :item="edit" />
+    </el-dialog>    
+
     <el-dialog title="账号详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
@@ -103,6 +115,8 @@ import md5 from 'js-md5'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Detail from '@/components/Larke/Detail'
+import Edit from './components/Edit'
+import Create from './components/Create'
 import { 
   getRuleTreeList,
   getRuleDetail, 
@@ -113,8 +127,8 @@ import {
 } from '@/api/authRule'
 
 export default {
-  name: 'AuthRuleIndex',
-  components: { Detail },
+  name: 'AuthRuleTree',
+  components: { Detail, Edit, Create },
   directives: { waves },
   filters: {
     methodFilter(method) {
@@ -139,6 +153,13 @@ export default {
         data: [],
       },
       treeExpandAll: false,
+      create: {
+        dialogVisible: false,
+      },        
+      edit: {
+        dialogVisible: false,
+        id: '',
+      },       
     }
   },
   created() {
@@ -233,13 +254,14 @@ export default {
       })
     },
     handleCreate() {
-      this.$router.replace('/auth/rule/create')
+      this.create.dialogVisible = true
+    },    
+    handleEdit(index, row) {
+      this.edit.dialogVisible = true
+      this.edit.id = row.id
     },
     handleIndex() {
       this.$router.replace('/auth/rule/index')
-    },
-    formatJson(json, depth = 0) {
-
     },
     changeStatus(e, data, index) {
       if (data.status == 1) {

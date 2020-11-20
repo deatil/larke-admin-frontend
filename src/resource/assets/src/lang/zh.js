@@ -12,7 +12,7 @@ export default {
     CreateAdmin: '添加管理员',
     EditAdmin: '编辑管理员',
     
-    AuthRule: '权限',
+    AuthRule: '权限路由',
     AuthRuleTree: '权限结构',
     CreateAuthRule: '创建权限',
     EditAuthRule: '编辑权限',

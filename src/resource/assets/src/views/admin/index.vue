@@ -22,13 +22,13 @@
         
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
-        </el-button>
+        </el-button>    
         
         <el-button class="filter-item" style="margin-right: 10px;" type="danger" icon="el-icon-switch-button" @click="handleLogout">
           账号退出
         </el-button>        
       </div>
-
+ 
       <el-table v-loading="listLoading" 
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
         :data="list" border fit highlight-current-row 
@@ -66,11 +66,9 @@
 
         <el-table-column align="center" label="操作" width="320">
           <template slot-scope="scope">
-            <router-link :to="'/admin/edit/'+scope.row.id">
-              <el-button type="primary" size="mini" icon="el-icon-edit">
-                编辑
-              </el-button>
-            </router-link>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+              编辑
+            </el-button>
 
             <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
@@ -92,6 +90,14 @@
 
     <el-dialog title="账号详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
+    </el-dialog>
+
+    <el-dialog title="添加账号" :visible.sync="create.dialogVisible">
+      <create :item="create" />
+    </el-dialog>
+
+    <el-dialog title="编辑账号" :visible.sync="edit.dialogVisible">
+      <edit :item="edit" />
     </el-dialog>
 
     <el-dialog title="更改密码" :visible.sync="password.dialogVisible">
@@ -124,6 +130,8 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Detail from '@/components/Larke/Detail'
+import Edit from './components/Edit'
+import Create from './components/Create'
 import { 
   getList, 
   getDetail,
@@ -136,7 +144,7 @@ import {
 
 export default {
   name: 'AdminIndex',
-  components: { Pagination, Detail },
+  components: { Pagination, Detail, Edit, Create },
   directives: { waves },
   filters: {
 
@@ -161,6 +169,13 @@ export default {
         { label: '正序', key: 'ASC' }, 
         { label: '倒叙', key: 'DESC' }
       ],
+      create: {
+        dialogVisible: false,
+      },        
+      edit: {
+        dialogVisible: false,
+        id: '',
+      },      
       detail: {
         dialogVisible: false,
         data: [],
@@ -198,6 +213,13 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },  
+    handleCreate() {
+      this.create.dialogVisible = true
+    },    
+    handleEdit(index, row) {
+      this.edit.dialogVisible = true
+      this.edit.id = row.id
+    },    
     handleDetail(index, row) {
       getDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
@@ -262,9 +284,6 @@ export default {
           },                  
         ]
       })
-    },
-    handleCreate() {
-      this.$router.replace('/admin/create')
     },
     changeStatus(e, data, index) {
       if (data.status == 1) {

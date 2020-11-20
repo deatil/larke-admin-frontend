@@ -143,29 +143,6 @@ export const asyncRoutes = [
           roles: ['larke-admin-admin-index'] // or you can only set roles in sub nav
         }
       },
-      {
-        path: '/admin/create',
-        component: () => import('@/views/admin/create'),
-        name: 'CreateAdmin',
-        meta: { 
-          title: 'CreateAdmin', 
-          roles: ['larke-admin-admin-create'],
-          activeMenu: '/admin/index'
-        },
-        hidden: true
-      },
-      {
-        path: '/admin/edit/:id(\\w+)',
-        component: () => import('@/views/admin/edit'),
-        name: 'EditAdmin',
-        meta: { 
-          title: 'EditAdmin', 
-          noCache: true, 
-          roles: ['larke-admin-admin-update'],
-          activeMenu: '/admin/index' 
-        },
-        hidden: true
-      },
 
       // 权限
       {
@@ -186,29 +163,6 @@ export const asyncRoutes = [
           title: 'AuthRuleTree',
           roles: ['larke-admin-auth-rule-index'],
           activeMenu: '/auth/rule/index'
-        },
-        hidden: true
-      },      
-      {
-        path: '/auth/rule/create',
-        component: () => import('@/views/auth-rule/create'),
-        name: 'CreateAuthRule',
-        meta: { 
-          title: 'CreateAuthRule', 
-          roles: ['larke-admin-auth-rule-create'],
-          activeMenu: '/auth/rule/index'
-        },
-        hidden: true
-      },
-      {
-        path: '/auth/rule/edit/:id(\\w+)',
-        component: () => import('@/views/auth-rule/edit'),
-        name: 'EditAuthRule',
-        meta: { 
-          title: 'EditAuthRule', 
-          noCache: true, 
-          roles: ['larke-admin-auth-rule-update'],
-          activeMenu: '/auth/rule/index' 
         },
         hidden: true
       },

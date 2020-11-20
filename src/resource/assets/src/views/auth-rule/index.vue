@@ -75,6 +75,21 @@
           </template>
         </el-table-column>
 
+        <el-table-column width="75px" align="center" label="排序">
+          <template slot-scope="{row, $index}">
+            <div @click.stop="{{editableChangeBtn($index, 'editListorderInput')}}">
+              <el-input
+                v-if="editable[$index]"
+                v-model="row.listorder"
+                size="mini"
+                class="editListorderInput"
+                @blur="editableChange($event, row, $index)"
+              ></el-input>
+              <span v-else>{{row.listorder}}</span>
+            </div>
+          </template>
+        </el-table-column>
+
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -96,11 +111,9 @@
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
-            <router-link :to="'/auth/rule/edit/'+scope.row.id">
-              <el-button type="primary" size="mini" icon="el-icon-edit">
-                编辑
-              </el-button>
-            </router-link>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+              编辑
+            </el-button>
 
             <el-button type="primary" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
@@ -116,7 +129,15 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog title="账号详情" :visible.sync="detail.dialogVisible">
+    <el-dialog title="添加权限" :visible.sync="create.dialogVisible">
+      <create :item="create" />
+    </el-dialog>
+
+    <el-dialog title="编辑权限" :visible.sync="edit.dialogVisible" @close="closeEdit">
+      <edit :item="edit" />
+    </el-dialog>
+
+    <el-dialog title="权限详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
   </div>
@@ -128,6 +149,8 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Detail from '@/components/Larke/Detail'
+import Edit from './components/Edit'
+import Create from './components/Create'
 import { 
   getRuleList, 
   getRuleTreeList,
@@ -144,7 +167,7 @@ import {
 
 export default {
   name: 'AuthRuleIndex',
-  components: { Pagination, Detail },
+  components: { Pagination, Detail, Edit, Create },
   directives: { waves },
   filters: {
     methodFilter(method) {
@@ -181,7 +204,6 @@ export default {
         { label: 'DELETE', key: 'DELETE' },
         { label: 'PATCH', key: 'PATCH' },
         { label: 'OPTIONS', key: 'OPTIONS' },
-        { label: 'ERROR', key: 'ERROR' },
       ],        
       statusOptions: [
         { key: 'open', display_name: '启用' },
@@ -195,6 +217,16 @@ export default {
         dialogVisible: false,
         data: [],
       }, 
+      create: {
+        dialogVisible: false,
+      },        
+      edit: {
+        dialogVisible: false,
+        id: '',
+      },
+      editable: [],
+      editableItem: {},
+      editableOldSort: 0,
       selectedData: [],   
       showDeletebtn: false,      
     }
@@ -234,6 +266,51 @@ export default {
         this.showDeletebtn = false
       }
     },    
+    handleCreate() {
+      this.create.dialogVisible = true
+    },    
+    handleEdit(index, row) {
+      this.edit.dialogVisible = true
+      this.edit.id = row.id
+    },
+    closeEdit() {
+      this.edit.id = ''
+    },
+    editableChangeBtn(index, className) {
+      this.editable = new Array(this.list.length);
+ 
+      this.editable[index] = true;
+ 
+      this.editableItem = this.list[index];
+ 
+      this.$set(this.editable, index, true);
+      
+      // 让input自动获取焦点
+      this.$nextTick(function() {
+        var editInputList = document.getElementsByClassName(className);
+        editInputList[0].children[0].focus();
+      });
+ 
+    },    
+    editableChange(e, data, index) {
+      this.editable[index] = false;
+
+      if (this.editableOldSort == data.listorder) {
+        return ;
+      }
+
+      this.editableOldSort = data.listorder
+
+      updateRuleSort(data.id, {
+        listorder: data.listorder
+      }).then(() => {
+        this.$message({
+          message: '权限排序成功',
+          type: 'success',
+          duration: 2 * 1000,
+        })        
+      })  
+    },
     handleDetail(index, row) {
       getRuleDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
@@ -312,9 +389,6 @@ export default {
           },
         ]
       })
-    },
-    handleCreate() {
-      this.$router.replace('/auth/rule/create')
     },
     handleTree() {
       this.$router.replace('/auth/rule/tree')

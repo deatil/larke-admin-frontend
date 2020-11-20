@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: 'Larke Admin',
-      logo: require('@/assets/larke/logo.png')
+      logo: require('@/assets/larke/larke.png')
     }
   }
 }

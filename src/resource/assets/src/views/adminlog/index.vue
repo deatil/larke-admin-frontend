@@ -13,22 +13,26 @@
           删除选中
         </el-button>  
 
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询信息" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-        <el-select v-model="listQuery.method" placeholder="请求方式" clearable style="width: 140px;margin-right: 10px;" class="filter-item">
+        <el-input v-model="listQuery.searchword" placeholder="请输入查询信息" clearable style="width: 150px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+    
+        <el-date-picker v-model="listQuery.start_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择开始时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />        
+        <el-date-picker v-model="listQuery.end_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择结束时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />        
+        
+        <el-select v-model="listQuery.method" placeholder="请求方式" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
           <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>          
-        <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
+        <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 80px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>      
-        <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
+        <el-select v-model="listQuery.order" style="width: 80px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
         <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
         
-        <el-button class="filter-item" style="margin-right: 10px;" type="danger" icon="el-icon-delete" @click="handleClear">
-          清空日志
+        <el-button class="filter-item" type="danger" icon="el-icon-delete" @click="handleClear">
+          清空
         </el-button>
       </div>
 
@@ -139,6 +143,8 @@ export default {
       listLoading: true,
       listQuery: {
         searchword: '',
+        start_time: '',
+        end_time: '',
         order: 'ASC',
         status: '',
         method: '',
@@ -177,7 +183,9 @@ export default {
     getList() {
       this.listLoading = true
       getList({
-        searchword: this.listQuery.searchword,    
+        searchword: this.listQuery.searchword,   
+        start_time: this.listQuery.start_time,
+        end_time: this.listQuery.end_time, 
         status: this.listQuery.status,
         method: this.listQuery.method,
         order: this.listQuery.order,
