@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="data" :rules="rules" label-width="100px" ref="authRuleForm">
+  <el-form :model="data" :rules="rules" label-width="100px" ref="authGroupForm">
     <el-form-item label="父级权限" prop="parentid">
       <el-select 
         v-model="data.parentid" 
@@ -14,29 +14,15 @@
     <el-form-item label="名称" prop="title">
       <el-input v-model.trim="data.title" placeholder="请填写权限名称" />
     </el-form-item>   
-    <el-form-item label="请求链接" prop="url">
-      <el-input v-model.trim="data.url" placeholder="请填写请求链接" />
-    </el-form-item>                 
-    <el-form-item label="请求方式" prop="method">
-      <el-select v-model="data.method">
-        <el-option v-for="item in methodOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-      </el-select>          
-    </el-form-item>
-    <el-form-item label="标识" prop="slug">
-      <el-input v-model.trim="data.slug" placeholder="请填写标识" />
-    </el-form-item>        
+     
     <el-form-item label="权限描述" prop="description">
       <el-input type="textarea" v-model.trim="data.description" rows="6" placeholder="请填写权限描述"></el-input>
-    </el-form-item>      
+    </el-form-item>    
+
     <el-form-item label="排序" prop="listorder">
       <el-input v-model.trim="data.listorder" placeholder="请填写排序" />
     </el-form-item>      
-    <el-form-item label="鉴定权限" prop="is_need_auth"> 
-      <el-radio-group v-model="data.is_need_auth">
-        <el-radio :label="1">启用</el-radio>
-        <el-radio :label="0">否</el-radio>
-      </el-radio-group> 
-    </el-form-item>                      
+                    
     <el-form-item label="状态" prop="status"> 
       <el-radio-group v-model="data.status">
         <el-radio :label="1">启用</el-radio>
@@ -51,12 +37,12 @@
 
 <script>
 import { 
-  getRuleChildrenList,
-  createRule 
-} from '@/api/authRule'
+  getGroupChildrenList,
+  createGroup 
+} from '@/api/authGroup'
 
 export default {
-  name: 'AuthRuleCreate',
+  name: 'AuthGroupCreate',
   components: { },
   props: {
     item: {
@@ -74,13 +60,7 @@ export default {
           ],
           title:[
             {required:true, message:'名称不能为空', trigger:'blur'}
-          ],          
-          url:[
-            {required:true, message:'请求方式不能为空', trigger:'blur'}
-          ],   
-          slug:[
-            {required:true, message:'标识不能为空', trigger:'blur'}
-          ],    
+          ],     
           listorder:[
             {required:true, message:'排序不能为空', trigger:'blur'}
           ],                           
@@ -88,27 +68,14 @@ export default {
       data: {
         parentid: '',
         title: '',
-        url: '',
-        method: 'GET',
-        slug: '',
         description: '',
         listorder: 100,
-        is_need_auth: 1,
         status: 1,
       },
       parentOptions: [
         { key: '0', display_name: '顶级权限' },
       ],
-      parentFilterOptions: [],
-      methodOptions: [
-        { key: 'GET', display_name: 'GET' },
-        { key: 'HEAD', display_name: 'HEAD' },
-        { key: 'POST', display_name: 'POST' },
-        { key: 'PUT', display_name: 'PUT' },
-        { key: 'DELETE', display_name: 'DELETE' },
-        { key: 'PATCH', display_name: 'PATCH' },
-        { key: 'OPTIONS', display_name: 'OPTIONS' },
-      ],      
+      parentFilterOptions: [],    
     }
   },
   created() {
@@ -117,7 +84,7 @@ export default {
   methods: {  
     initData() {
       const all = new Promise((resolve, reject) => {
-        getRuleChildrenList({
+        getGroupChildrenList({
           id: 0,
           type: 'list',
         }).then(res => {
@@ -132,7 +99,7 @@ export default {
           all.list.forEach(item => {
             this.parentOptions.push({
               key: item.id, 
-              display_name: item.spacer + ' ' + item.title + '【' + item.method + '】'
+              display_name: item.spacer + ' ' + item.title
             })           
           }); 
 
@@ -163,14 +130,14 @@ export default {
     },
     submit() {
       const thiz = this
-      createRule(this.data).then(response => {
+      createGroup(this.data).then(response => {
         this.$message({
           message: '添加权限成功',
           type: 'success',
           duration: 2 * 1000,
           onClose() {
-            if (thiz.$refs.authRuleForm !== undefined) {
-              thiz.$refs.authRuleForm.resetFields()
+            if (thiz.$refs.authGroupForm !== undefined) {
+              thiz.$refs.authGroupForm.resetFields()
             }
             thiz.item.dialogVisible = false
           }

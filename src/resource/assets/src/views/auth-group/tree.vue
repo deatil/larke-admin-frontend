@@ -2,16 +2,16 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>权限结构</span>
+        <span>用户组结构</span>
       </div>
 
       <div class="filter-container">
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-          添加权限
+          添加用户组
         </el-button>    
 
         <el-button class="filter-item" style="margin-right: 10px;" icon="tree" @click="handleIndex">
-          全部权限
+          全部用户组
         </el-button>           
       </div>
 
@@ -30,28 +30,10 @@
             :show-overflow-tooltip="true"
             :indent-size="25"
             label="名称" 
-            width="250" 
-            class-name="larke-admin-auth-rule-tree"
+            min-width="250" 
+            class-name="larke-admin-auth-group-tree"
             header-align="left">           
         </el-table-tree-column>
-
-        <el-table-column min-width="100px" label="链接">
-          <template slot-scope="{row}">
-            <div>
-              <el-tag type="info" size="mini" style="margin-bottom:3px;">
-                {{ row.slug }}
-              </el-tag>              
-            </div> 
-                        
-            <div>
-              <el-tag :type="row.method | methodFilter" size="mini">
-                {{ row.method }}
-              </el-tag>
-
-              <span style="margin-left: 5px;">{{ row.url }}</span>
-            </div>           
-          </template>
-        </el-table-column>
 
         <el-table-column width="60px" align="center" label="排序">
           <template slot-scope="scope">
@@ -96,15 +78,15 @@
       </el-table>
     </el-card>
 
-    <el-dialog title="添加权限" :visible.sync="create.dialogVisible">
+    <el-dialog title="添加用户组" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog title="编辑权限" :visible.sync="edit.dialogVisible">
+    <el-dialog title="编辑用户组" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>    
 
-    <el-dialog title="权限详情" :visible.sync="detail.dialogVisible">
+    <el-dialog title="用户组详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
   </div>
@@ -118,31 +100,19 @@ import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
 import { 
-  getRuleTreeList,
-  getRuleDetail, 
-  deleteRule,
-  updateRuleSort,
-  enableRule,
-  disableRule
-} from '@/api/authRule'
+  getGroupTreeList,
+  getGroupDetail, 
+  deleteGroup,
+  updateGroupSort,
+  enableGroup,
+  disableGroup
+} from '@/api/authGroup'
 
 export default {
-  name: 'AuthRuleTree',
+  name: 'AuthGroupTree',
   components: { Detail, Edit, Create },
   directives: { waves },
   filters: {
-    methodFilter(method) {
-      const methodMap = {
-        'GET': 'success',
-        'HEAD': 'info',
-        'POST': 'warning',
-        'PUT': 'warning',
-        'DELETE': 'danger',
-        'PATCH': 'warning',
-        'OPTIONS': 'info',
-      }
-      return methodMap[method]
-    }, 
   },
   data() {
     return {
@@ -169,13 +139,13 @@ export default {
     getList() {
       this.listLoading = true
 
-      getRuleTreeList().then(res => {
+      getGroupTreeList().then(res => {
         this.listLoading = false
         this.list = res.data.list
       })
     },
     handleDetail(index, row) {
-      getRuleDetail(row.id).then((res) => {
+      getGroupDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
         const data = res.data
 
@@ -194,21 +164,6 @@ export default {
             name: '名称',
             content: data.title,
             type: 'text',
-          },    
-          {
-            name: '权限链接',
-            content: data.url,
-            type: 'text',
-          },  
-          {
-            name: '请求类型',
-            content: data.method,
-            type: 'text',
-          }, 
-          {
-            name: '地址标识',
-            content: data.slug,
-            type: 'text',
           },                                       
           {
             name: '描述',
@@ -220,11 +175,6 @@ export default {
             content: data.listorder,
             type: 'text',
           },    
-          {
-            name: '验证权限',
-            content: data.is_need_auth,
-            type: 'status',
-          },
           {
             name: '状态',
             content: data.status,
@@ -261,21 +211,21 @@ export default {
       this.edit.id = row.id
     },
     handleIndex() {
-      this.$router.replace('/auth/rule/index')
+      this.$router.replace('/auth/group/index')
     },
     changeStatus(e, data, index) {
       if (data.status == 1) {
-        enableRule(data.id).then(() => {
+        enableGroup(data.id).then(() => {
           this.$message({
-            message: '权限启用成功',
+            message: '用户组启用成功',
             type: 'success',
             duration: 2 * 1000,
           })
         })    
       } else {
-        disableRule(data.id).then(() => {
+        disableGroup(data.id).then(() => {
           this.$message({
-            message: '权限禁用成功',
+            message: '用户组禁用成功',
             type: 'success',
             duration: 2 * 1000,
           })
@@ -284,14 +234,14 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm('确认要删除该权限吗？', '提示', {
+      this.$confirm('确认要删除该用户组吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteRule(row.id).then(() => {
+        deleteGroup(row.id).then(() => {
           this.$message({
-            message: '删除权限成功',
+            message: '删除用户组成功',
             type: 'success',
             duration: 5 * 1000,
             onClose() {

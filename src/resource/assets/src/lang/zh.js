@@ -4,20 +4,21 @@ export default {
     profile: '我的信息',
     
     System: '系统配置',
-    Attachment: '附件管理',
+    
+        Attachment: '附件管理',
     
     Permission: '权限管理',
-    Admin: '管理员',
-    AdminIndex: '管理员列表',
-    CreateAdmin: '添加管理员',
-    EditAdmin: '编辑管理员',
     
-    AuthRule: '权限路由',
-    AuthRuleTree: '权限结构',
-    CreateAuthRule: '创建权限',
-    EditAuthRule: '编辑权限',
+        Admin: '管理员',
+        AdminIndex: '管理员列表',
+        
+        AuthGroup: '用户组',
+        AuthGroupTree: '用户组结构',
+        
+        AuthRule: '权限路由',
+        AuthRuleTree: '权限结构',
     
-    AdminLog: '操作日志',
+        AdminLog: '操作日志',
   },
   navbar: {
     dashboard: '首页',

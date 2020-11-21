@@ -144,6 +144,29 @@ export const asyncRoutes = [
         }
       },
 
+      // 用户组
+      {
+        path: '/auth/group/index',
+        component: () => import('@/views/auth-group/index'),
+        name: 'AuthGroup',
+        meta: {
+          title: 'AuthGroup',
+          icon: 'el-icon-s-operation',
+          roles: ['larke-admin-auth-group-index'] 
+        }
+      },
+      {
+        path: '/auth/group/tree',
+        component: () => import('@/views/auth-group/tree'),
+        name: 'AuthGroupTree',
+        meta: {
+          title: 'AuthGroupTree',
+          roles: ['larke-admin-auth-group-index'],
+          activeMenu: '/auth/group/index'
+        },
+        hidden: true
+      },
+
       // 权限
       {
         path: '/auth/rule/index',
