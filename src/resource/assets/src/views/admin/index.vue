@@ -6,7 +6,7 @@
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询账号" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" placeholder="请输入查询的关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
         
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
@@ -44,6 +44,14 @@
             <span>{{ row.nickname }}</span>
           </template>
         </el-table-column>
+
+        <el-table-column width="100px" align="center" label="授权">
+          <template slot-scope="scope">
+            <el-button type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
+              授权
+            </el-button>
+          </template>
+        </el-table-column>        
 
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
@@ -120,7 +128,11 @@
           <el-button type="primary" @click="onLogout">确认退出</el-button>
         </el-form-item>        
       </el-form>
-    </el-dialog>    
+    </el-dialog> 
+
+    <el-dialog title="账号授权" :visible.sync="access.dialogVisible">
+      <access :item="access" />
+    </el-dialog>          
   </div>
 </template>
 
@@ -132,6 +144,7 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
+import Access from './components/Access'
 import { 
   getList, 
   getDetail,
@@ -144,7 +157,7 @@ import {
 
 export default {
   name: 'AdminIndex',
-  components: { Pagination, Detail, Edit, Create },
+  components: { Pagination, Detail, Edit, Create, Access },
   directives: { waves },
   filters: {
 
@@ -180,6 +193,10 @@ export default {
         dialogVisible: false,
         data: [],
       },
+      access: {
+        dialogVisible: false,
+        id: '',
+      },      
       password: {
         dialogVisible: false,
         id: '',
@@ -219,7 +236,11 @@ export default {
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
-    },    
+    }, 
+    handleAccess(index, row) {    
+      this.access.id = row.id
+      this.access.dialogVisible = true
+    },       
     handleDetail(index, row) {
       getDetail(row.id).then((res) => {
         this.detail.dialogVisible = true

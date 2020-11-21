@@ -13,7 +13,7 @@
           删除选中
         </el-button>  
 
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询信息" clearable style="width: 150px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" placeholder="请输入查询的关键字" clearable style="width: 150px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
     
         <el-date-picker v-model="listQuery.start_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择开始时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />        
         <el-date-picker v-model="listQuery.end_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择结束时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />        

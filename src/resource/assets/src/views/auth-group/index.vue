@@ -6,7 +6,7 @@
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询权限" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" /> 
+        <el-input v-model="listQuery.searchword" placeholder="请输入查询的关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" /> 
 
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 80px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
@@ -42,7 +42,7 @@
 
         <el-table-column width="100px" align="center" label="授权">
           <template slot-scope="scope">
-            <el-button type="warning" size="mini" style="margin-left:10px;" @click="handleAccess(scope.$index, scope.row)">
+            <el-button type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
               授权
             </el-button>
           </template>

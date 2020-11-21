@@ -40,7 +40,15 @@
             <span>{{ scope.row.listorder }}</span>
           </template>
         </el-table-column>
-        
+
+        <el-table-column width="100px" align="center" label="授权">
+          <template slot-scope="scope">
+            <el-button type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
+              授权
+            </el-button>
+          </template>
+        </el-table-column>
+
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -89,6 +97,10 @@
     <el-dialog title="用户组详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
+
+    <el-dialog title="用户组授权" :visible.sync="access.dialogVisible">
+      <access :item="access" />
+    </el-dialog>       
   </div>
 </template>
 
@@ -99,6 +111,7 @@ import { parseTime } from '@/utils'
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
+import Access from './components/Access'
 import { 
   getGroupTreeList,
   getGroupDetail, 
@@ -110,7 +123,7 @@ import {
 
 export default {
   name: 'AuthGroupTree',
-  components: { Detail, Edit, Create },
+  components: { Detail, Edit, Create, Access },
   directives: { waves },
   filters: {
   },
@@ -129,7 +142,11 @@ export default {
       edit: {
         dialogVisible: false,
         id: '',
-      },       
+      }, 
+      access: {
+        dialogVisible: false,
+        id: '',
+      },            
     }
   },
   created() {
@@ -144,6 +161,10 @@ export default {
         this.list = res.data.list
       })
     },
+    handleAccess(index, row) {    
+      this.access.id = row.id
+      this.access.dialogVisible = true
+    },    
     handleDetail(index, row) {
       getGroupDetail(row.id).then((res) => {
         this.detail.dialogVisible = true

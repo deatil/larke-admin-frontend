@@ -19,6 +19,10 @@ export default {
         AuthRuleTree: '权限结构',
     
         AdminLog: '操作日志',
+    
+    LocalExtension: '本地扩展',
+    
+        Extension: '扩展管理',
   },
   navbar: {
     dashboard: '首页',

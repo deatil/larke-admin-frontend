@@ -20,11 +20,14 @@
 </template>
 
 <script>
-import { getGroupDetail, updateGroupAccess } from '@/api/authGroup'
-import { getRuleTreeList } from '@/api/authRule'
+import { 
+  getDetail as getAdminDetail, 
+  updateAccess as updateAdminAccess 
+} from '@/api/admin'
+import { getGroupTreeList } from '@/api/authGroup'
 
 export default {
-  name: 'AuthGroupAccess',
+  name: 'AdminAccess',
   components: { },
   props: {
     item: {
@@ -66,15 +69,14 @@ export default {
   },
   methods: { 
     featchData() {
-      this.fetchRules().then(() => {
-        getGroupDetail(this.id).then(response => {
-          const rule_accesses = response.data.rule_accesses
-          this.data.access = rule_accesses.join(',')
+      this.fetchGroups().then(() => {
+        getAdminDetail(this.id).then(response => {
+          const groups = response.data.groups
 
           const thiz = this
-          if (rule_accesses.length > 0) {
-            rule_accesses.forEach((i, n) => {        
-              const node = thiz.$refs.tree.getNode(i)
+          if (groups.length > 0) {
+            groups.forEach(item => {        
+              const node = thiz.$refs.tree.getNode(item.id)
               if (node['isLeaf']) {
                 thiz.$refs.tree.setChecked(node, true)
               }
@@ -86,9 +88,9 @@ export default {
         })      
       })
     },
-    fetchRules() {
+    fetchGroups() {
       return new Promise((resolve, reject) => {
-        getRuleTreeList().then((res) => {
+        getGroupTreeList().then((res) => {
           this.list = res.data.list
         })
 
@@ -103,11 +105,11 @@ export default {
     },
     submit() {
       const thiz = this
-      updateGroupAccess(this.id, {
+      updateAdminAccess(this.id, {
         access: this.checkedids
       }).then(response => {
         this.$message({
-          message: '用户组授权成功',
+          message: '账号授权成功',
           type: 'success',
           duration: 2 * 1000,
           onClose() {
