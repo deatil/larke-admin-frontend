@@ -21,7 +21,7 @@
         </el-button>
         
         <el-button class="filter-item" style="margin-right: 10px;" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
-          安装扩展
+          安装/更新
         </el-button>        
       </div>
  
@@ -37,34 +37,38 @@
             </div> 
                         
             <div>
-              <el-tag type="primary" size="mini" style="margin-right:10px;">
-                v{{ scope.row.version }}
-              </el-tag>
+              <el-tooltip effect="dark" content="当前扩展版本" placement="top">
+                <el-tag type="primary" size="mini" style="margin-right:10px;">
+                  v{{ scope.row.version }}
+                </el-tag>
+              </el-tooltip>
 
-              <el-tag type="info" size="mini" style="margin-right:10px;">
-                <i class="el-icon-goblet-square-full" />&nbsp;
-                <span>{{ scope.row.adaptation }}</span>  
-              </el-tag>                
+              <el-tooltip effect="dark" content="当前扩展适配系统版本" placement="top">
+                <el-tag type="info" size="mini" style="margin-right:10px;">
+                  <i class="el-icon-goblet-square-full" />&nbsp;
+                  <span>{{ scope.row.adaptation }}</span>  
+                </el-tag>  
+              </el-tooltip>           
             </div>           
                      
           </template>
         </el-table-column>
 
         <el-table-column min-width="100px" label="简介">
-          <template slot-scope="{row}">
+          <template slot-scope="scope">
             <div style="margin-bottom:3px;">
-              <span>{{ row.introduce }}</span>  
+              <span>{{ scope.row.introduce }}</span>  
             </div> 
 
             <div>    
               <el-tag type="primary" size="mini" style="margin-right:10px;">
                 <i class="el-icon-user" />&nbsp;
-                <span>{{ row.author }}</span>  
+                <span>{{ scope.row.author }}</span>  
               </el-tag>    
 
-              <el-tag v-if="row.authoremail" type="info" size="mini" style="margin-right:10px;">
+              <el-tag v-if="scope.row.authoremail" type="info" size="mini" style="margin-right:10px;">
                 <i class="el-icon-message" />&nbsp;
-                <span>{{ row.authoremail }}</span>  
+                <span>{{ scope.row.authoremail }}</span>  
               </el-tag>                     
             </div>              
           </template>
@@ -78,7 +82,7 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="scope">
-            <el-switch 
+            <el-switch
               v-model="scope.row.status" 
               active-color="#13ce66"
               inactive-color="#ff4949"
@@ -109,12 +113,17 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog title="账号详情" :visible.sync="detail.dialogVisible">
+    <el-dialog title="扩展详情" 
+      append-to-body
+      :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>  
 
-    <el-dialog title="本地扩展" :visible.sync="local.dialogVisible">
-      <local />
+    <el-dialog title="本地扩展" 
+      append-to-body
+      v-if="local.dialogVisible"
+      :visible.sync="local.dialogVisible">
+      <local :item="local" />
     </el-dialog>          
   </div>
 </template>
@@ -139,7 +148,6 @@ export default {
   components: { Pagination, Detail, Local },
   directives: { waves },
   filters: {
-
   },
   data() {
     return {
@@ -229,7 +237,7 @@ export default {
         },           
         {
           name: '作者邮箱',
-          content: data.email,
+          content: data.authoremail,
           type: 'text',
         },  
         {
@@ -258,12 +266,12 @@ export default {
           content: data.upgradetime,
           type: 'time',
         },   
+
         {
           name: '排序',
           content: data.listorder,
           type: 'text',
-        },   
-
+        },  
         {
           name: '激活状态',
           content: data.status,
@@ -298,9 +306,18 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        const loading = thiz.$loading({
+          lock: true,
+          text: '扩展卸载中...',
+          spanner: '',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+
         uninstall(row.name).then(() => {
+          loading.close()
+
           this.$message({
-            message: '删除扩展成功',
+            message: '卸载扩展成功',
             type: 'success',
             duration: 5 * 1000,
             onClose() {

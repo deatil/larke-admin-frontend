@@ -226,6 +226,16 @@ export default {
       &:last-of-type {
         margin-right: 15px;
       }
+      &::before {
+        content: '';
+        background: #d8dce5;
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        position: relative;
+        margin-right: 2px;
+      }     
       &.active {
         background-color: #42b983;
         color: #fff;

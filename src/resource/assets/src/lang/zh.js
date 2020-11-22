@@ -5,6 +5,8 @@ export default {
     
     System: '系统配置',
     
+        Config: '配置管理',
+        
         Attachment: '附件管理',
     
     Permission: '权限管理',

@@ -62,11 +62,13 @@ export function clearRule(data) {
   })
 }
 
-export function updateRuleSort(id, data) {
+export function updateRuleSort(id, listorder) {
   return request({
     url: `/auth/rule/${id}/sort`,
     method: 'patch',
-    data
+    data: {
+      listorder
+    }
   })
 }
 

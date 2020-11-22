@@ -21,6 +21,7 @@ selenium-debug.log
 
 # development files
 .env.development
+vue.config.js
 
 package-lock.json
 yarn.lock

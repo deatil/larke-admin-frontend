@@ -85,8 +85,8 @@ service.interceptors.response.use(
         })
       } 
       
-      // other
-      else {
+      // 只拦截通用错误
+      else if (res.code === 1) {
         Message({
           message: res.message || 'Error',
           type: 'error',

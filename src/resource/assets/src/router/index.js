@@ -106,6 +106,18 @@ export const asyncRoutes = [
       roles: ['larke-admin-attachment-index'] // you can set roles in root nav
     },
     children: [
+      // 配置管理
+      {
+        path: '/config/index',
+        component: () => import('@/views/config/index'),
+        name: 'Config',
+        meta: {
+          title: 'Config',
+          icon: 'el-icon-paperclip',
+          roles: ['larke-admin-config-index'] 
+        }
+      },
+
       // 附件管理
       {
         path: '/attachment/index',
@@ -114,9 +126,9 @@ export const asyncRoutes = [
         meta: {
           title: 'Attachment',
           icon: 'el-icon-paperclip',
-          roles: ['larke-admin-attachment-index'] // or you can only set roles in sub nav
+          roles: ['larke-admin-attachment-index'] 
         }
-      }
+      },
     ]
   },
 
@@ -124,12 +136,12 @@ export const asyncRoutes = [
     path: '/permission',
     component: Layout,
     redirect: '/admin/index',
-    alwaysShow: true, // will always show the root menu
+    alwaysShow: true, 
     name: 'Permission',
     meta: {
       title: 'Permission',
       icon: 'el-icon-s-management',
-      roles: ['larke-admin-admin-index'] // you can set roles in root nav
+      roles: ['larke-admin-admin-index'] 
     },
     children: [
       // 管理员
@@ -140,7 +152,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Admin',
           icon: 'peoples',
-          roles: ['larke-admin-admin-index'] // or you can only set roles in sub nav
+          roles: ['larke-admin-admin-index'] 
         }
       },
 

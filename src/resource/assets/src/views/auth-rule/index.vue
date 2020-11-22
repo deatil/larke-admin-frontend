@@ -301,9 +301,7 @@ export default {
 
       this.editableOldSort = data.listorder
 
-      updateRuleSort(data.id, {
-        listorder: data.listorder
-      }).then(() => {
+      updateRuleSort(data.id, data.listorder).then(() => {
         this.$message({
           message: '权限排序成功',
           type: 'success',

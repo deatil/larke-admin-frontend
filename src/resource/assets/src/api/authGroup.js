@@ -54,11 +54,13 @@ export function deleteGroup(id) {
   })
 }
 
-export function updateGroupSort(id, data) {
+export function updateGroupSort(id, listorder) {
   return request({
     url: `/auth/group/${id}/sort`,
     method: 'patch',
-    data
+    data: {
+      listorder
+    }
   })
 }
 

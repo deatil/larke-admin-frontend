@@ -24,7 +24,7 @@ export function setToken(token, type = 'local') {
   }
 }
 
-export function removeToken() {
+export function removeToken(type = 'local') {
   if (type == 'local') {
     return localStorage.removeItem(TokenKey)
   } else if (type == 'session') {
