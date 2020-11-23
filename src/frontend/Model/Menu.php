@@ -264,7 +264,7 @@ class Menu
             return [];
         }
         
-        $roles = app('larke.admin')->getRuleids();
+        $roles = app('larke.admin.admin')->getRuleids();
         
         $list = collect($menus)->filter(function($data) use($roles) {
             if (in_array($data['id'], $roles)) {

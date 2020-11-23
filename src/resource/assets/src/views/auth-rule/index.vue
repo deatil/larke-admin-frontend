@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>权限</span>
+        <span>权限路由</span>
       </div>
 
       <div class="filter-container">
@@ -13,7 +13,7 @@
           删除选中
         </el-button>  
 
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询的关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
         
         <el-select v-model="listQuery.method" placeholder="请求方式" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
           <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />

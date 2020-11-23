@@ -2,11 +2,11 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>管理员</span>
+        <span>配置管理</span>
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" placeholder="请输入查询的关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
         
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
@@ -22,36 +22,46 @@
         
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
-        </el-button>    
-        
-        <el-button class="filter-item" style="margin-right: 10px;" type="danger" icon="el-icon-switch-button" @click="handleLogout">
-          账号退出
-        </el-button>        
+        </el-button>
       </div>
  
       <el-table v-loading="listLoading" 
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
         :data="list" border fit highlight-current-row 
-        style="width: 100%">
-        <el-table-column width="150px" label="账号">
+        style="width: 100%">  
+
+        <el-table-column width="150px" label="名称">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column min-width="100px" label="昵称">
+        <el-table-column min-width="150px" label="标题">
           <template slot-scope="{row}">
-            <span>{{ row.nickname }}</span>
+            <span>{{ row.title }}</span>
           </template>
-        </el-table-column>
+        </el-table-column>  
 
-        <el-table-column width="100px" align="center" label="授权">
+        <el-table-column align="center" width="100px" label="类型">
           <template slot-scope="scope">
-            <el-button type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
-              授权
-            </el-button>
+            <span>{{ scope.row.type }}</span>
           </template>
-        </el-table-column>        
+        </el-table-column>    
+
+        <el-table-column width="75px" align="center" label="排序">
+          <template slot-scope="{row, $index}">
+            <div @click.stop="{{editableChangeBtn($index, 'editListorderInput')}}">
+              <el-input
+                v-if="editable[$index]"
+                v-model="row.listorder"
+                size="mini"
+                class="editListorderInput"
+                @blur="editableChange($event, row, $index)"
+              ></el-input>
+              <span v-else>{{row.listorder}}</span>
+            </div>
+          </template>
+        </el-table-column>            
 
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
@@ -72,7 +82,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="320">
+        <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
@@ -81,10 +91,6 @@
             <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
-
-            <el-button type="warning" size="mini" style="margin-left:10px;" @click="handlePassword(scope.$index, scope.row)">
-              改密
-            </el-button> 
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
@@ -96,43 +102,18 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog title="账号详情" :visible.sync="detail.dialogVisible">
+    <el-dialog title="配置详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-dialog title="添加账号" :visible.sync="create.dialogVisible">
+    <el-dialog title="添加配置" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog title="编辑账号" :visible.sync="edit.dialogVisible">
+    <el-dialog title="编辑配置" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>
-
-    <el-dialog title="更改密码" :visible.sync="password.dialogVisible">
-      <el-form>
-        <el-form-item label="新密码">
-          <el-input type="password" v-model="password.newpassword" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="changePassword">确认</el-button>
-        </el-form-item>        
-      </el-form>
-    </el-dialog>
-
-    <el-dialog title="退出账号" :visible.sync="logout.dialogVisible">
-      <el-form>
-        <el-form-item label="账号的RefreshToken">
-          <el-input type="textarea" rows="6" placeholder="请输入账号的RefreshToken" v-model="logout.refreshToken" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onLogout">确认退出</el-button>
-        </el-form-item>        
-      </el-form>
-    </el-dialog> 
-
-    <el-dialog title="账号授权" :visible.sync="access.dialogVisible">
-      <access :item="access" />
-    </el-dialog>          
+        
   </div>
 </template>
 
@@ -144,20 +125,19 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
-import Access from './components/Access'
 import { 
   getList, 
   getDetail,
-  deleteAdmin, 
-  enableAdmin, 
-  disableAdmin, 
-  updatePassword, 
-  logoutAdmin 
-} from '@/api/admin'
+  deleteConfig, 
+  enable, 
+  disable, 
+  updateSort, 
+  setting 
+} from '@/api/config'
 
 export default {
-  name: 'AdminIndex',
-  components: { Pagination, Detail, Edit, Create, Access },
+  name: 'ConfigIndex',
+  components: { Pagination, Detail, Edit, Create },
   directives: { waves },
   filters: {
 
@@ -193,19 +173,9 @@ export default {
         dialogVisible: false,
         data: [],
       },
-      access: {
-        dialogVisible: false,
-        id: '',
-      },      
-      password: {
-        dialogVisible: false,
-        id: '',
-        newpassword: '',
-      },
-      logout: {
-        dialogVisible: false,
-        refreshToken: '',
-      },      
+      editable: [],
+      editableItem: {},
+      editableOldSort: 0,    
     }
   },
   created() {
@@ -236,10 +206,39 @@ export default {
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
-    }, 
-    handleAccess(index, row) {    
-      this.access.id = row.id
-      this.access.dialogVisible = true
+    },    
+    editableChangeBtn(index, className) {
+      this.editable = new Array(this.list.length);
+ 
+      this.editable[index] = true;
+ 
+      this.editableItem = this.list[index];
+ 
+      this.$set(this.editable, index, true);
+      
+      // 让input自动获取焦点
+      this.$nextTick(function() {
+        var editInputList = document.getElementsByClassName(className);
+        editInputList[0].children[0].focus();
+      });
+ 
+    },    
+    editableChange(e, data, index) {
+      this.editable[index] = false;
+
+      if (this.editableOldSort == data.listorder) {
+        return ;
+      }
+
+      this.editableOldSort = data.listorder
+
+      updateSort(data.id, data.listorder).then(() => {
+        this.$message({
+          message: '配置排序成功',
+          type: 'success',
+          duration: 2 * 1000,
+        })        
+      })  
     },       
     handleDetail(index, row) {
       getDetail(row.id).then((res) => {
@@ -253,72 +252,85 @@ export default {
             type: 'text',
           },          
           {
-            name: '账号',
-            content: data.name,
+            name: '分组',
+            content: data.group,
             type: 'text',
           },
           {
-            name: '昵称',
-            content: data.nickname,
+            name: '类型',
+            content: data.type,
             type: 'text',
           },    
           {
-            name: '邮箱',
-            content: data.email,
+            name: '标题',
+            content: data.title,
             type: 'text',
           },  
           {
-            name: '简介',
-            content: data.introduce,
+            name: '名称',
+            content: data.name,
             type: 'text',
           }, 
+                                      
           {
-            name: '用户组',
-            content: data.groups,
-            type: 'arr2str',
-            arrkey: 'title',
-          },                                       
-          {
-            name: '头像',
-            content: data.avatar,
-            type: 'image',
+            name: '配置项',
+            content: data.options,
+            type: 'text',
           },
           {
-            name: '加入时间',
-            content: data.create_time,
-            type: 'time',
+            name: '配置值',
+            content: data.value,
+            type: 'text',
+          },
+          {
+            name: '描述',
+            content: data.description,
+            type: 'text',
+          },
+
+          {
+            name: '排序',
+            content: data.listorder,
+            type: 'text',
           },   
           {
-            name: '最近活动',
-            content: data.last_active,
-            type: 'time',
-          },            
-          {
-            name: '最近活动IP',
-            content: data.last_ip,
-            type: 'text',
-          }, 
+            name: '显示',
+            content: data.is_show,
+            type: 'status',
+          },  
           {
             name: '激活状态',
             content: data.status,
             type: 'boolen',
-          },                  
+          },   
+
+          {
+            name: '最后更新',
+            content: data.update_time,
+            type: 'time',
+          }, 
+          {
+            name: '添加时间',
+            content: data.create_time,
+            type: 'time',
+          },
+                
         ]
       })
     },
     changeStatus(e, data, index) {
       if (data.status == 1) {
-        enableAdmin(data.id).then(() => {
+        enable(data.id).then(() => {
           this.$message({
-            message: '管理员启用成功',
+            message: '配置启用成功',
             type: 'success',
             duration: 2 * 1000,
           })
         })    
       } else {
-        disableAdmin(data.id).then(() => {
+        disable(data.id).then(() => {
           this.$message({
-            message: '管理员禁用成功',
+            message: '配置禁用成功',
             type: 'success',
             duration: 2 * 1000,
           })
@@ -327,14 +339,14 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm('确认要删除该管理员吗？', '提示', {
+      this.$confirm('确认要删除该配置吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteAdmin(row.id).then(() => {
+        deleteConfig(row.id).then(() => {
           this.$message({
-            message: '删除管理员成功',
+            message: '删除配置成功',
             type: 'success',
             duration: 5 * 1000,
             onClose() {
@@ -346,63 +358,6 @@ export default {
 
       })
     },
-    handlePassword(index, row) {
-      this.password.dialogVisible = true
-      this.password.id = row.id
-    },
-    changePassword() {
-      if (this.password.newpassword == '') {
-        this.$message({
-          message: '密码不能为空',
-          type: 'error',
-          duration: 5 * 1000,
-        })
-
-        return false      
-      }
-
-      updatePassword(this.password.id, {
-        password: md5(this.password.newpassword)
-      }).then(() => {
-        const thiz = this
-        this.$message({
-          message: '管理员密码修改成功',
-          type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            thiz.password.newpassword = ''            
-            thiz.password.dialogVisible = false
-          }
-        })          
-      })    
-    },
-    handleLogout() {
-      this.logout.dialogVisible = true
-    },
-    onLogout() {
-      if (this.logout.refreshToken == '') {
-        this.$message({
-          message: 'refreshToken 不能为空',
-          type: 'error',
-          duration: 5 * 1000,
-        })
-
-        return false      
-      }
-      
-      logoutAdmin(this.logout.refreshToken).then(() => {
-        const thiz = this
-        this.$message({
-          message: '管理员退出成功',
-          type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            thiz.logout.refreshToken = ''            
-            thiz.logout.dialogVisible = false
-          }
-        })  
-      })
-    }
   }
 }
 </script>

@@ -62,7 +62,7 @@ export function updateSort(id, listorder) {
   })
 }
 
-export function setting(id, data) {
+export function setting(data) {
   return request({
     url: '/config/setting',
     method: 'put',
