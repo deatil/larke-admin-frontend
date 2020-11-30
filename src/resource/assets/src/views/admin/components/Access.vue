@@ -1,5 +1,9 @@
 <template>
   <el-form :model="data" label-width="100px" ref="form">
+    <el-form-item label="管理员账号" prop="name">
+      <el-input v-model.trim="name" readonly />
+    </el-form-item>  
+
     <el-form-item label="权限路由" prop="access">
       <el-tree 
         ref="tree"
@@ -13,6 +17,7 @@
         :expand-on-click-node="false">
       </el-tree>
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" @click="submit">提交</el-button>
     </el-form-item>
@@ -39,7 +44,8 @@ export default {
   },    
   data() {   
     return {
-      id: '',      
+      id: '',
+      name: '',
       data: {
         access: '',
       },
@@ -64,6 +70,8 @@ export default {
   created() {
     const id = this.item.id
     this.id = id
+
+    this.name = this.item.name
 
     this.featchData()
   },

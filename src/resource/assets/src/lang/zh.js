@@ -8,6 +8,8 @@ export default {
         Config: '配置管理',
         
         Attachment: '附件管理',
+        
+        Menu: '菜单权限',
     
     Permission: '权限管理',
     

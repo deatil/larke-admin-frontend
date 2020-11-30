@@ -103,7 +103,7 @@ export const asyncRoutes = [
     meta: {
       title: 'System',
       icon: 'el-icon-setting',
-      roles: ['larke-admin-attachment-index'] // you can set roles in root nav
+      roles: ['larke-admin.attachment.index'] // you can set roles in root nav
     },
     children: [
       // 配置管理
@@ -113,10 +113,22 @@ export const asyncRoutes = [
         name: 'Config',
         meta: {
           title: 'Config',
-          icon: 'el-icon-paperclip',
-          roles: ['larke-admin-config-index'] 
+          icon: 'el-icon-s-operation',
+          roles: ['larke-admin.config.index'] 
         }
       },
+
+      // 菜单管理
+      {
+        path: '/menu/index',
+        component: () => import('@/views/menu/index'),
+        name: 'Menu',
+        meta: {
+          title: 'Menu',
+          icon: 'list',
+          roles: ['larke-admin.frontend.menu.index'] 
+        }
+      }, 
 
       // 附件管理
       {
@@ -126,9 +138,9 @@ export const asyncRoutes = [
         meta: {
           title: 'Attachment',
           icon: 'el-icon-paperclip',
-          roles: ['larke-admin-attachment-index'] 
+          roles: ['larke-admin.attachment.index'] 
         }
-      },
+      },     
     ]
   },
 
@@ -141,7 +153,7 @@ export const asyncRoutes = [
     meta: {
       title: 'Permission',
       icon: 'el-icon-s-management',
-      roles: ['larke-admin-admin-index'] 
+      roles: ['larke-admin.admin.index'] 
     },
     children: [
       // 管理员
@@ -152,7 +164,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Admin',
           icon: 'peoples',
-          roles: ['larke-admin-admin-index'] 
+          roles: ['larke-admin.admin.index'] 
         }
       },
 
@@ -164,7 +176,7 @@ export const asyncRoutes = [
         meta: {
           title: 'AuthGroup',
           icon: 'el-icon-s-operation',
-          roles: ['larke-admin-auth-group-index'] 
+          roles: ['larke-admin.auth-group.index'] 
         }
       },
       {
@@ -173,7 +185,7 @@ export const asyncRoutes = [
         name: 'AuthGroupTree',
         meta: {
           title: 'AuthGroupTree',
-          roles: ['larke-admin-auth-group-index'],
+          roles: ['larke-admin.auth-group.index'],
           activeMenu: '/auth/group/index'
         },
         hidden: true
@@ -187,7 +199,7 @@ export const asyncRoutes = [
         meta: {
           title: 'AuthRule',
           icon: 'el-icon-menu',
-          roles: ['larke-admin-auth-rule-index'] 
+          roles: ['larke-admin.auth-rule.index'] 
         }
       },
       {
@@ -196,7 +208,7 @@ export const asyncRoutes = [
         name: 'AuthRuleTree',
         meta: {
           title: 'AuthRuleTree',
-          roles: ['larke-admin-auth-rule-index'],
+          roles: ['larke-admin.auth-rule.index'],
           activeMenu: '/auth/rule/index'
         },
         hidden: true
@@ -205,12 +217,12 @@ export const asyncRoutes = [
       // 日志
       {
         path: '/adminlog/index',
-        component: () => import('@/views/adminlog/index'),
+        component: () => import('@/views/admin-log/index'),
         name: 'AdminLog',
         meta: {
           title: 'AdminLog',
           icon: 'el-icon-document-add',
-          roles: ['larke-admin-log-index'] 
+          roles: ['larke-admin.log.index'] 
         }
       },      
 
@@ -226,7 +238,7 @@ export const asyncRoutes = [
     meta: {
       title: 'LocalExtension',
       icon: 'el-icon-s-cooperation',
-      roles: ['larke-admin-extension-index'] // you can set roles in root nav
+      roles: ['larke-admin.extension-index'] // you can set roles in root nav
     },
     children: [
       // 扩展管理
@@ -237,7 +249,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Extension',
           icon: 'component',
-          roles: ['larke-admin-extension-index'] // or you can only set roles in sub nav
+          roles: ['larke-admin.extension-index'] // or you can only set roles in sub nav
         }
       },
     ]

@@ -90,8 +90,13 @@ class Menu
         return $content;
     }
     
-    public function save($content, $file = null)
+    public function save(array $content, $file = null)
     {
+        $content = collect($content)
+            ->sortBy('slug')
+            ->values()
+            ->all();
+        
         $data = json_encode($content, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
         
         $data = str_replace(': null', ': ""', $data);
@@ -117,6 +122,27 @@ class Menu
         }
         
         return [];
+    }
+    
+    public function findChildren($id)
+    {
+        if (empty($id)) {
+            return [];
+        }
+        
+        $menus = $this->read();
+        if (empty($menus)) {
+            return [];
+        }
+        
+        $menuChildren = [];
+        foreach ($menus as $menu) {
+            if ($menu['pid'] == $id) {
+                $menuChildren[] = $menu;
+            }
+        }
+        
+        return $menuChildren;
     }
     
     public function delete($id)
@@ -175,9 +201,10 @@ class Menu
             return false;
         }
         
+        $data['id'] = $id;
         $validateStatus = $this->validateInfo($data);
         
-        if (!$validateStatus) {
+        if (! $validateStatus) {
             return false;
         }
         
@@ -189,11 +216,10 @@ class Menu
         foreach ($menus as $key => $menu) {
             if ($menu['id'] == $id) {
                 $menus[$key] = $data;
-                return true;
             }
         }
         
-        return false;
+        return $this->save($menus);
     }
     
     public function getList()
@@ -218,7 +244,9 @@ class Menu
         }
         
         // 根据 sort 键值正序排序
-        $menus = collect($menus)->sortBy('sort')->toArray();
+        $menus = collect($menus)
+            ->sortBy('sort')
+            ->toArray();
         
         $menusTree = $this->list2tree($menus, 'id', 'pid', $childType);
         
@@ -241,15 +269,21 @@ class Menu
             return false;
         }
         
-        $list = collect($menus)->map(function($menu) use($id) {
-            if (isset($menu['pid']) && $menu['pid'] == $id) {
-                return $menu;
-            }
-            
-            return [];
-        })->filter(function($data) {
-            return !empty($data);
-        });
+        $list = collect($menus)
+            ->map(function($menu) use($id) {
+                if (! isset($menu['pid'])) {
+                    return false;
+                }
+                
+                if (isset($menu['pid']) && $menu['pid'] == $id) {
+                    return $menu;
+                }
+                
+                return [];
+            })
+            ->filter(function($data) {
+                return !empty($data);
+            });
         
         return $list;
     }
@@ -266,13 +300,19 @@ class Menu
         
         $roles = app('larke.admin.admin')->getRuleids();
         
-        $list = collect($menus)->filter(function($data) use($roles) {
-            if (in_array($data['id'], $roles)) {
-                return true;
-            }
-            
-            return false;
-        })->values();
+        $list = collect($menus)
+            ->filter(function($data) use($roles) {
+                if (! isset($data['id'])) {
+                    return false;
+                }
+                
+                if (in_array($data['id'], $roles)) {
+                    return true;
+                }
+                
+                return false;
+            })
+            ->values();
         
         return $list;
     }
@@ -292,7 +332,9 @@ class Menu
         }
         
         // 根据 sort 键值正序排序
-        $menus = collect($menus)->sortBy('sort')->toArray();
+        $menus = collect($menus)
+            ->sortBy('sort')
+            ->toArray();
         
         $menusTree = $this->list2tree($menus, 'id', 'pid', $childType);
         

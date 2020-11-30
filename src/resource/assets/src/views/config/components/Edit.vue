@@ -1,7 +1,9 @@
 <template>
   <el-form :model="data" :rules="rules" ref="form" label-width="100px">
     <el-form-item label="分组" prop="group">
-      <el-input v-model.trim="data.group" placeholder="请填写昵称" />
+      <el-select v-model="data.group" placeholder="选择分组" clearable>
+        <el-option v-for="item in groupOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+      </el-select>  
     </el-form-item>  
         
     <el-form-item label="类型" prop="type">
@@ -94,6 +96,9 @@ export default {
         is_show: 1,
         status: 1,
       },
+      groupOptions: [
+        { key: 'other', display_name: '其他' },        
+      ],      
       typeOptions: [
         { key: 'text', display_name: '文本' },
         { key: 'textarea', display_name: '文本框' },

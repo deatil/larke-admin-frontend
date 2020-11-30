@@ -178,8 +178,9 @@ export default {
         id: '',
       },
       access: {
+        id: '',        
+        title: '',
         dialogVisible: false,
-        id: '',
       },
       editable: [],
       editableItem: {},
@@ -253,6 +254,7 @@ export default {
     },
     handleAccess(index, row) {    
       this.access.id = row.id
+      this.access.title = row.title
       this.access.dialogVisible = true
     },
     handleDetail(index, row) {

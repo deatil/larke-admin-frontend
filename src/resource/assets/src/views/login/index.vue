@@ -196,6 +196,12 @@ export default {
               this.loading = false
             })
             .catch(err => {
+              this.$message({
+                message: err || 'Error',
+                type: 'error',
+                duration: 2 * 1000
+              })  
+
               this.loading = false
             })
         } else {

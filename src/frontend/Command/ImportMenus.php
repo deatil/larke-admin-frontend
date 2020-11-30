@@ -66,8 +66,7 @@ class ImportMenus extends Command
             $menusByKey = array_intersect_key($menusByKey, $rulesByKey);
         }
         
-        $newMenus = collect($rulesByKey)
-            ->merge($menusByKey)
+        $newMenus = collect(array_merge($rulesByKey, $menusByKey))
             ->sortBy('slug')
             ->values()
             ->all();

@@ -194,8 +194,9 @@ export default {
         data: [],
       },
       access: {
-        dialogVisible: false,
         id: '',
+        name: '',                
+        dialogVisible: false,
       },      
       password: {
         dialogVisible: false,
@@ -239,6 +240,7 @@ export default {
     }, 
     handleAccess(index, row) {    
       this.access.id = row.id
+      this.access.name = row.name
       this.access.dialogVisible = true
     },       
     handleDetail(index, row) {

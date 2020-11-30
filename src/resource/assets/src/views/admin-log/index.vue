@@ -74,7 +74,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column class-name="status-col" label="状态" width="110">
+        <el-table-column class-name="status-col" label="状态" width="70">
           <template slot-scope="{row}">
             <el-tag :type="row.status | statusFilter" size="mini">
               {{ (row.status == 1) ? '启用' : '禁用'}}
@@ -149,7 +149,7 @@ export default {
         status: '',
         method: '',
         page: 1,
-        limit: 10
+        limit: 20
       },
       statusOptions: [
         { key: 'open', display_name: '启用' },

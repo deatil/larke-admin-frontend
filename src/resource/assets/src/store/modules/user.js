@@ -78,7 +78,7 @@ const actions = {
         setToken(token)
         setTokenExpiresIn(expires_in)
         setRefreshToken(refresh_token)
-        resolve()
+        resolve(data)
       }).catch(error => {
         reject(error)
       })

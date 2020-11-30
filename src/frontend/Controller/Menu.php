@@ -5,8 +5,8 @@ namespace Larke\Admin\Frontend\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use Larke\Admin\Service\Tree;
 use Larke\Admin\Http\Controller as BaseController;
-
 use Larke\Admin\Frontend\Model\Menu as MenuModel;
 
 /**
@@ -21,11 +21,74 @@ class Menu extends BaseController
      * 列表
      *
      * @param  Request  $request
+     * @param  MenuModel $menuModel
      * @return Response
      */
-    public function index(Request $request, MenuModel $model)
+    public function index(Request $request, MenuModel $menuModel)
     {
-        $list = $model->getList();
+        $list = $menuModel->getList();
+        
+        return $this->successJson(__('获取成功'), [
+            'list' => $list,
+        ]);
+    }
+    
+    /**
+     * 分组列表
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function indexTree(Request $request, MenuModel $menuModel)
+    {
+        $result = $menuModel->getList();
+        
+        $Tree = new Tree();
+        $list = $Tree
+            ->withConfig('parentidKey', 'pid')
+            ->withConfig('buildChildKey', 'children')
+            ->withData($result)
+            ->build(0);
+        
+        return $this->successJson(__('获取成功'), [
+            'list' => $list,
+        ]);
+    }
+    
+    /**
+     * 分组子列表
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function indexChildren(Request $request, MenuModel $menuModel)
+    {
+        $id = $request->get('id', 0);
+        if (is_array($id)) {
+            return $this->errorJson(__('ID错误'));
+        }
+        
+        $type = $request->get('type');
+        
+        $result = $menuModel->getList();
+        $Tree = new Tree();
+        
+        if ($type == 'list') {
+            $list = $Tree
+                ->withConfig('parentidKey', 'pid')
+                ->withConfig('buildChildKey', 'children')
+                ->withData($result)
+                ->build(0);
+            
+            $list = $Tree
+                ->withConfig('parentidKey', 'pid')
+                ->withConfig('buildChildKey', 'children')
+                ->buildFormatList($list, $id, 'asc');
+        } else {
+            $list = $Tree
+                ->withConfig('parentidKey', 'pid')
+                ->getListChildrenId($result, $id);
+        }
         
         return $this->successJson(__('获取成功'), [
             'list' => $list,
@@ -36,16 +99,17 @@ class Menu extends BaseController
      * 创建
      *
      * @param  Request  $request
+     * @param  MenuModel $menuModel
      * @return Response
      */
-    public function create(Request $request, MenuModel $model)
+    public function create(Request $request, MenuModel $menuModel)
     {
         $data = $request->all();
         if (empty($data)) {
             return $this->errorJson(__('创建的菜单数据不能为空'));
         }
         
-        $insertStatus = $model->insert($data);
+        $insertStatus = $menuModel->insert($data);
         if ($insertStatus === false) {
             return $this->errorJson(__('添加菜单失败'));
         }
@@ -56,17 +120,18 @@ class Menu extends BaseController
     /**
      * 更新
      *
-     * @param  Request  $request
+     * @param  String $id
+     * @param  Request $request
+     * @param  MenuModel $menuModel
      * @return Response
      */
-    public function update(Request $request, MenuModel $model)
+    public function update(String $id, Request $request, MenuModel $menuModel)
     {
-        $id = $request->get('id');
         if (empty($id)) {
             return $this->errorJson(__('菜单ID不能为空'));
         }
         
-        $info = $model->find($id);
+        $info = $menuModel->find($id);
         if (empty($info)) {
             return $this->errorJson(__('菜单不存在'));
         }
@@ -86,7 +151,7 @@ class Menu extends BaseController
         }
         
         // 更新信息
-        $status = $model->update($id, $data);
+        $status = $menuModel->update($id, $data);
         if ($status === false) {
             return $this->errorJson(__('菜单修改失败'));
         }
@@ -97,22 +162,28 @@ class Menu extends BaseController
     /**
      * 删除
      *
-     * @param  Request  $request
+     * @param  String $id
+     * @param  Request $request
+     * @param  MenuModel $menuModel
      * @return Response
      */
-    public function delete(Request $request, MenuModel $model)
+    public function delete(String $id, Request $request, MenuModel $menuModel)
     {
-        $id = $request->get('id');
         if (empty($id)) {
             return $this->errorJson(__('菜单ID不能为空'));
         }
         
-        $info = $model->find($id);
+        $info = $menuModel->find($id);
         if (empty($info)) {
             return $this->errorJson(__('菜单不存在'));
         }
         
-        $status = $model->delete($id);
+        $menuChildren = $menuModel->findChildren($id);
+        if (! empty($menuChildren)) {
+            return $this->errorJson(__('菜单有子菜单，请删除子菜单'));
+        }
+        
+        $status = $menuModel->delete($id);
         if ($status === false) {
             return $this->errorJson(__('菜单删除失败'));
         }
@@ -126,9 +197,9 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function getJson(Request $request, MenuModel $model)
+    public function getJson(Request $request, MenuModel $menuModel)
     {
-        $json = $model->getFileData();
+        $json = $menuModel->getFileData();
         
         return $this->successJson(__('获取成功'), [
             'json' => $json,
@@ -141,7 +212,7 @@ class Menu extends BaseController
      * @param  Request  $request
      * @return Response
      */
-    public function saveJson(Request $request, MenuModel $model)
+    public function saveJson(Request $request, MenuModel $menuModel)
     {
         $json = $request->get('json');
         if (empty($json)) {
@@ -152,7 +223,7 @@ class Menu extends BaseController
             return $this->errorJson(__('json格式错误'));
         }
         
-        $status = $model->saveFileData($json);
+        $status = $menuModel->saveFileData($json);
         if ($status === false) {
             return $this->errorJson(__('保存数据失败'));
         }
