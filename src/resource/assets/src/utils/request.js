@@ -84,13 +84,22 @@ service.interceptors.response.use(
           })
         })
       } 
+
+      // AccessToken error;
+      else if (res.code === 103 || res.code === 105) {
+        Message({
+          message: res.message || 'Error',
+          type: 'error',
+          duration: 3 * 1000
+        })
+      }       
       
       // 只拦截通用错误
       else if (res.code === 1) {
         Message({
           message: res.message || 'Error',
           type: 'error',
-          duration: 5 * 1000
+          duration: 3 * 1000
         })
       }
 

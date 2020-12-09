@@ -8,6 +8,13 @@ export function getList(params) {
   })
 }
 
+export function getSettings() {
+  return request({
+    url: '/config/list',
+    method: 'get'
+  })
+}
+
 export function getDetail(id) {
   return request({
     url: `/config/${id}`,
@@ -59,6 +66,13 @@ export function updateSort(id, listorder) {
     data: {
       listorder
     }
+  })
+}
+
+export function getSetting() {
+  return request({
+    url: '/config/settings',
+    method: 'get'
   })
 }
 

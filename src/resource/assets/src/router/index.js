@@ -106,6 +106,18 @@ export const asyncRoutes = [
       roles: ['larke-admin.attachment.index'] // you can set roles in root nav
     },
     children: [
+      // 网站设置
+      {
+        path: '/config/setting',
+        component: () => import('@/views/config/setting'),
+        name: 'Setting',
+        meta: {
+          title: 'Setting',
+          icon: 'el-icon-setting',
+          roles: ['larke-admin.config.setting'] 
+        }
+      },
+
       // 配置管理
       {
         path: '/config/index',
