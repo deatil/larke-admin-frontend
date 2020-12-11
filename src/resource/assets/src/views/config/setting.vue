@@ -8,6 +8,7 @@
       <dynamic-form 
         :items="form.items" 
         :value="form.value" 
+        @input="input"
         :columnMinWidth="form.columnMinWidth">
         <template slot>
 
@@ -24,6 +25,7 @@
 
 <script>
 import DynamicForm from '@/components/DynamicForm/form'
+import { formatOpions, formatFormItem } from '@/utils'
 
 import { 
   getSettings, 
@@ -45,10 +47,7 @@ export default {
         value: {},
         columnMinWidth: '100px',
       },
-      statusOptions: [
-        { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' },
-      ],  
+      inputs: {},
     }
   },
   created() {
@@ -61,36 +60,34 @@ export default {
         this.list = response.data.list
 
         this.list.forEach(element => {
-          if (element.type == 'number') {
-            element.value = parseInt(element.value)
-          }
+          element = formatFormItem(element)
 
           this.form.items.push({
             "type": element.type,
             "label": element.title,
-            "disable": false,
-            "readonly": false,
             "value": element.value,
             "placeholder": element.description,
+            "options": element.options,
             "rules": {},
             "key": element.name,
-          })         
+          })
         });
 
       })
     },
-    handleInput(val, key) {
-      this.$emit('input', { ...this.value, [key]: val })
+    input(data) {
+      if (data) {
+        this.inputs = Object.assign({}, this.inputs, data)
+      }
     }, 
     submit() {
-      setting(row.id).then(() => {
+      setting({
+        fields: this.inputs
+      }).then(() => {
         this.$message({
-          message: '删除配置成功',
+          message: '提交更新成功',
           type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            thiz.list.splice(index, 1)
-          }
+          duration: 3 * 1000
         })
       })
     },

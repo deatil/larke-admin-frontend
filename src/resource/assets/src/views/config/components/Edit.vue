@@ -20,10 +20,10 @@
     </el-form-item>    
 
     <el-form-item label="配置项" prop="options">
-      <el-input type="textarea" v-model.trim="data.options" rows="6" placeholder="请填写配置项"></el-input>
+      <el-input type="textarea" v-model="data.options" rows="6" placeholder="请填写配置项"></el-input>
     </el-form-item>   
     <el-form-item label="配置值" prop="value">
-      <el-input type="textarea" v-model.trim="data.value" rows="6" placeholder="请填写配置值"></el-input>
+      <el-input type="textarea" v-model="data.value" rows="6" placeholder="请填写配置值"></el-input>
     </el-form-item>  
     <el-form-item label="描述" prop="description">
       <el-input type="textarea" v-model.trim="data.description" rows="6" placeholder="请填写描述"></el-input>
@@ -102,14 +102,19 @@ export default {
       typeOptions: [
         { key: 'text', display_name: '文本' },
         { key: 'textarea', display_name: '文本框' },
+        { key: 'array', display_name: '数组' },
         { key: 'number', display_name: '数字' },
         { key: 'radio', display_name: '单选' },
         { key: 'checkbox', display_name: '复选' },
         { key: 'select', display_name: '下拉' }, 
-        { key: 'switch', display_name: '滑块' },               
-        { key: 'array', display_name: '数组' },
-        { key: 'image', display_name: '图片' },
-        { key: 'images', display_name: '多图' },
+        { key: 'switch', display_name: '开关' },
+        { key: 'rate', display_name: '评分' },
+        { key: 'color', display_name: '颜色' },
+        { key: 'slider', display_name: '滑块' },
+        { key: 'time', display_name: '时间' },
+        { key: 'date', display_name: '日期' },
+        { key: 'range-time', display_name: '时间范围' },
+        { key: 'range-date', display_name: '日期范围' },
       ],       
     }
   },

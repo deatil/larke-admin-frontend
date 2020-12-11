@@ -44,22 +44,28 @@ export default {
     this.setDefaultValue();
   },
   methods: {
-    handleInput(val, key) {
-      // 这里element-ui没有上报event，直接就是value了
+    handleInput(val, key) {   
+      if (val instanceof Array) {
+        let newVal = []
+
+        val.forEach((item, index) => { 
+          if (item) {
+            newVal.push(item)            
+          }
+        })
+
+        val = newVal.join(',')
+      }
+      
       this.$emit('input', { ...this.value, [key]: val });
     },
     setDefaultValue() {
-      const formData = { ...this.value };
       for (var i in this.items) {
         const item = this.items[i]
         const key = item.key
         const value = item.value
-        if (formData[key] === undefined || formData[key] === null) {
-          formData[key] = value;
-        }
+        this.handleInput(value, key)
       }
-      
-      this.$emit('input', { ...formData });
     },
   },
 };

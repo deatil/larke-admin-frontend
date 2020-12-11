@@ -250,7 +250,7 @@ export const asyncRoutes = [
     meta: {
       title: 'LocalExtension',
       icon: 'el-icon-s-cooperation',
-      roles: ['larke-admin.extension-index'] // you can set roles in root nav
+      roles: ['larke-admin.extension.index'] // you can set roles in root nav
     },
     children: [
       // 扩展管理
@@ -261,7 +261,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Extension',
           icon: 'component',
-          roles: ['larke-admin.extension-index'] // or you can only set roles in sub nav
+          roles: ['larke-admin.extension.index'] // or you can only set roles in sub nav
         }
       },
     ]

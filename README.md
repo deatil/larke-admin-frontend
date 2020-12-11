@@ -9,10 +9,14 @@
 ### 安装步骤
 
 
-然后运行下面的命令，推送配置静态文件
+然后运行下面的命令，推送配置及静态文件
 
 ```php
-php artisan vendor:publish --tag=larke-admin-assets
+php artisan vendor:publish --tag=larke-admin-frontend-config
+```
+
+```php
+php artisan vendor:publish --tag=larke-admin-frontend-assets
 ```
 
 运行命令后，你可以在 `public/admin` 下发现前端文件
