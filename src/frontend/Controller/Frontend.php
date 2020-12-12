@@ -10,6 +10,11 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
 /**
  * 前端菜单
  *
+ * @title 前端菜单
+ * @desc 前端菜单配置
+ * @order 110
+ * @auth true
+ *
  * @create 2020-11-4
  * @author deatil
  */
@@ -17,6 +22,11 @@ class Frontend extends BaseController
 {
     /**
      * 菜单列表
+     *
+     * @title 菜单列表
+     * @desc 菜单列表配置
+     * @order 1101
+     * @auth true
      *
      * @param  Request  $request
      * @param  MenuModel  $model
@@ -34,6 +44,11 @@ class Frontend extends BaseController
     /**
      * 菜单树
      *
+     * @title 菜单树
+     * @desc 菜单树配置
+     * @order 1102
+     * @auth true
+     *
      * @param  Request  $request
      * @param  MenuModel  $model
      * @return Response
@@ -49,6 +64,11 @@ class Frontend extends BaseController
     
     /**
      * 权限列表
+     *
+     * @title 权限列表
+     * @desc 权限列表配置
+     * @order 1103
+     * @auth true
      *
      * @param  Request  $request
      * @return Response

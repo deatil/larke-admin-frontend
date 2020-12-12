@@ -2,6 +2,7 @@ export default {
   route: {
     dashboard: '首页',
     profile: '我的信息',
+    icons: '图标',
     
     System: '系统配置',
     

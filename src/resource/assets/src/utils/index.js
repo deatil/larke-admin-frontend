@@ -416,7 +416,9 @@ export function formatExtensionOpions(options) {
   return arr
 }
 
-export function formatExtensionFormItem(element) {
+export function formatExtensionFormItem(olelement) {
+  const element = JSON.parse(JSON.stringify(olelement))
+
   if (element.type == 'number' 
     || element.type == 'switch'
     || element.type == 'rate'

@@ -46,15 +46,16 @@ export default {
   },
   methods: { 
     getSettings() {
-      var data = JSON.parse(JSON.stringify(this.item.data))
+      let data = JSON.parse(JSON.stringify(this.item.data))
 
-      data.forEach(element => {
-        element = formatExtensionFormItem(element)
-
-        let value = element.value || ''
-        if (this.item.config[element.name]) {
-          value = this.item.config[element.name]
+      data.forEach(element => { 
+        if (element.name in this.item.config) {
+          element.value = this.item.config[element.name]
         }
+
+        element = formatExtensionFormItem(element)
+        
+        let value = element.value || ''
 
         this.form.items.push({
           "type": element.type,

@@ -50,7 +50,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    
     if (res.code !== 0) {
       // ACCESS TOKEN TIMEOUT
       if (res.code === 106) {
@@ -113,7 +113,7 @@ service.interceptors.response.use(
     Message({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 3 * 1000
     })
     return Promise.reject(error)
   }

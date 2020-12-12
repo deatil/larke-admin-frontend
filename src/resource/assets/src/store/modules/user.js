@@ -1,6 +1,6 @@
 import md5 from 'js-md5'
 import { captcha, login, refreshToken, logout } from '@/api/passport'
-import { getInfo, getRoles, changePassword, updateInfo } from '@/api/user'
+import { getInfo, getRoles } from '@/api/user'
 import { 
   getToken, setToken, removeToken,
   getTokenExpiresIn, setTokenExpiresIn, removeTokenExpiresIn,
@@ -163,7 +163,7 @@ const actions = {
   refreshToken({ commit }) {
     return new Promise((resolve, reject) => {
       const refresh_token = getRefreshToken()
-      login({ 
+      refreshToken({ 
         refresh_token: refresh_token
       }).then(response => {
         const { data } = response
@@ -176,7 +176,7 @@ const actions = {
         setToken(token)
         setTokenExpiresIn(expires_in)
 
-        resolve()
+        resolve(data)
       }).catch(error => {
         reject(error)
       })

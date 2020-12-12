@@ -12,6 +12,11 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
 /**
  * 菜单管理
  *
+ * @title 菜单管理
+ * @desc 菜单管理
+ * @order 111
+ * @auth true
+ *
  * @create 2020-11-3
  * @author deatil
  */
@@ -19,6 +24,11 @@ class Menu extends BaseController
 {
     /**
      * 列表
+     *
+     * @title 菜单列表
+     * @desc 菜单列表管理
+     * @order 1111
+     * @auth true
      *
      * @param  Request  $request
      * @param  MenuModel $menuModel
@@ -34,7 +44,12 @@ class Menu extends BaseController
     }
     
     /**
-     * 分组列表
+     * 菜单树
+     *
+     * @title 菜单树列表
+     * @desc 菜单树列表管理
+     * @order 1112
+     * @auth true
      *
      * @param  Request  $request
      * @return Response
@@ -42,6 +57,10 @@ class Menu extends BaseController
     public function indexTree(Request $request, MenuModel $menuModel)
     {
         $result = $menuModel->getList();
+        
+        $result = collect($result)
+            ->sortBy('sort')
+            ->toArray();
         
         $Tree = new Tree();
         $list = $Tree
@@ -56,7 +75,12 @@ class Menu extends BaseController
     }
     
     /**
-     * 分组子列表
+     * 菜单子列表
+     *
+     * @title 菜单子列表
+     * @desc 菜单子列表管理
+     * @order 1113
+     * @auth true
      *
      * @param  Request  $request
      * @return Response
@@ -98,6 +122,11 @@ class Menu extends BaseController
     /**
      * 创建
      *
+     * @title 菜单创建
+     * @desc 菜单创建管理
+     * @order 1114
+     * @auth true
+     *
      * @param  Request  $request
      * @param  MenuModel $menuModel
      * @return Response
@@ -119,6 +148,11 @@ class Menu extends BaseController
     
     /**
      * 更新
+     *
+     * @title 菜单更新
+     * @desc 菜单更新管理
+     * @order 1115
+     * @auth true
      *
      * @param  String $id
      * @param  Request $request
@@ -162,6 +196,11 @@ class Menu extends BaseController
     /**
      * 删除
      *
+     * @title 菜单删除
+     * @desc 菜单删除管理
+     * @order 1116
+     * @auth true
+     *
      * @param  String $id
      * @param  Request $request
      * @param  MenuModel $menuModel
@@ -194,6 +233,11 @@ class Menu extends BaseController
     /**
      * 获取全部
      *
+     * @title 菜单获取全部
+     * @desc 菜单获取全部管理
+     * @order 1117
+     * @auth true
+     *
      * @param  Request  $request
      * @return Response
      */
@@ -208,6 +252,11 @@ class Menu extends BaseController
     
     /**
      * 保存全部
+     *
+     * @title 菜单保存全部
+     * @desc 菜单保存全部管理
+     * @order 1118
+     * @auth true
      *
      * @param  Request  $request
      * @return Response

@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
@@ -9,12 +9,16 @@
           <div class="card-panel-text">
             管理员
           </div>
-          <count-to :start-val="0" :end-val="admins" :duration="2600" class="card-panel-num" />
+          <count-to 
+            :start-val="0" 
+            :end-val="admins" 
+            :duration="2600" 
+            class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon icon-class="message" class-name="card-panel-icon" />
         </div>
@@ -22,7 +26,11 @@
           <div class="card-panel-text">
             附件
           </div>
-          <count-to :start-val="0" :end-val="attachments" :duration="3000" class="card-panel-num" />
+          <count-to 
+            :start-val="0" 
+            :end-val="attachments" 
+            :duration="3000" 
+            class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -31,22 +39,43 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { getList as getAdminList } from '@/api/admin'
+import { getAttachmentList } from '@/api/attachment'
 
 export default {
   data() {
     return {
-      admins: 123,
-      attachments: 656,
+      admins: 0,
+      attachments: 0,
     }
   },
   components: {
     CountTo
   },
+  created() {
+    this.initData()
+  },    
   methods: {
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
+    initData() {
+      const thiz = this
+
+      // 管理员
+      getAdminList({  
+        start: 1,
+        limit: 0
+      }).then(response => {
+        thiz.admins = response.data.total
+      })
+
+      // 附件
+      getAttachmentList({  
+        start: 1,
+        limit: 0
+      }).then(response => {
+        thiz.attachments = response.data.total
+      })
     }
-  }
+  },
 }
 </script>
 
