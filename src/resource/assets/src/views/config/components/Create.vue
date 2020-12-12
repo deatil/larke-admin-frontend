@@ -54,7 +54,8 @@
 </template>
 
 <script>
-import { create } from '@/api/config'
+import { formatOpions } from '@/utils'
+import { getDetail, create } from '@/api/config'
 
 export default {
   name: 'AdminCreate',
@@ -106,6 +107,8 @@ export default {
         { key: 'radio', display_name: '单选' },
         { key: 'checkbox', display_name: '复选' },
         { key: 'select', display_name: '下拉' }, 
+        { key: 'switch', display_name: '开关' },
+        { key: 'image', display_name: '单图' },
         { key: 'rate', display_name: '评分' },
         { key: 'color', display_name: '颜色' },
         { key: 'slider', display_name: '滑块' },
@@ -117,8 +120,26 @@ export default {
     }
   },
   created() {
+    this.fetchGroup()
   },
   methods: {  
+    fetchGroup() {
+      getDetail('group').then(response => {
+        const data = formatOpions(response.data.value)
+
+        this.groupOptions = []
+        data.forEach((item, key) => {
+          this.groupOptions.push({
+            key: item.key, 
+            display_name: item.label
+          })
+        })
+        this.groupOptions.push({ 
+          key: 'other', 
+          display_name: '其他' 
+        })
+      })
+    },     
     submit() {
       const thiz = this
       create(this.data).then(response => {

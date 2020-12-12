@@ -8,6 +8,10 @@
       <div class="filter-container">
         <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
         
+        <el-select v-model="listQuery.group" placeholder="分组" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
+          <el-option v-for="group in groupOptions" :key="group.key" :label="group.display_name" :value="group.key" />
+        </el-select>
+
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
@@ -30,7 +34,7 @@
         :data="list" border fit highlight-current-row 
         style="width: 100%">  
 
-        <el-table-column width="150px" label="名称">
+        <el-table-column width="130px" label="名称">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
@@ -47,6 +51,12 @@
             <span>{{ scope.row.type }}</span>
           </template>
         </el-table-column>    
+
+        <el-table-column align="center" width="80px" label="分组">
+          <template slot-scope="scope">
+            <span>{{ scope.row.group }}</span>
+          </template>
+        </el-table-column>         
 
         <el-table-column width="75px" align="center" label="排序">
           <template slot-scope="{row, $index}">
@@ -119,9 +129,9 @@
 
 <script>
 import md5 from 'js-md5'
-import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import waves from '@/directive/waves'
+import { parseTime, formatOpions } from '@/utils'
+import Pagination from '@/components/Pagination' 
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
@@ -149,19 +159,23 @@ export default {
       listLoading: true,
       listQuery: {
         searchword: '',
-        order: 'ASC',
+        group: '',
         status: '',
+        order: 'ASC',
         page: 1,
         limit: 10
       },
+      groupOptions: [
+        { key: 'other', display_name: '其他' },        
+      ],       
       statusOptions: [
         { key: 'open', display_name: '启用' },
         { key: 'close', display_name: '禁用' },
       ],
       sortOptions: [
-        { label: '正序', key: 'ASC' }, 
-        { label: '倒叙', key: 'DESC' }
-      ],
+        { key: 'ASC', label: '正序' }, 
+        { key: 'DESC', label: '倒叙' }
+      ],      
       create: {
         dialogVisible: false,
       },        
@@ -179,15 +193,40 @@ export default {
     }
   },
   created() {
+    this.fetchGroup()
     this.getList()
   },
   methods: {
+    fetchGroup() {
+      return new Promise((resolve, reject) => {
+        getDetail('group').then(response => {
+          const data = formatOpions(response.data.value)
+
+          this.groupOptions = []
+          data.forEach((item, key) => {
+            this.groupOptions.push({
+              key: item.key, 
+              display_name: item.label,
+            })
+          })
+          this.groupOptions.push({ 
+            key: 'other', 
+            display_name: '其他',
+          })
+
+          resolve(this.groupOptions)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },     
     getList() {
       this.listLoading = true
       getList({
         searchword: this.listQuery.searchword,
-        order: this.listQuery.order,
+        group: this.listQuery.group,
         status: this.listQuery.status,
+        order: this.listQuery.order,
         start: (this.listQuery.page - 1) * this.listQuery.limit,
         limit: this.listQuery.limit
       }).then(response => {

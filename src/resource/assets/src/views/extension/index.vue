@@ -124,7 +124,14 @@
       v-if="local.dialogVisible"
       :visible.sync="local.dialogVisible">
       <local :item="local" />
-    </el-dialog>          
+    </el-dialog> 
+
+    <el-dialog title="扩展设置" 
+      append-to-body
+      v-if="setting.dialogVisible"
+      :visible.sync="setting.dialogVisible">
+      <setting :item="setting" />
+    </el-dialog>                
   </div>
 </template>
 
@@ -135,6 +142,7 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Detail from '@/components/Larke/Detail'
 import Local from './components/Local'
+import Setting from './components/Setting'
 import { 
   getList, 
   uninstall, 
@@ -145,7 +153,7 @@ import {
 
 export default {
   name: 'ExtensionIndex',
-  components: { Pagination, Detail, Local },
+  components: { Pagination, Detail, Local, Setting },
   directives: { waves },
   filters: {
   },
@@ -175,7 +183,13 @@ export default {
       },  
       local: {
         dialogVisible: false,
-      },         
+      },  
+      setting: {
+        dialogVisible: false,
+        name: '',
+        data: [],
+        config: {},
+      },              
     }
   },
   created() {
@@ -329,13 +343,15 @@ export default {
 
       })
     },
-    handleConfig() {
-
-    },
     handleLocalExtension() {
       this.local.dialogVisible = true
     },
-
+    handleConfig(index, row) {
+      this.setting.dialogVisible = true
+      this.setting.name = row.name
+      this.setting.data = row.configs
+      this.setting.config = row.config_datas
+    },
   }
 }
 </script>

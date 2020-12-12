@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { formatOpions } from '@/utils'
 import { getDetail, update } from '@/api/config'
 
 export default {
@@ -108,6 +109,7 @@ export default {
         { key: 'checkbox', display_name: '复选' },
         { key: 'select', display_name: '下拉' }, 
         { key: 'switch', display_name: '开关' },
+        { key: 'image', display_name: '单图' },
         { key: 'rate', display_name: '评分' },
         { key: 'color', display_name: '颜色' },
         { key: 'slider', display_name: '滑块' },
@@ -132,6 +134,8 @@ export default {
   created() {
     const id = this.item.id
     this.id = id
+
+    this.fetchGroup()
     this.fetchData(id)
   },
   methods: {
@@ -152,7 +156,24 @@ export default {
       }).catch(err => {
         console.log(err)
       })
-    },    
+    },  
+    fetchGroup() {
+      getDetail('group').then(response => {
+        const data = formatOpions(response.data.value)
+
+        this.groupOptions = []
+        data.forEach((item, key) => {
+          this.groupOptions.push({
+            key: item.key, 
+            display_name: item.label
+          })
+        })
+        this.groupOptions.push({ 
+          key: 'other', 
+          display_name: '其他' 
+        })
+      })
+    }, 
     submit() {
       const thiz = this
       update(this.id, this.data).then(response => {

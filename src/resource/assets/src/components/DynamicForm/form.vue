@@ -5,16 +5,17 @@
     label-width="100px"
     class="dynamic-form"
   >
-    <item
-      v-for="item in items"
-      :key="item.key"
-      :item="item"
-      v-bind="item"
-      :value="value[item.key]"
-      :style="{'min-width':columnMinWidth}"
-      @input="handleInput($event, item.key)"
-    ></item>
-
+    <template v-for="item in items">
+      <item
+        v-if="item.show"
+        :key="item.key"
+        :item="item"
+        v-bind="item"
+        :value="value[item.key]"
+        :style="{'min-width':columnMinWidth}"
+        @input="handleInput($event, item.key)"
+      ></item>
+    </template>
     <slot></slot>
 
   </el-form>

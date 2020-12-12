@@ -22,6 +22,14 @@ export function deleteAttachment(id) {
   })
 }
 
+export function uploadAttachment(data) {
+  return request({
+    url: `/attachment`,
+    method: 'post',
+    data
+  })
+}
+
 export function enableAttachment(id) {
   return request({
     url: `/attachment/${id}/enable`,

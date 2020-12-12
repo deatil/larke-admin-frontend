@@ -39,7 +39,7 @@ export function upgrade(name) {
 
 export function updateConfig(name, data) {
   return request({
-    url: `/extension/uninstall/${name}`,
+    url: `/extension/${name}/config`,
     method: 'put',
     data
   })

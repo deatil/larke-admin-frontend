@@ -4,19 +4,32 @@
       <div slot="header" class="clearfix">
         <span>网站设置</span>
       </div>
- 
-      <dynamic-form 
-        :items="form.items" 
-        :value="form.value" 
-        @input="input"
-        :columnMinWidth="form.columnMinWidth">
-        <template slot>
 
-          <el-form-item>
-            <el-button type="primary" @click="submit">提交</el-button>
-          </el-form-item>  
-        </template>
-      </dynamic-form>
+      <el-tabs 
+        type="border-card" 
+        v-model="activeName"
+        @tab-click="handleClick"
+      >
+        <el-tab-pane 
+          v-for="group in groups" 
+          :key="group.key"
+          :name="group.key"
+          :label="group.label"
+        >
+          <dynamic-form 
+            v-if="group.key === activeName"
+            :items="group.items" 
+            :value="form.value" 
+            @input="input"
+            :columnMinWidth="form.columnMinWidth">
+              <template slot>
+                <el-form-item>
+                  <el-button type="primary" @click="submit">提交</el-button>
+                </el-form-item>  
+              </template>
+            </dynamic-form>
+        </el-tab-pane> 
+      </el-tabs>     
         
     </el-card>
         
@@ -30,6 +43,7 @@ import { formatOpions, formatFormItem } from '@/utils'
 import { 
   getSettings, 
   setting,
+  getDetail,
 } from '@/api/config'
 
 export default {
@@ -41,7 +55,11 @@ export default {
   },
   data() {
     return {
+      activeName: '',
       list: null,
+      groups: [
+        { key: 'other', label: '其他', items: [] },        
+      ],       
       form: {
         items: [],
         value: {},
@@ -51,27 +69,87 @@ export default {
     }
   },
   created() {
-    this.getSettings()
+    this.initData()
   },
   methods: {
-    getSettings() {
-      this.listLoading = true
-      getSettings().then(response => {
-        this.list = response.data.list
+    handleClick(tab) {
+      const tabName =tab.name
+    },
+    initData() {
+      return new Promise((resolve, reject) => {
+        const group = this.fetchGroup()
+        const settings = this.getSettings()   
+        
+        Promise.all([group, settings])
+          .then(([group, settings]) => {
 
-        this.list.forEach(element => {
-          element = formatFormItem(element)
-
-          this.form.items.push({
-            "type": element.type,
-            "label": element.title,
-            "value": element.value,
-            "placeholder": element.description,
-            "options": element.options,
-            "rules": {},
-            "key": element.name,
+            this.groups.forEach((groupItem, key) => {
+              settings.items.forEach(settingItem => {
+                if (groupItem.key == settingItem.group) {
+                  this.groups[key].items.push(settingItem)
+                }
+              })              
+            })
+            
+            this.activeName = this.groups[0].key
+            resolve(this.groups)
           })
-        });
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },    
+    fetchGroup() {
+      return new Promise((resolve, reject) => {
+        getDetail('group').then(response => {
+          const data = formatOpions(response.data.value)
+
+          this.groups = []
+          data.forEach((item, key) => {
+            this.groups.push({
+              key: item.key, 
+              label: item.label,
+              items: [],
+            })
+          })
+          this.groups.push({ 
+            key: 'other', 
+            label: '其他',
+            items: [],
+          })
+
+          resolve(this.groups)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },     
+    getSettings() {
+      return new Promise((resolve, reject) => {
+      
+        getSettings().then(response => {
+          this.list = response.data.list
+
+          this.list.forEach(element => {
+            element = formatFormItem(element)
+
+            this.form.items.push({
+              "group": element.group,
+              "type": element.type,
+              "label": element.title,
+              "value": element.value,
+              "placeholder": element.description,
+              "options": element.options,
+              "rules": {},
+              "key": element.name,
+              "show": element.is_show,
+            })
+          });
+
+          resolve(this.form)
+        }).catch(error => {
+          reject(error)
+        })
 
       })
     },

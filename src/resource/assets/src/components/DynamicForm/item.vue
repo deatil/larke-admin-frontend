@@ -265,14 +265,24 @@
       v-on="$listeners"
     ></el-time-picker>
 
+    <single-image
+      v-else-if="item.type==='image'"
+      :placeholder="item.placeholder"
+      v-model="item.value"
+      v-bind="$attrs"
+      v-on="$listeners"
+    ></single-image>    
+
   </el-form-item>
 </template>
 
 <script>
+import SingleImage from '@/components/Larke/SingleImage'
 import InputNumber from './input-number'
 
 export default {
   components: {
+    SingleImage,
     InputNumber
   },
   props: {

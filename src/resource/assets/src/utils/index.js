@@ -402,3 +402,43 @@ export function formatFormItem(element) {
 
   return element
 }
+
+export function formatExtensionOpions(options) {
+  var arr = []
+
+  for (var key in options) {
+    arr.push({
+      key: key,
+      label: options[key]
+    })
+  }
+
+  return arr
+}
+
+export function formatExtensionFormItem(element) {
+  if (element.type == 'number' 
+    || element.type == 'switch'
+    || element.type == 'rate'
+    || element.type == 'slider'
+  ) {
+    element.value = parseInt(element.value)
+  }
+
+  if (element.type == 'checkbox'
+    || element.type == 'range-date'
+    || element.type == 'range-time'
+  ) {
+    element.value = element.value.split(',')
+  }
+
+  if (element.type == 'radio' 
+    || element.type == 'checkbox'
+    || element.type == 'select'
+    || element.type == 'switch'
+  ) {
+    element.options = formatExtensionOpions(element.options)
+  }    
+
+  return element
+}
