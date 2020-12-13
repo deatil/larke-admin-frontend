@@ -1,9 +1,13 @@
 <template>
   <div class="components-container" style="margin: 0;">
-    <aside>
-      注意，选择头像提交后将会自动提交修改头像为选择头像
-    </aside>
-    
+
+    <el-alert type="info" 
+      title="注意"
+      description="选择头像提交后将会自动提交修改头像为选择头像"
+      class="profile-avatar-tip"
+      show-icon
+      :closable="false"></el-alert>
+
     <pan-thumb :image="user.avatar" />
 
     <el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
@@ -75,10 +79,13 @@ export default {
 </script>
 
 <style scoped>
-  .avatar{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-  }
+.profile-avatar-tip {
+  margin-bottom: 20px;
+}
+.avatar{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
 </style>
 
