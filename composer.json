@@ -1,0 +1,39 @@
+{
+    "name": "lake/larke-admin-frontend",
+    "description": "The library is the larke-admin frontend.",
+    "license": "Apache-2.0",
+    "type": "library",
+    "keywords": [
+        "lake",
+        "larke",
+        "admin",
+        "frontend",
+        "larke-admin",
+        "larke-admin-frontend"
+    ],
+    "homepage": "https://github.com/deatil/larke-admin-frontend",
+    "authors": [
+        {
+            "name": "deatil",
+            "email": "deatil@github.com",
+            "homepage": "https://github.com/deatil"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "lake/larke-admin":"^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Larke\\Admin\\Frontend\\": "src/frontend"
+        },
+        "files": []
+    },
+    "extra" : {
+        "laravel" : {
+            "providers" : [
+                "Larke\\Admin\\Frontend\\ServiceProvider"
+            ]
+        }
+    }
+}
