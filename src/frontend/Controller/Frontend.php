@@ -36,7 +36,7 @@ class Frontend extends BaseController
     {
         $list = $model->getAuthList();
         
-        return $this->successJson(__('获取成功'), [
+        return $this->success(__('获取成功'), [
             'list' => $list,
         ]);
     }
@@ -57,7 +57,7 @@ class Frontend extends BaseController
     {
         $tree = $model->getAuthTree();
         
-        return $this->successJson(__('获取成功'), [
+        return $this->success(__('获取成功'), [
             'list' => $tree,
         ]);
     }
@@ -94,7 +94,7 @@ class Frontend extends BaseController
             ->unique()
             ->values();
         
-        return $this->successJson(__('获取成功'), [
+        return $this->success(__('获取成功'), [
             'list' => $list,
         ]);
     }

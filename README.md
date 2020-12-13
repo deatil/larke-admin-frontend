@@ -4,6 +4,7 @@
 ### 项目介绍
 
 *  `larke-admin` 的前端页面及菜单api接口
+*  本项目为 `后台前端页面`，后台api服务可查看 [Larke Admin](https://github.com/deatil/larke-admin) 项目
 
 
 ### 截图预览
