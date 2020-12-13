@@ -40,7 +40,12 @@ export default {
   components: { UserCard, Account, Password, Avatar },
   data() {
     return {
-      user: {},
+      user: {
+        name: '',
+        email: '',
+        avatar: require('@/assets/larke/user-default.jpg'),
+        introduce: '',        
+      },
       activeTab: 'account'
     }
   },
