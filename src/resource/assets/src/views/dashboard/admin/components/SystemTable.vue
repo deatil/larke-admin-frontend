@@ -1,11 +1,14 @@
 <template>
-  <el-table :data="list" style="width: 100%;">
-    <el-table-column label="名称" width="200">
+  <el-table 
+    :data="list" 
+    :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+    class="system-table">
+    <el-table-column label="系统信息" width="200">
       <template slot-scope="scope">
         {{ scope.row.name }}
       </template>
     </el-table-column>
-    <el-table-column label="内容" min-width="100" align="left">
+    <el-table-column label="" min-width="100" align="left">
       <template slot-scope="scope">
         {{ scope.row.content }}
       </template>
@@ -76,3 +79,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.system-table {
+  width: 100%;
+  -webkit-box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+</style>
