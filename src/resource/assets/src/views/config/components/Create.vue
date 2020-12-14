@@ -97,7 +97,7 @@ export default {
         status: 1,
       },
       groupOptions: [
-        { key: 'other', display_name: '其他' },        
+        { key: 'other', display_name: '未分组' },        
       ],
       typeOptions: [
         { key: 'text', display_name: '文本' },
@@ -136,7 +136,7 @@ export default {
         })
         this.groupOptions.push({ 
           key: 'other', 
-          display_name: '其他' 
+          display_name: '未分组' 
         })
       })
     },     

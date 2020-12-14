@@ -166,7 +166,7 @@ export default {
         limit: 10
       },
       groupOptions: [
-        { key: 'other', display_name: '其他' },        
+        { key: 'other', display_name: '未分组' },        
       ],       
       statusOptions: [
         { key: 'open', display_name: '启用' },
@@ -211,7 +211,7 @@ export default {
           })
           this.groupOptions.push({ 
             key: 'other', 
-            display_name: '其他',
+            display_name: '未分组',
           })
 
           resolve(this.groupOptions)

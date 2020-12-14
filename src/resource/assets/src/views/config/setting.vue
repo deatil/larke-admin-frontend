@@ -58,7 +58,7 @@ export default {
       activeName: '',
       list: null,
       groups: [
-        { key: 'other', label: '其他', items: [] },        
+        { key: 'loading..', label: '加载中..', items: [] },        
       ],       
       form: {
         items: [],
@@ -111,11 +111,6 @@ export default {
               label: item.label,
               items: [],
             })
-          })
-          this.groups.push({ 
-            key: 'other', 
-            label: '其他',
-            items: [],
           })
 
           resolve(this.groups)
