@@ -3,13 +3,26 @@
     :header-cell-style="{background:'#eef1f6',color:'#606266'}"
     :data="list" border fit highlight-current-row 
     style="width: 100%">
-    <el-table-column width="220px" label="扩展">
+    <el-table-column width="120px" label="扩展">
       <template slot-scope="scope">
 
-        <div style="margin-bottom:3px;">
-            <span>{{ scope.row.name }}</span>            
+        <div class="extension-title">
+          <span>{{ scope.row.title }}</span>         
         </div> 
-                    
+
+        <div class="extension-name">
+          <span>{{ scope.row.name }}</span>            
+        </div>          
+                  
+      </template>
+    </el-table-column>     
+
+    <el-table-column min-width="100px" label="简介">
+      <template slot-scope="scope">
+        <div style="margin-bottom:3px;">
+          <span>{{ scope.row.introduce }}</span>  
+        </div> 
+
         <div>
           <template v-if="scope.row.upgrade == 1">
             <el-tooltip effect="dark" content="当前扩展版本" placement="top">
@@ -40,32 +53,35 @@
             </el-tag>  
           </el-tooltip>
               
-        </div>           
-                  
+        </div>                
       </template>
     </el-table-column>
 
-    <el-table-column min-width="100px" label="简介">
+    <el-table-column min-width="100px" label="作者">
       <template slot-scope="scope">
-        <div style="margin-bottom:3px;">
-          <span>{{ scope.row.introduce }}</span>  
+        <div class="extension-author" style="margin-bottom:3px;">
+          <span>
+            <span>{{ scope.row.author }}</span>  
+          </span>
         </div> 
 
         <div>    
-          <el-tag type="primary" size="mini" style="margin-right:10px;">
-            <i class="el-icon-user" />&nbsp;
-            <span>{{ scope.row.author }}</span>  
-          </el-tag>    
-
           <el-tag v-if="scope.row.authoremail" type="info" size="mini" style="margin-right:10px;">
             <i class="el-icon-message" />&nbsp;
             <span>{{ scope.row.authoremail }}</span>  
-          </el-tag>                     
+          </el-tag>
+        </div>
+
+        <div> 
+          <el-tag v-if="scope.row.authorsite" type="info" size="mini" style="margin-right:10px;">
+            <i class="el-icon-mouse" />&nbsp;
+            <span>{{ scope.row.authorsite }}</span>  
+          </el-tag>                                  
         </div>              
       </template>
-    </el-table-column>       
+    </el-table-column>         
 
-    <el-table-column align="left" label="操作" width="150">
+    <el-table-column align="center" label="操作" width="100">
       <template slot-scope="scope">
         <el-button v-if="scope.row.install.length == 0" type="primary" size="mini" @click="handleInstall(scope.$index, scope.row)">
           安装
@@ -177,3 +193,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.extension-name {
+  color: #909399;
+  font-size: 13px;
+}
+</style>

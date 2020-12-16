@@ -21,7 +21,13 @@
     </el-form-item>  
 
     <el-form-item label="链接" prop="url">
-      <el-input v-model.trim="data.url" placeholder="请填写菜单链接" />
+      <el-tooltip effect="dark" content="链接默认不用加前缀" placement="top">
+        <el-input v-model.trim="data.url" placeholder="请填写菜单链接" >
+          <template slot="prepend">
+            <i class="el-icon-link" />
+          </template>
+        </el-input>
+      </el-tooltip>      
     </el-form-item>   
 
     <el-form-item label="请求方式" prop="method">

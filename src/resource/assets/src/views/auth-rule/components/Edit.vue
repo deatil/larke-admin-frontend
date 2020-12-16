@@ -13,7 +13,13 @@
       <el-input v-model.trim="data.title" placeholder="请填写权限名称" />
     </el-form-item>   
     <el-form-item label="请求链接" prop="url">
-      <el-input v-model.trim="data.url" placeholder="请填写请求链接" />
+      <el-tooltip effect="dark" content="请求链接默认不用加前缀" placement="top">
+        <el-input v-model.trim="data.url" placeholder="请填写请求链接" >
+          <template slot="prepend">
+            <i class="el-icon-link" />
+          </template>
+        </el-input>
+      </el-tooltip>
     </el-form-item>                 
     <el-form-item label="请求方式" prop="method">
       <el-select v-model="data.method">
@@ -84,13 +90,13 @@ export default {
       },
       rules:{
           parentid:[
-            {required:true, message:'父级权限不能为空', trigger:'change'}
+            {required:true, message:'父级不能为空', trigger:'change'}
           ],
           title:[
             {required:true, message:'名称不能为空', trigger:'blur'}
           ],          
           url:[
-            {required:true, message:'请求方式不能为空', trigger:'blur'}
+            {required:true, message:'请求链接不能为空', trigger:'blur'}
           ],   
           slug:[
             {required:true, message:'标识不能为空', trigger:'blur'}

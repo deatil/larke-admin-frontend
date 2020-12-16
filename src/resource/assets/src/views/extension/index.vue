@@ -31,12 +31,23 @@
         style="width: 100%">
         <el-table-column width="150px" label="扩展">
           <template slot-scope="scope">
-
-            <div style="margin-bottom:3px;">
-                <span>{{ scope.row.name }}</span>            
+            <div class="extension-title">
+              <span>{{ scope.row.title }}</span>         
             </div> 
-                        
-            <div>
+
+            <div class="extension-name">
+              <span>{{ scope.row.name }}</span>            
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column min-width="100px" label="简介">
+          <template slot-scope="scope">
+            <div class="extension-introduce">
+              <span>{{ scope.row.introduce }}</span>  
+            </div> 
+
+            <div style="margin-top:3px;">
               <el-tooltip effect="dark" content="当前扩展版本" placement="top">
                 <el-tag type="primary" size="mini" style="margin-right:10px;">
                   v{{ scope.row.version }}
@@ -49,34 +60,57 @@
                   <span>{{ scope.row.adaptation }}</span>  
                 </el-tag>  
               </el-tooltip>           
-            </div>           
-                     
+            </div>
           </template>
-        </el-table-column>
+        </el-table-column> 
 
-        <el-table-column min-width="100px" label="简介">
+        <el-table-column min-width="100px" label="作者">
           <template slot-scope="scope">
-            <div style="margin-bottom:3px;">
-              <span>{{ scope.row.introduce }}</span>  
+            <div class="extension-author">
+              <span>
+                <span>{{ scope.row.author }}</span>  
+              </span>
             </div> 
 
-            <div>    
-              <el-tag type="primary" size="mini" style="margin-right:10px;">
-                <i class="el-icon-user" />&nbsp;
-                <span>{{ scope.row.author }}</span>  
-              </el-tag>    
-
+            <div style="margin-top:3px;">    
               <el-tag v-if="scope.row.authoremail" type="info" size="mini" style="margin-right:10px;">
                 <i class="el-icon-message" />&nbsp;
                 <span>{{ scope.row.authoremail }}</span>  
-              </el-tag>                     
+              </el-tag>
+            </div>
+
+            <div style="margin-top:3px;"> 
+              <el-tag v-if="scope.row.authorsite" type="info" size="mini" style="margin-right:10px;">
+                <i class="el-icon-mouse" />&nbsp;
+                <span>{{ scope.row.authorsite }}</span>  
+              </el-tag>                                  
             </div>              
           </template>
-        </el-table-column>       
+        </el-table-column>                 
 
         <el-table-column width="160px" align="center" label="安装时间">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+            <div class="extension-installtime">
+              <el-tooltip effect="dark" content="扩展安装时间" placement="top">
+                <span>
+                  <i class="el-icon-time" />&nbsp;
+                  {{ scope.row.installtime | parseTime('{y}-{m}-{d} {h}:{i}') }}
+                </span>
+              </el-tooltip>              
+            </div>
+          
+            <div 
+              v-if="scope.row.installtime < scope.row.upgradetime" 
+              class="extension-upgradetime"
+              style="margin-top:3px;"
+            >
+              <el-tooltip effect="dark" content="扩展最后更新时间" placement="top">
+                <span>
+                  <i class="el-icon-refresh" />&nbsp;
+                  {{ scope.row.upgradetime | parseTime('{y}-{m}-{d} {h}:{i}') }}
+                </span>
+              </el-tooltip>
+            </div>
           </template>
         </el-table-column>
 
@@ -91,9 +125,9 @@
               @change="changeStatus($event, scope.row, scope.$index)"
               ></el-switch>
           </template>
-        </el-table-column>
+        </el-table-column>       
 
-        <el-table-column align="center" label="操作" width="320">
+        <el-table-column align="center" label="操作" width="280">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
               详情
@@ -261,8 +295,9 @@ export default {
         },                              
         {
           name: '依赖扩展',
-          content: data.require_extension,
-          type: 'text',
+          content: data.require_extensions,
+          type: 'json',
+          depth: 3,
         },
         {
           name: '扩展绑定类',
@@ -367,5 +402,12 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.extension-name {
+  color: #909399;
+  font-size: 13px;
+}
+.extension-upgradetime {
+  color: #909399;  
 }
 </style>

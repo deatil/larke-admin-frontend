@@ -20,7 +20,9 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
-import ElTreeGrid from 'element-tree-grid' 
+import ElTreeGrid from 'element-tree-grid'
+
+import JsonViewer from 'vue-json-viewer' 
 
 /**
  * If you don't want to use mock-server
@@ -43,6 +45,8 @@ Vue.use(Element, {
 })
 
 Vue.component(ElTreeGrid.name,ElTreeGrid) 
+
+Vue.use(JsonViewer)
 
 // register global utility filters
 Object.keys(filters).forEach(key => {

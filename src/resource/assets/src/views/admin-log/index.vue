@@ -247,7 +247,8 @@ export default {
           {
             name: '请求内容',
             content: data.info,
-            type: 'text',
+            type: 'json',
+            depth: 10,
           },                                       
           {
             name: '请求信息',

@@ -21,6 +21,15 @@
           {{ row.content | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
         </span>
 
+        <span v-else-if="row.type == 'json'">
+          <json-viewer
+            :value="row.content"
+            :expand-depth="row.depth||5"
+            copyable
+            boxed
+            sort></json-viewer>       
+        </span>
+
         <span v-else-if="row.type == 'boolen'">
           <template v-if="row.content == '1'">
             <el-tag type="success" size="mini">
@@ -66,6 +75,7 @@
 </template>
 
 <script>
+import 'vue-json-viewer/style.css'
 import { parseTime } from '@/utils'
 
 export default {
