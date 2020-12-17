@@ -13,9 +13,16 @@
         node-key="id"
         @check-change="treeCheck"
         style="padding-top: 5px;"
+        :highlight-current="true"
         :default-expand-all="false"
-        :expand-on-click-node="false">
-      </el-tree>
+        :expand-on-click-node="false"
+      >
+        <template slot-scope="scope">
+          <span class="rule-title" :title="scope.data.title">
+            {{ scope.data.title }}【{{ scope.data.method }}】
+          </span>
+        </template>            
+      </el-tree>  
     </el-form-item>
 
     <el-form-item>
@@ -73,12 +80,20 @@ export default {
   },
   methods: { 
     featchData() {
-      this.fetchRules().then(() => {
+      Promise.resolve().then(() => {
+        return this.fetchRules()
+      }).then(() => {
+        return this.fetchGroupDetail()
+      })
+    },
+    fetchGroupDetail() {
+      const thiz = this
+
+      return new Promise((resolve, reject) => {
         getGroupDetail(this.id).then(response => {
           const rule_accesses = response.data.rule_accesses
           this.data.access = rule_accesses.join(',')
 
-          const thiz = this
           if (rule_accesses.length > 0) {
             rule_accesses.forEach((i, n) => {        
               const node = thiz.$refs.tree.getNode(i)
@@ -88,18 +103,21 @@ export default {
             });
           }
 
+          resolve()
         }).catch(err => {
-          console.log(err)
-        })      
+          reject(err)
+        }) 
       })
-    },
+    },    
     fetchRules() {
       return new Promise((resolve, reject) => {
         getRuleTreeList().then((res) => {
           this.list = res.data.list
-        })
 
-        resolve()
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })  
       })
     },
     treeCheck() {

@@ -13,6 +13,7 @@
         node-key="id"
         @check-change="treeCheck"
         style="padding-top: 5px;"
+        :highlight-current="true"
         :default-expand-all="false"
         :expand-on-click-node="false">
       </el-tree>
@@ -77,11 +78,19 @@ export default {
   },
   methods: { 
     featchData() {
-      this.fetchGroups().then(() => {
+      Promise.resolve().then(() => {
+        return this.fetchGroups()
+      }).then(() => {
+        return this.fetchAdminDetail()
+      })
+    },
+    fetchAdminDetail() {
+      const thiz = this
+
+      return new Promise((resolve, reject) => {
         getAdminDetail(this.id).then(response => {
           const groups = response.data.groups
-
-          const thiz = this
+  
           if (groups.length > 0) {
             groups.forEach(item => {        
               const node = thiz.$refs.tree.getNode(item.id)
@@ -91,18 +100,22 @@ export default {
             });
           }
 
+          resolve()
         }).catch(err => {
-          console.log(err)
-        })      
+          reject(err)
+        }) 
       })
-    },
+    },    
     fetchGroups() {
       return new Promise((resolve, reject) => {
         getGroupTreeList().then((res) => {
           this.list = res.data.list
-        })
 
-        resolve()
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+        
       })
     },
     treeCheck() {

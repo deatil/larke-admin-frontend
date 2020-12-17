@@ -123,7 +123,9 @@ export default {
   watch: {
     item: {
       handler(val, oldVal) {
-        if (this.item.dialogVisible == true) {
+        if (this.item.dialogVisible == true 
+          && this.id != val.id
+        ) {
           this.id = val.id
           this.fetchParents().then(() => {
             this.fetchData(val.id)
@@ -208,7 +210,9 @@ export default {
           this.parentFilterOptions = this.parentOptions 
 
           resolve()
-        }) 
+        }).catch(err => {
+          reject(err)
+        })
       })  
     },    
     fetchData(id) {
@@ -234,9 +238,9 @@ export default {
       }
     },
     parentidChange(val) {
-      if (! val) {
+      if (val) {
         this.parentOptions = this.parentFilterOptions
-        this.data.parentid = this.parentid
+        this.data.parentid = val
       }
     },    
     submit() {

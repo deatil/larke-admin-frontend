@@ -124,7 +124,7 @@ export default {
       }
     },
     parentidChange(val) {
-      if (! val) {
+      if (val) {
         this.parentOptions = this.parentFilterOptions
       }
     },

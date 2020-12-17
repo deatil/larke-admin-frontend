@@ -112,7 +112,9 @@ export default {
   watch: {
     item: {
       handler(val, oldVal) {
-        if (this.item.dialogVisible == true) {
+        if (this.item.dialogVisible == true 
+          && this.id != val.id
+        ) {
           this.id = val.id
           this.fetchParents().then(() => {
             this.fetchData()
@@ -182,7 +184,7 @@ export default {
           const children = this.children
 
           this.parentOptions = [
-            { key: '0', display_name: '顶级用户组' },
+            { key: '0', display_name: '顶级菜单' },
           ]
           this.parentFilterOptions = []
 
@@ -220,12 +222,12 @@ export default {
         })
       } else {
         this.parentOptions = this.parentFilterOptions
-      }
+      }   
     },
     pidChange(val) {
-      if (! val) {
+      if (val) {
         this.parentOptions = this.parentFilterOptions
-        this.data.pid = this.pid
+        this.data.pid = val
       }
     },    
     submit() {

@@ -7,7 +7,7 @@
         clearable            
         filterable 
         :filter-method="parentFilter"
-        @change="parentidChange">
+        @change="pidChange">
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>            
     </el-form-item>
@@ -137,7 +137,7 @@ export default {
         })
     },
     parentFilter(val) {
-      this.data.parentid = val
+      this.data.pid = val
       if (val) {
         this.parentOptions = this.parentFilterOptions.filter(item => {
           if (!!~item.display_name.indexOf(val)
@@ -150,8 +150,8 @@ export default {
         this.parentOptions = this.parentFilterOptions
       }
     },
-    parentidChange(val) {
-      if (! val) {
+    pidChange(val) {
+      if (val) {
         this.parentOptions = this.parentFilterOptions
       }
     },

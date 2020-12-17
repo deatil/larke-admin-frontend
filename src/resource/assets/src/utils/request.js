@@ -72,11 +72,11 @@ service.interceptors.response.use(
       }
 
       // Token expires;
-      else if (res.code === 107) {
+      else if (res.code === 104 || res.code === 107) {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm('登陆已过期，是否重新登陆？', '登陆提示', {
+          confirmButtonText: '重登',
+          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           store.dispatch('user/resetToken').then(() => {

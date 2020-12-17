@@ -72,7 +72,9 @@ export default {
   watch: {
     item: {
       handler(val, oldVal) {
-        if (this.item.dialogVisible == true) {
+        if (this.item.dialogVisible == true 
+          && this.id != val.id
+        ) {
           this.id = val.id
           this.fetchData(val.id)
         }

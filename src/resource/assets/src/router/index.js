@@ -103,7 +103,12 @@ export const asyncRoutes = [
     meta: {
       title: 'System',
       icon: 'el-icon-setting',
-      roles: ['larke-admin.attachment.index'] // you can set roles in root nav
+      roles: [
+        'larke-admin.config.setting',
+        'larke-admin.config.index',
+        'larke-admin.frontend.menu.index',
+        'larke-admin.attachment.index',
+      ] // you can set roles in root nav
     },
     children: [
       // 网站设置
@@ -165,7 +170,12 @@ export const asyncRoutes = [
     meta: {
       title: 'Permission',
       icon: 'el-icon-s-management',
-      roles: ['larke-admin.admin.index'] 
+      roles: [
+        'larke-admin.admin.index',
+        'larke-admin.auth-group.index',
+        'larke-admin.auth-rule.index',
+        'larke-admin.log.index',
+      ] 
     },
     children: [
       // 管理员

@@ -95,6 +95,11 @@ class Menu extends BaseController
         $type = $request->get('type');
         
         $result = $menuModel->getList();
+        
+        $result = collect($result)
+            ->sortBy('sort')
+            ->toArray();
+            
         $Tree = new Tree();
         
         if ($type == 'list') {
