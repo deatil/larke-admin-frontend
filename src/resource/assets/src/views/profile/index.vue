@@ -43,7 +43,7 @@ export default {
       user: {
         name: '',
         email: '',
-        avatar: require('@/assets/larke/user-default.jpg'),
+        avatar: require('@/assets/larke/avatar-default.jpg'),
         introduce: '',        
       },
       activeTab: 'account'

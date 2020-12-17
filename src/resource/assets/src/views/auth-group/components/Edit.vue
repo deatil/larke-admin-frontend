@@ -203,25 +203,34 @@ export default {
     },    
     submit() {
       const thiz = this
-      updateGroup(this.id, {     
-        parentid: this.data.parentid,
-        title: this.data.title,
-        description: this.data.description,
-        listorder: this.data.listorder,
-        status: this.data.status,
-      }).then(response => {
-        this.$message({
-          message: '更新用户组信息成功',
-          type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            if (thiz.$refs.authGroupForm !== undefined) {
-              thiz.$refs.authGroupForm.resetFields()
-            }            
-            thiz.item.dialogVisible = false
-          }
+
+      this.$refs.authGroupForm.validate(valid => {
+        if (! valid) {
+          return false
+        }
+
+        updateGroup(this.id, {     
+          parentid: this.data.parentid,
+          title: this.data.title,
+          description: this.data.description,
+          listorder: this.data.listorder,
+          status: this.data.status,
+        }).then(response => {
+          this.$message({
+            message: '更新用户组信息成功',
+            type: 'success',
+            duration: 5 * 1000,
+            onClose() {
+              if (thiz.$refs.authGroupForm !== undefined) {
+                thiz.$refs.authGroupForm.resetFields()
+              }            
+              thiz.item.dialogVisible = false
+            }
+          })
         })
+
       })
+
     }
   }
 }

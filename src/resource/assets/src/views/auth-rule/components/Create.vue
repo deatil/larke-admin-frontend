@@ -169,19 +169,28 @@ export default {
     },
     submit() {
       const thiz = this
-      createRule(this.data).then(response => {
-        this.$message({
-          message: '添加权限成功',
-          type: 'success',
-          duration: 2 * 1000,
-          onClose() {
-            if (thiz.$refs.authRuleForm !== undefined) {
-              thiz.$refs.authRuleForm.resetFields()
+
+      this.$refs.authRuleForm.validate(valid => {
+        if (! valid) {
+          return false
+        }
+
+        createRule(this.data).then(response => {
+          this.$message({
+            message: '添加权限成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose() {
+              if (thiz.$refs.authRuleForm !== undefined) {
+                thiz.$refs.authRuleForm.resetFields()
+              }
+              thiz.item.dialogVisible = false
             }
-            thiz.item.dialogVisible = false
-          }
+          })
         })
+
       })
+
     }
   }
 }

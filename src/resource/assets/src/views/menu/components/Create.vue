@@ -158,60 +158,27 @@ export default {
     submit() {
       const thiz = this
 
-      if (this.data.pid.length < 1) {
-        this.$message({
-          message: 'pid不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }
-      if (this.data.title.length < 1) {
-        this.$message({
-          message: '名称不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }      
-      if (this.data.slug.length < 1) {
-        this.$message({
-          message: '标识不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }  
-      if (this.data.url.length < 1) {
-        this.$message({
-          message: '链接不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }  
-      if (this.data.method.length < 1) {
-        this.$message({
-          message: '请求方式不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }  
+      this.$refs.menuCreateform.validate(valid => {
+        if (! valid) {
+          return false
+        }
 
-      createMenu(this.data).then(response => {
-        this.$message({
-          message: '添加菜单成功',
-          type: 'success',
-          duration: 2 * 1000,
-          onClose() {
-            if (thiz.$refs.menuCreateform !== undefined) {
-              thiz.$refs.menuCreateform.resetFields()
+        createMenu(this.data).then(response => {
+          this.$message({
+            message: '添加菜单成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose() {
+              if (thiz.$refs.menuCreateform !== undefined) {
+                thiz.$refs.menuCreateform.resetFields()
+              }
+              thiz.item.dialogVisible = false
             }
-            thiz.item.dialogVisible = false
-          }
+          })
         })
+
       })
+
     }
   }
 }

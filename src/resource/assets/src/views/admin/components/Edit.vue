@@ -95,25 +95,33 @@ export default {
     },    
     submit() {
       const thiz = this
-      updateAdmin(this.id, {
-        name: this.data.name,
-        nickname: this.data.nickname,
-        email: this.data.email,
-        avatar: this.data.avatarKey,
-        introduce: this.data.introduce,
-        status: this.data.status,
-      }).then(response => {
-        this.$message({
-          message: '编辑管理员成功',
-          type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            if (thiz.$refs.form !== undefined) {
-              thiz.$refs.form.resetFields()
-            }             
-            thiz.item.dialogVisible = false
-          }
-        })
+
+      this.$refs.form.validate(valid => {
+        if (! valid) {
+          return false
+        }
+
+        updateAdmin(this.id, {
+          name: this.data.name,
+          nickname: this.data.nickname,
+          email: this.data.email,
+          avatar: this.data.avatarKey,
+          introduce: this.data.introduce,
+          status: this.data.status,
+        }).then(response => {
+          this.$message({
+            message: '编辑管理员成功',
+            type: 'success',
+            duration: 5 * 1000,
+            onClose() {
+              if (thiz.$refs.form !== undefined) {
+                thiz.$refs.form.resetFields()
+              }             
+              thiz.item.dialogVisible = false
+            }
+          })
+        }) 
+
       })
     }
   }

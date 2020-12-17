@@ -142,19 +142,28 @@ export default {
     },     
     submit() {
       const thiz = this
-      create(this.data).then(response => {
-        this.$message({
-          message: '添加配置成功',
-          type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            if (thiz.$refs.form !== undefined) {
-              thiz.$refs.form.resetFields()
-            }            
-            thiz.item.dialogVisible = false
-          }
+
+      this.$refs.form.validate(valid => {
+        if (! valid) {
+          return false
+        }
+
+        create(this.data).then(response => {
+          this.$message({
+            message: '添加配置成功',
+            type: 'success',
+            duration: 5 * 1000,
+            onClose() {
+              if (thiz.$refs.form !== undefined) {
+                thiz.$refs.form.resetFields()
+              }            
+              thiz.item.dialogVisible = false
+            }
+          })
         })
+
       })
+
     }
   }
 }

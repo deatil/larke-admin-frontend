@@ -230,68 +230,35 @@ export default {
     },    
     submit() {
       const thiz = this
+  
+      this.$refs.menuEditForm.validate(valid => {
+        if (! valid) {
+          return false
+        }
 
-      if (this.data.pid.length < 1) {
-        this.$message({
-          message: 'pid不能为空',
-          type: 'error',
-          duration: 2 * 1000,
+        updateMenu(this.id, {  
+          pid: this.data.pid,
+          title: this.data.title,
+          slug: this.data.slug,
+          url: this.data.url,
+          method: this.data.method,
+          sort: this.data.sort,
+        }).then(response => {
+          this.$message({
+            message: '更新菜单信息成功',
+            type: 'success',
+            duration: 5 * 1000,
+            onClose() {
+              if (thiz.$refs.menuEditForm !== undefined) {
+                thiz.$refs.menuEditForm.resetFields()
+              }            
+              thiz.item.dialogVisible = false
+            }
+          })
         })
-        return ;
-      }
-      if (this.data.title.length < 1) {
-        this.$message({
-          message: '名称不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }      
-      if (this.data.slug.length < 1) {
-        this.$message({
-          message: '标识不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }  
-      if (this.data.url.length < 1) {
-        this.$message({
-          message: '链接不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }  
-      if (this.data.method.length < 1) {
-        this.$message({
-          message: '请求方式不能为空',
-          type: 'error',
-          duration: 2 * 1000,
-        })
-        return ;
-      }  
 
-      updateMenu(this.id, {  
-        pid: this.data.pid,
-        title: this.data.title,
-        slug: this.data.slug,
-        url: this.data.url,
-        method: this.data.method,
-        sort: this.data.sort,
-      }).then(response => {
-        this.$message({
-          message: '更新菜单信息成功',
-          type: 'success',
-          duration: 5 * 1000,
-          onClose() {
-            if (thiz.$refs.menuEditForm !== undefined) {
-              thiz.$refs.menuEditForm.resetFields()
-            }            
-            thiz.item.dialogVisible = false
-          }
-        })
       })
+
     }
   }
 }

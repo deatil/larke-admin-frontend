@@ -130,19 +130,28 @@ export default {
     },
     submit() {
       const thiz = this
-      createGroup(this.data).then(response => {
-        this.$message({
-          message: '添加权限成功',
-          type: 'success',
-          duration: 2 * 1000,
-          onClose() {
-            if (thiz.$refs.authGroupForm !== undefined) {
-              thiz.$refs.authGroupForm.resetFields()
+
+      this.$refs.authGroupForm.validate(valid => {
+        if (! valid) {
+          return false
+        }
+
+        createGroup(this.data).then(response => {
+          this.$message({
+            message: '添加权限成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose() {
+              if (thiz.$refs.authGroupForm !== undefined) {
+                thiz.$refs.authGroupForm.resetFields()
+              }
+              thiz.item.dialogVisible = false
             }
-            thiz.item.dialogVisible = false
-          }
+          })
         })
+
       })
+
     }
   }
 }
