@@ -15,6 +15,10 @@ const getters = {
   introduction: state => state.user.introduction,
   roles: state => state.user.roles,
 
+  systemInfo: state => state.system.info,
+  systemName: state => state.system.name,
+  systemVersion: state => state.system.version,
+
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs
 }

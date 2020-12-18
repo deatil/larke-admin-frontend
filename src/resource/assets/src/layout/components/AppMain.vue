@@ -33,6 +33,7 @@ export default {
 
 .fixed-header+.app-main {
   padding-top: 50px;
+  padding-bottom: 35px;
 }
 
 .hasTagsView {

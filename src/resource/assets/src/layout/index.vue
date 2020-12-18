@@ -11,13 +11,16 @@
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
+      <div :class="{'fixed-footer':fixedHeader}">
+        <footerbar />
+      </div>      
     </div>
   </div>
 </template>
 
 <script>
 import RightPanel from '@/components/RightPanel'
-import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+import { AppMain, Navbar, Settings, Sidebar, TagsView, Footerbar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
@@ -26,10 +29,11 @@ export default {
   components: {
     AppMain,
     Navbar,
+    Footerbar,    
     RightPanel,
     Settings,
     Sidebar,
-    TagsView
+    TagsView,
   },
   mixins: [ResizeMixin],
   computed: {
@@ -94,12 +98,28 @@ export default {
     width: calc(100% - #{$sideBarWidth});
     transition: width 0.28s;
   }
+  
+  .fixed-footer {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      z-index: 9;
+      width: calc(100% - 210px);
+      -webkit-transition: width 0.28s;
+      transition: width 0.28s;
+  }
 
   .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
+  }
+  .hideSidebar .fixed-footer {
     width: calc(100% - 54px)
   }
 
   .mobile .fixed-header {
     width: 100%;
   }
+  .mobile .fixed-footer {
+    width: 100%;
+  }  
 </style>
