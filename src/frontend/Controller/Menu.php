@@ -5,7 +5,7 @@ namespace Larke\Admin\Frontend\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use Larke\Admin\Service\Tree;
+use Larke\Admin\Support\Tree;
 use Larke\Admin\Http\Controller as BaseController;
 use Larke\Admin\Frontend\Model\Menu as MenuModel;
 
