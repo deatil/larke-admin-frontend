@@ -6,50 +6,58 @@
       </div>
 
       <div class="filter-container">
-        <el-button class="filter-item" type="danger"
+        <el-button
           v-if="showDeletebtn"
-          style="margin-right: 10px;"  
-          @click="handleDeleteList">
+          class="filter-item"
+          type="danger"
+          style="margin-right: 10px;"
+          @click="handleDeleteList"
+        >
           删除选中
-        </el-button>  
+        </el-button>
 
         <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-        
+
         <el-select v-model="listQuery.method" placeholder="请求方式" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
           <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />
-        </el-select>    
+        </el-select>
 
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 80px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
-        
+
         <el-select v-model="listQuery.order" style="width: 80px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
-        
+
         <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
-        
+
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
-        </el-button>    
-        
+        </el-button>
+
         <el-button class="filter-item" style="margin-right: 10px;" icon="tree" @click="handleTree">
           权限结构
-        </el-button>          
+        </el-button>
       </div>
 
-      <el-table v-loading="listLoading" 
+      <el-table
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
         @selection-change="handleSelectionChange"
-        style="width: 100%">
-        <el-table-column 
-          type="selection" 
-          width="55" 
-          align="center">
-        </el-table-column>
+      >
+        <el-table-column
+          type="selection"
+          width="55"
+          align="center"
+        />
 
         <el-table-column width="150px" label="名称">
           <template slot-scope="scope">
@@ -62,16 +70,16 @@
             <div>
               <el-tag type="info" size="mini" style="margin-bottom:3px;">
                 {{ row.slug }}
-              </el-tag>              
-            </div> 
-                        
+              </el-tag>
+            </div>
+
             <div>
               <el-tag :type="row.method | methodFilter" size="mini">
                 {{ row.method }}
               </el-tag>
 
               <span style="margin-left: 5px;">{{ row.url }}</span>
-            </div>           
+            </div>
           </template>
         </el-table-column>
 
@@ -84,8 +92,8 @@
                 size="mini"
                 class="editListorderInput"
                 @blur="editableChange($event, row, $index)"
-              ></el-input>
-              <span v-else>{{row.listorder}}</span>
+              />
+              <span v-else>{{ row.listorder }}</span>
             </div>
           </template>
         </el-table-column>
@@ -98,14 +106,14 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="scope">
-            <el-switch 
-              v-model="scope.row.status" 
+            <el-switch
+              v-model="scope.row.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              :active-value="1" 
+              :active-value="1"
               :inactive-value="0"
               @change="changeStatus($event, scope.row, scope.$index)"
-              ></el-switch>
+            />
           </template>
         </el-table-column>
 
@@ -121,7 +129,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>         
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -151,13 +159,13 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
-import { 
-  getRuleList, 
+import {
+  getRuleList,
   getRuleTreeList,
-  getRuleChildrenList, 
-  getRuleDetail, 
-  createRule, 
-  updateRule, 
+  getRuleChildrenList,
+  getRuleDetail,
+  createRule,
+  updateRule,
   deleteRule,
   clearRule,
   updateRuleSort,
@@ -178,10 +186,10 @@ export default {
         'PUT': 'warning',
         'DELETE': 'danger',
         'PATCH': 'warning',
-        'OPTIONS': 'info',
+        'OPTIONS': 'info'
       }
       return methodMap[method]
-    }, 
+    }
   },
   data() {
     return {
@@ -197,38 +205,38 @@ export default {
         limit: 10
       },
       methodOptions: [
-        { label: 'GET', key: 'GET' }, 
+        { label: 'GET', key: 'GET' },
         { label: 'HEAD', key: 'HEAD' },
         { label: 'POST', key: 'POST' },
         { label: 'PUT', key: 'PUT' },
         { label: 'DELETE', key: 'DELETE' },
         { label: 'PATCH', key: 'PATCH' },
-        { label: 'OPTIONS', key: 'OPTIONS' },
-      ],        
+        { label: 'OPTIONS', key: 'OPTIONS' }
+      ],
       statusOptions: [
         { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' },
+        { key: 'close', display_name: '禁用' }
       ],
       sortOptions: [
-        { label: '正序', key: 'ASC' }, 
+        { label: '正序', key: 'ASC' },
         { label: '倒叙', key: 'DESC' }
       ],
       detail: {
         dialogVisible: false,
-        data: [],
-      }, 
+        data: []
+      },
       create: {
-        dialogVisible: false,
-      },        
+        dialogVisible: false
+      },
       edit: {
         dialogVisible: false,
-        id: '',
+        id: ''
       },
       editable: [],
       editableItem: {},
       editableOldSort: 0,
-      selectedData: [],   
-      showDeletebtn: false,      
+      selectedData: [],
+      showDeletebtn: false
     }
   },
   created() {
@@ -253,22 +261,22 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },  
+    },
     handleSelectionChange(data, key) {
       this.selectedData = []
       data.forEach(element => {
         this.selectedData.push(element.id)
-      });
+      })
 
       if (this.selectedData.length > 0) {
         this.showDeletebtn = true
       } else {
         this.showDeletebtn = false
       }
-    },    
+    },
     handleCreate() {
       this.create.dialogVisible = true
-    },    
+    },
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
@@ -277,26 +285,25 @@ export default {
       this.edit.id = ''
     },
     editableChangeBtn(index, className) {
-      this.editable = new Array(this.list.length);
- 
-      this.editable[index] = true;
- 
-      this.editableItem = this.list[index];
- 
-      this.$set(this.editable, index, true);
-      
+      this.editable = new Array(this.list.length)
+
+      this.editable[index] = true
+
+      this.editableItem = this.list[index]
+
+      this.$set(this.editable, index, true)
+
       // 让input自动获取焦点
       this.$nextTick(function() {
-        var editInputList = document.getElementsByClassName(className);
-        editInputList[0].children[0].focus();
-      });
- 
-    },    
+        var editInputList = document.getElementsByClassName(className)
+        editInputList[0].children[0].focus()
+      })
+    },
     editableChange(e, data, index) {
-      this.editable[index] = false;
+      this.editable[index] = false
 
       if (this.editableOldSort == data.listorder) {
-        return ;
+        return
       }
 
       this.editableOldSort = data.listorder
@@ -305,9 +312,9 @@ export default {
         this.$message({
           message: '权限排序成功',
           type: 'success',
-          duration: 2 * 1000,
-        })        
-      })  
+          duration: 2 * 1000
+        })
+      })
     },
     handleDetail(index, row) {
       getRuleDetail(row.id).then((res) => {
@@ -318,96 +325,96 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '父级ID',
             content: data.parentid,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '名称',
             content: data.title,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '权限链接',
             content: data.url,
-            type: 'text',
-          },  
+            type: 'text'
+          },
           {
             name: '请求类型',
             content: data.method,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '地址标识',
             content: data.slug,
-            type: 'text',
-          },                                       
+            type: 'text'
+          },
           {
             name: '描述',
             content: data.description,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '排序',
             content: data.listorder,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '验证权限',
             content: data.is_need_auth,
-            type: 'status',
+            type: 'status'
           },
           {
             name: '状态',
             content: data.status,
-            type: 'boolen',
-          }, 
+            type: 'boolen'
+          },
           {
             name: '更新时间',
             content: data.update_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '更新IP',
             content: data.update_ip,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '添加时间',
             content: data.create_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '添加IP',
             content: data.create_ip,
-            type: 'text',
-          },
+            type: 'text'
+          }
         ]
       })
     },
     handleTree() {
       this.$router.replace('/auth/rule/tree')
-    },    
+    },
     changeStatus(e, data, index) {
       if (data.status == 1) {
         enableRule(data.id).then(() => {
           this.$message({
             message: '权限启用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })    
+        })
       } else {
         disableRule(data.id).then(() => {
           this.$message({
             message: '权限禁用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })   
+        })
       }
     },
     handleDelete(index, row) {
@@ -441,21 +448,21 @@ export default {
           this.$message({
             message: '请选择要删除的权限',
             type: 'error',
-            duration: 3 * 1000,
+            duration: 3 * 1000
           })
-          return ;
+          return
         }
 
         const thiz = this
         clearRule({
-          ids: this.selectedData.join(','),
+          ids: this.selectedData.join(',')
         }).then(res => {
           this.$message({
             message: res.message,
             type: 'success',
             duration: 3 * 1000,
             onClose() {
-              for (let i = thiz.list.length - 1; i >= 0; i --) {
+              for (let i = thiz.list.length - 1; i >= 0; i--) {
                 if (thiz.selectedData.includes(thiz.list[i].id)) {
                   thiz.list.splice(i, 1)
                 }
@@ -466,7 +473,7 @@ export default {
       }).catch(() => {
 
       })
-    }, 
+    }
 
   }
 }

@@ -2,24 +2,24 @@
   <div class="upload-container">
     <el-upload
       v-show="imgUrl.length<=1"
+      ref="upload"
       drag
       action="string"
       accept="image/jpeg,image/png,image/jpg"
       class="image-uploader"
-      ref="upload"
       :multiple="false"
       :show-file-list="false"
       :before-upload="onBeforeUploadImage"
       :http-request="UploadImage"
-      :on-change="fileChange"  
-      :on-success="handleImageSuccess"    
+      :on-change="fileChange"
+      :on-success="handleImageSuccess"
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">
         将文件拖到此处，或<em>点击上传</em>
       </div>
     </el-upload>
-    <div class="image-preview" v-show="imgUrl.length>1">
+    <div v-show="imgUrl.length>1" class="image-preview">
       <div class="image-preview-wrapper">
         <img :src="imgUrl">
         <div class="image-preview-action">
@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import { 
-  getAttachmentDetail, 
-  uploadAttachment,
+import {
+  getAttachmentDetail,
+  uploadAttachment
 } from '@/api/attachment'
 
 export default {
@@ -48,24 +48,24 @@ export default {
     return {
       imgId: '',
       imgUrl: '',
-      
+
       tempRaw: '',
       tempName: '',
-      tempUrl: '',
+      tempUrl: ''
     }
   },
-  created() {
-    this.getAttachment()
-  },  
   computed: {
     imageId() {
       return this.value
     }
   },
+  created() {
+    this.getAttachment()
+  },
   methods: {
     rmImage() {
       this.imgId = ''
-      this.imgUrl = ''  
+      this.imgUrl = ''
 
       this.emitInput('')
     },
@@ -107,7 +107,7 @@ export default {
 
         this.emitInput(this.imgId)
 
-        param.onSuccess()  
+        param.onSuccess()
       }).catch(response => {
         param.onError()
       })
@@ -117,7 +117,7 @@ export default {
       this.tempRaw = file.raw
       this.tempName = file.name
       this.tempUrl = file.url
-    },    
+    }
   }
 }
 </script>

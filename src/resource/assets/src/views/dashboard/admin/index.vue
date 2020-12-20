@@ -32,31 +32,42 @@ export default {
       nowTime: '',
       nowTimeCall: '晚上',
 
-      timer: '',
+      timer: ''
     }
+  },
+  created() {
+    this.nickname = this.$store.getters.nickname
+    if (!this.nickname) {
+      setTimeout(this.getNickname, 3000)
+    }
+
+    this.timer = setInterval(this.setNowTime, 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   methods: {
     dateFilter(date) {
-        if (date < 10) { 
-          return "0" + date; 
-        }
-        return date;
+      if (date < 10) {
+        return '0' + date
+      }
+      return date
     },
     getNowTime() {
-        var dateObj = new Date();
-        var year = dateObj.getFullYear(); 
-        var month = dateObj.getMonth() + 1;
-        var date = dateObj.getDate();
-        var day = dateObj.getDay();
-        var weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-        var week = weeks[day]; 
-        var hour = dateObj.getHours();
-        var minute = dateObj.getMinutes();
-        var second = dateObj.getSeconds(); 
-        var timeValue = "" + ((hour >= 12) ? (hour >= 18) ? "晚上" : "下午" : "上午"); 
-        var newDate = this.dateFilter(year) + "年" + this.dateFilter(month) + "月" + this.dateFilter(date) + "日 " + " " + this.dateFilter(hour) + ":" + this.dateFilter(minute) + ":" + this.dateFilter(second);
-        var nowTime = newDate + " " + week;
-        return [nowTime, timeValue];
+      var dateObj = new Date()
+      var year = dateObj.getFullYear()
+      var month = dateObj.getMonth() + 1
+      var date = dateObj.getDate()
+      var day = dateObj.getDay()
+      var weeks = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+      var week = weeks[day]
+      var hour = dateObj.getHours()
+      var minute = dateObj.getMinutes()
+      var second = dateObj.getSeconds()
+      var timeValue = '' + ((hour >= 12) ? (hour >= 18) ? '晚上' : '下午' : '上午')
+      var newDate = this.dateFilter(year) + '年' + this.dateFilter(month) + '月' + this.dateFilter(date) + '日 ' + ' ' + this.dateFilter(hour) + ':' + this.dateFilter(minute) + ':' + this.dateFilter(second)
+      var nowTime = newDate + ' ' + week
+      return [nowTime, timeValue]
     },
     setNowTime() {
       const nowTime = this.getNowTime()
@@ -64,19 +75,8 @@ export default {
       this.nowTimeCall = nowTime[1]
     },
     getNickname() {
-      this.nickname = this.$store.getters.nickname;
+      this.nickname = this.$store.getters.nickname
     }
-  },
-  created() {
-    this.nickname = this.$store.getters.nickname;
-    if (!this.nickname) {
-      setTimeout(this.getNickname, 3000);
-    }
-
-    this.timer = setInterval(this.setNowTime, 1000);
-  },
-  beforeDestroy() {
-    clearInterval(this.timer)
   }
 }
 </script>

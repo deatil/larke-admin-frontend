@@ -7,32 +7,37 @@
 
       <div class="filter-container">
         <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-        
+
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
-        
+
         <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
-        
+
         <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
-        
+
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
-        </el-button>    
-        
+        </el-button>
+
         <el-button class="filter-item" style="margin-right: 10px;" type="danger" icon="el-icon-switch-button" @click="handleLogout">
           账号退出
-        </el-button>        
+        </el-button>
       </div>
- 
-      <el-table v-loading="listLoading" 
+
+      <el-table
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
-        style="width: 100%">
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+      >
         <el-table-column width="150px" label="账号">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
@@ -51,7 +56,7 @@
               授权
             </el-button>
           </template>
-        </el-table-column>        
+        </el-table-column>
 
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
@@ -61,14 +66,14 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="scope">
-            <el-switch 
-              v-model="scope.row.status" 
+            <el-switch
+              v-model="scope.row.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              :active-value="1" 
+              :active-value="1"
               :inactive-value="0"
               @change="changeStatus($event, scope.row, scope.$index)"
-              ></el-switch>
+            />
           </template>
         </el-table-column>
 
@@ -84,11 +89,11 @@
 
             <el-button type="warning" size="mini" style="margin-left:10px;" @click="handlePassword(scope.$index, scope.row)">
               改密
-            </el-button> 
+            </el-button>
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>         
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,28 +116,28 @@
     <el-dialog title="更改密码" :visible.sync="password.dialogVisible">
       <el-form>
         <el-form-item label="新密码">
-          <el-input type="password" v-model="password.newpassword" />
+          <el-input v-model="password.newpassword" type="password" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="changePassword">确认</el-button>
-        </el-form-item>        
+        </el-form-item>
       </el-form>
     </el-dialog>
 
     <el-dialog title="退出账号" :visible.sync="logout.dialogVisible">
       <el-form>
         <el-form-item label="账号的RefreshToken">
-          <el-input type="textarea" rows="6" placeholder="请输入账号的RefreshToken" v-model="logout.refreshToken" />
+          <el-input v-model="logout.refreshToken" type="textarea" rows="6" placeholder="请输入账号的RefreshToken" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onLogout">确认退出</el-button>
-        </el-form-item>        
+        </el-form-item>
       </el-form>
-    </el-dialog> 
+    </el-dialog>
 
     <el-dialog title="账号授权" :visible.sync="access.dialogVisible">
       <access :item="access" />
-    </el-dialog>          
+    </el-dialog>
   </div>
 </template>
 
@@ -145,14 +150,14 @@ import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
 import Access from './components/Access'
-import { 
-  getList, 
+import {
+  getList,
   getDetail,
-  deleteAdmin, 
-  enableAdmin, 
-  disableAdmin, 
-  updatePassword, 
-  logoutAdmin 
+  deleteAdmin,
+  enableAdmin,
+  disableAdmin,
+  updatePassword,
+  logoutAdmin
 } from '@/api/admin'
 
 export default {
@@ -176,37 +181,37 @@ export default {
       },
       statusOptions: [
         { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' },
+        { key: 'close', display_name: '禁用' }
       ],
       sortOptions: [
-        { label: '正序', key: 'ASC' }, 
+        { label: '正序', key: 'ASC' },
         { label: '倒叙', key: 'DESC' }
       ],
       create: {
-        dialogVisible: false,
-      },        
+        dialogVisible: false
+      },
       edit: {
         dialogVisible: false,
-        id: '',
-      },      
+        id: ''
+      },
       detail: {
         dialogVisible: false,
-        data: [],
+        data: []
       },
       access: {
         id: '',
-        name: '',                
-        dialogVisible: false,
-      },      
+        name: '',
+        dialogVisible: false
+      },
       password: {
         dialogVisible: false,
         id: '',
-        newpassword: '',
+        newpassword: ''
       },
       logout: {
         dialogVisible: false,
-        refreshToken: '',
-      },      
+        refreshToken: ''
+      }
     }
   },
   created() {
@@ -230,19 +235,19 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },  
+    },
     handleCreate() {
       this.create.dialogVisible = true
-    },    
+    },
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
-    }, 
-    handleAccess(index, row) {    
+    },
+    handleAccess(index, row) {
       this.access.id = row.id
       this.access.name = row.name
       this.access.dialogVisible = true
-    },       
+    },
     handleDetail(index, row) {
       getDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
@@ -252,59 +257,59 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '账号',
             content: data.name,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '昵称',
             content: data.nickname,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '邮箱',
             content: data.email,
-            type: 'text',
-          },  
+            type: 'text'
+          },
           {
             name: '简介',
             content: data.introduce,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '用户组',
             content: data.groups,
             type: 'arr2str',
-            arrkey: 'title',
-          },                                       
+            arrkey: 'title'
+          },
           {
             name: '头像',
             content: data.avatar,
-            type: 'image',
+            type: 'image'
           },
           {
             name: '加入时间',
             content: data.create_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '最近活动',
             content: data.last_active,
-            type: 'time',
-          },            
+            type: 'time'
+          },
           {
             name: '最近活动IP',
             content: data.last_ip,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '激活状态',
             content: data.status,
-            type: 'boolen',
-          },                  
+            type: 'boolen'
+          }
         ]
       })
     },
@@ -314,17 +319,17 @@ export default {
           this.$message({
             message: '管理员启用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })    
+        })
       } else {
         disableAdmin(data.id).then(() => {
           this.$message({
             message: '管理员禁用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })   
+        })
       }
     },
     handleDelete(index, row) {
@@ -357,10 +362,10 @@ export default {
         this.$message({
           message: '密码不能为空',
           type: 'error',
-          duration: 5 * 1000,
+          duration: 5 * 1000
         })
 
-        return false      
+        return false
       }
 
       updatePassword(this.password.id, {
@@ -372,11 +377,11 @@ export default {
           type: 'success',
           duration: 5 * 1000,
           onClose() {
-            thiz.password.newpassword = ''            
+            thiz.password.newpassword = ''
             thiz.password.dialogVisible = false
           }
-        })          
-      })    
+        })
+      })
     },
     handleLogout() {
       this.logout.dialogVisible = true
@@ -386,12 +391,12 @@ export default {
         this.$message({
           message: 'refreshToken 不能为空',
           type: 'error',
-          duration: 5 * 1000,
+          duration: 5 * 1000
         })
 
-        return false      
+        return false
       }
-      
+
       logoutAdmin(this.logout.refreshToken).then(() => {
         const thiz = this
         this.$message({
@@ -399,10 +404,10 @@ export default {
           type: 'success',
           duration: 5 * 1000,
           onClose() {
-            thiz.logout.refreshToken = ''            
+            thiz.logout.refreshToken = ''
             thiz.logout.dialogVisible = false
           }
-        })  
+        })
       })
     }
   }

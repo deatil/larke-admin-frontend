@@ -235,7 +235,7 @@ export default {
         border-radius: 50%;
         position: relative;
         margin-right: 2px;
-      }     
+      }
       &.active {
         background-color: #42b983;
         color: #fff;

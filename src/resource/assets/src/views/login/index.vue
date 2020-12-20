@@ -63,15 +63,15 @@
           class="captcha-input"
         />
 
-        <span @click="refreshCaptcha" class="captcha-img">
-          <img :src="captchaImg" :title="$t('login.refresh_captcha')" />
-        </span>        
+        <span class="captcha-img" @click="refreshCaptcha">
+          <img :src="captchaImg" :title="$t('login.refresh_captcha')">
+        </span>
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
- 
+
     </el-form>
 
   </div>
@@ -107,7 +107,7 @@ export default {
       }
     }
     return {
-      captchaImg: '',
+      captchaImg: require('@/assets/larke/captcha.png'),
       loginForm: {
         username: '',
         password: '',
@@ -200,7 +200,7 @@ export default {
                 message: err || 'Error',
                 type: 'error',
                 duration: 2 * 1000
-              })  
+              })
 
               this.loading = false
             })

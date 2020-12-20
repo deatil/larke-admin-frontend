@@ -16,9 +16,9 @@ export function getToken(type = 'local') {
 
 export function setToken(token, type = 'local') {
   if (type == 'local') {
-    return localStorage.setItem(TokenKey, token);
+    return localStorage.setItem(TokenKey, token)
   } else if (type == 'session') {
-    return sessionStorage.setItem(TokenKey, token);
+    return sessionStorage.setItem(TokenKey, token)
   } else {
     return Cookies.set(TokenKey, token)
   }
@@ -46,9 +46,9 @@ export function getTokenExpiresIn(type = 'local') {
 
 export function setTokenExpiresIn(time, type = 'local') {
   if (type == 'local') {
-    return localStorage.setItem(TokenExpiresInKey, time);
+    return localStorage.setItem(TokenExpiresInKey, time)
   } else if (type == 'session') {
-    return sessionStorage.setItem(TokenExpiresInKey, time);
+    return sessionStorage.setItem(TokenExpiresInKey, time)
   } else {
     return Cookies.set(TokenExpiresInKey, time)
   }
@@ -76,9 +76,9 @@ export function getRefreshToken(type = 'local') {
 
 export function setRefreshToken(token, type = 'local') {
   if (type == 'local') {
-    return localStorage.setItem(RefreshTokenKey, token);
+    return localStorage.setItem(RefreshTokenKey, token)
   } else if (type == 'session') {
-    return sessionStorage.setItem(RefreshTokenKey, token);
+    return sessionStorage.setItem(RefreshTokenKey, token)
   } else {
     return Cookies.set(RefreshTokenKey, token)
   }

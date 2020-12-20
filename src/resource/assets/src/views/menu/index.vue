@@ -5,54 +5,62 @@
         <span>菜单管理</span>
       </div>
 
-      <el-alert type="warning" 
+      <el-alert
+        type="warning"
         title="菜单设置及新增需注意"
         description="菜单权限对当前的前端模版只有标识和层级有使用"
         class="menu-tip"
         show-icon
-        :closable="false"></el-alert>
+        :closable="false"
+      />
 
       <div class="filter-container">
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加菜单
-        </el-button>         
+        </el-button>
       </div>
 
-      <el-table v-loading="listLoading" 
+      <el-table
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
-        style="width: 100%">
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+      >
 
-        <el-table-tree-column :expand-all="treeExpandAll" 
-            file-icon="el-icon-document"  
-            folder-icon="el-icon-folder"
-            prop="title" 
-            levelKey="depth"
-            parentKey='pid'
-            treeKey='id'
-            :show-overflow-tooltip="true"
-            :indent-size="25"
-            label="菜单" 
-            min-width="150" 
-            class-name="larke-admin-menu-tree"
-            header-align="left">           
-        </el-table-tree-column>      
+        <el-table-tree-column
+          :expand-all="treeExpandAll"
+          file-icon="el-icon-document"
+          folder-icon="el-icon-folder"
+          prop="title"
+          level-key="depth"
+          parent-key="pid"
+          tree-key="id"
+          :show-overflow-tooltip="true"
+          :indent-size="25"
+          label="菜单"
+          min-width="150"
+          class-name="larke-admin-menu-tree"
+          header-align="left"
+        />
 
         <el-table-column label="链接">
           <template slot-scope="{row}">
             <div>
               <el-tag type="info" size="mini" style="margin-bottom:3px;">
                 {{ row.slug }}
-              </el-tag>              
-            </div> 
-                        
+              </el-tag>
+            </div>
+
             <div>
               <el-tag :type="row.method | methodFilter" size="mini">
                 {{ row.method }}
               </el-tag>
 
               <span style="margin-left: 5px;">{{ row.url }}</span>
-            </div>           
+            </div>
           </template>
         </el-table-column>
 
@@ -60,7 +68,7 @@
           <template slot-scope="scope">
             <span>{{ scope.row.sort }}</span>
           </template>
-        </el-table-column> 
+        </el-table-column>
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
@@ -74,7 +82,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>         
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -86,11 +94,11 @@
 
     <el-dialog title="编辑菜单" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
-    </el-dialog>    
+    </el-dialog>
 
     <el-dialog title="菜单详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
-    </el-dialog>     
+    </el-dialog>
   </div>
 </template>
 
@@ -101,9 +109,9 @@ import { parseTime } from '@/utils'
 import Detail from '@/components/Larke/Detail'
 import Create from './components/Create'
 import Edit from './components/Edit'
-import { 
+import {
   getMenuTree,
-  deleteMenu,
+  deleteMenu
 } from '@/api/menu'
 
 export default {
@@ -119,10 +127,10 @@ export default {
         'PUT': 'warning',
         'DELETE': 'danger',
         'PATCH': 'warning',
-        'OPTIONS': 'info',
+        'OPTIONS': 'info'
       }
       return methodMap[method]
-    },     
+    }
   },
   data() {
     return {
@@ -130,17 +138,17 @@ export default {
       listLoading: true,
       detail: {
         dialogVisible: false,
-        data: [],
+        data: []
       },
       treeExpandAll: false,
       create: {
-        dialogVisible: false,
-      },        
+        dialogVisible: false
+      },
       edit: {
         dialogVisible: false,
         id: '',
-        data: [],
-      },           
+        data: []
+      }
     }
   },
   created() {
@@ -154,9 +162,8 @@ export default {
         this.listLoading = false
         this.list = res.data.list
       })
-    },  
+    },
     handleDetail(index, row) {
-      
       this.detail.dialogVisible = true
       const data = row
 
@@ -164,43 +171,43 @@ export default {
         {
           name: 'ID',
           content: data.id,
-          type: 'text',
-        },          
+          type: 'text'
+        },
         {
           name: '父级ID',
           content: data.pid,
-          type: 'text',
+          type: 'text'
         },
         {
           name: '名称',
           content: data.title,
-          type: 'text',
-        },                                       
+          type: 'text'
+        },
         {
           name: '权限标识',
           content: data.slug,
-          type: 'text',
+          type: 'text'
         },
         {
           name: '权限链接',
           content: data.url,
-          type: 'text',
+          type: 'text'
         },
         {
           name: '链接请求类型',
           content: data.method,
-          type: 'text',
-        },         
+          type: 'text'
+        },
         {
           name: '排序',
           content: data.sort,
-          type: 'text',
-        },
+          type: 'text'
+        }
       ]
     },
     handleCreate() {
       this.create.dialogVisible = true
-    },    
+    },
     handleEdit(index, row) {
       this.edit.dialogVisible = true
 
@@ -228,7 +235,7 @@ export default {
       }).catch(() => {
 
       })
-    },
+    }
 
   }
 }

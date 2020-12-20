@@ -14,7 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    config.headers['Content-Type'] = 'application/json;charset=utf-8';
+    config.headers['Content-Type'] = 'application/json;charset=utf-8'
 
     if (store.getters.token) {
       // let each request carry token
@@ -23,7 +23,7 @@ service.interceptors.request.use(
       // config.headers['X-Token'] = getToken()
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }
-    
+
     return config
   },
   error => {
@@ -36,7 +36,7 @@ service.interceptors.request.use(
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    config.headers['Content-Type'] = 'application/json;charset=utf-8';
+    config.headers['Content-Type'] = 'application/json;charset=utf-8'
 
     if (store.getters.token) {
       // let each request carry token
@@ -45,7 +45,7 @@ service.interceptors.request.use(
       // config.headers['X-Token'] = getToken()
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }
-    
+
     return config
   },
   error => {
@@ -68,7 +68,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-      return response
+    return response
   },
   error => {
     console.log('err' + error) // for debug

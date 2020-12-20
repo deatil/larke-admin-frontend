@@ -67,22 +67,21 @@ export function uppercaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-
 /**
  * 格式化文件大小
  * @param {string} value
  */
 export function renderSize(value) {
-  if ( null == value || value == '') {
-      return "0 Bytes";
+  if (value == null || value == '') {
+    return '0 Bytes'
   }
-  var unitArr = new Array("Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
-  var index=0;
-  var srcsize = parseFloat(value);
-  index = Math.floor(Math.log(srcsize)/Math.log(1024));
-  var size = srcsize/Math.pow(1024,index);
-  size = size.toFixed(2);//保留的小数位数
-  return size + unitArr[index];
+  var unitArr = new Array('Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
+  var index = 0
+  var srcsize = parseFloat(value)
+  index = Math.floor(Math.log(srcsize) / Math.log(1024))
+  var size = srcsize / Math.pow(1024, index)
+  size = size.toFixed(2)// 保留的小数位数
+  return size + unitArr[index]
 }
 
 export function entityToString(entity) {

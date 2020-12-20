@@ -22,7 +22,7 @@ import * as filters from './filters' // global filters
 
 import ElTreeGrid from 'element-tree-grid'
 
-import JsonViewer from 'vue-json-viewer' 
+import JsonViewer from 'vue-json-viewer'
 
 /**
  * If you don't want to use mock-server
@@ -32,7 +32,7 @@ import JsonViewer from 'vue-json-viewer'
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
- /*
+/*
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
@@ -44,7 +44,7 @@ Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
-Vue.component(ElTreeGrid.name,ElTreeGrid) 
+Vue.component(ElTreeGrid.name, ElTreeGrid)
 
 Vue.use(JsonViewer)
 

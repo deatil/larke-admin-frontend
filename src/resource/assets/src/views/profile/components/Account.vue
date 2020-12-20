@@ -7,8 +7,8 @@
       <el-input v-model.trim="user.email" />
     </el-form-item>
     <el-form-item label="简介">
-      <el-input type="textarea" v-model.trim="user.introduce" rows="6" placeholder="请填写简介"></el-input>
-    </el-form-item>    
+      <el-input v-model.trim="user.introduce" type="textarea" rows="6" placeholder="请填写简介" />
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">提交</el-button>
     </el-form-item>
@@ -26,34 +26,34 @@ export default {
         return {
           name: '',
           email: '',
-          introduce: '',
+          introduce: ''
         }
       }
     }
   },
   data() {
     return {
-      rules:{
-          name:[
-            {required:true, message:'昵称不能为空', trigger:'blur'}
-          ],
-          email:[
-            {required:true, message:'邮箱不能为空', trigger:'blur'}
-          ],                                   
-      },       
+      rules: {
+        name: [
+          { required: true, message: '昵称不能为空', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '邮箱不能为空', trigger: 'blur' }
+        ]
+      }
     }
-  },  
+  },
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
-        if (! valid) {
+        if (!valid) {
           return false
         }
 
         updateInfo({
-            nickname: this.user.name,
-            email: this.user.email,
-            introduce: this.user.introduce,   
+          nickname: this.user.name,
+          email: this.user.email,
+          introduce: this.user.introduce
         }).then(response => {
           this.$message({
             message: '信息更新成功',
@@ -61,7 +61,6 @@ export default {
             duration: 5 * 1000
           })
         })
-
       })
     }
   }

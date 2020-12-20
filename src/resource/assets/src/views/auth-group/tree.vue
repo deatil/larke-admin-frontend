@@ -8,32 +8,38 @@
       <div class="filter-container">
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加用户组
-        </el-button>    
+        </el-button>
 
         <el-button class="filter-item" style="margin-right: 10px;" icon="tree" @click="handleIndex">
           全部用户组
-        </el-button>           
+        </el-button>
       </div>
 
-      <el-table v-loading="listLoading" 
+      <el-table
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
-        style="width: 100%">
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+      >
 
-        <el-table-tree-column :expand-all="treeExpandAll" 
-            file-icon="el-icon-document"  
-            folder-icon="el-icon-folder"
-            prop="title" 
-            levelKey="depth"
-            parentKey='parentid'
-            treeKey='id'
-            :show-overflow-tooltip="true"
-            :indent-size="25"
-            label="名称" 
-            min-width="250" 
-            class-name="larke-admin-auth-group-tree"
-            header-align="left">           
-        </el-table-tree-column>
+        <el-table-tree-column
+          :expand-all="treeExpandAll"
+          file-icon="el-icon-document"
+          folder-icon="el-icon-folder"
+          prop="title"
+          level-key="depth"
+          parent-key="parentid"
+          tree-key="id"
+          :show-overflow-tooltip="true"
+          :indent-size="25"
+          label="名称"
+          min-width="250"
+          class-name="larke-admin-auth-group-tree"
+          header-align="left"
+        />
 
         <el-table-column width="60px" align="center" label="排序">
           <template slot-scope="scope">
@@ -57,14 +63,14 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="scope">
-            <el-switch 
-              v-model="scope.row.status" 
+            <el-switch
+              v-model="scope.row.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              :active-value="1" 
+              :active-value="1"
               :inactive-value="0"
               @change="changeStatus($event, scope.row, scope.$index)"
-              ></el-switch>
+            />
           </template>
         </el-table-column>
 
@@ -80,7 +86,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>         
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -92,7 +98,7 @@
 
     <el-dialog title="编辑用户组" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
-    </el-dialog>    
+    </el-dialog>
 
     <el-dialog title="用户组详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
@@ -100,7 +106,7 @@
 
     <el-dialog title="用户组授权" :visible.sync="access.dialogVisible">
       <access :item="access" />
-    </el-dialog>       
+    </el-dialog>
   </div>
 </template>
 
@@ -112,9 +118,9 @@ import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
 import Access from './components/Access'
-import { 
+import {
   getGroupTreeList,
-  getGroupDetail, 
+  getGroupDetail,
   deleteGroup,
   updateGroupSort,
   enableGroup,
@@ -133,20 +139,20 @@ export default {
       listLoading: true,
       detail: {
         dialogVisible: false,
-        data: [],
+        data: []
       },
       treeExpandAll: false,
       create: {
-        dialogVisible: false,
-      },        
+        dialogVisible: false
+      },
       edit: {
         dialogVisible: false,
-        id: '',
-      }, 
+        id: ''
+      },
       access: {
         dialogVisible: false,
-        id: '',
-      },            
+        id: ''
+      }
     }
   },
   created() {
@@ -161,10 +167,10 @@ export default {
         this.list = res.data.list
       })
     },
-    handleAccess(index, row) {    
+    handleAccess(index, row) {
       this.access.id = row.id
       this.access.dialogVisible = true
-    },    
+    },
     handleDetail(index, row) {
       getGroupDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
@@ -174,59 +180,59 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '父级ID',
             content: data.parentid,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '名称',
             content: data.title,
-            type: 'text',
-          },                                       
+            type: 'text'
+          },
           {
             name: '描述',
             content: data.description,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '排序',
             content: data.listorder,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '状态',
             content: data.status,
-            type: 'boolen',
-          }, 
+            type: 'boolen'
+          },
           {
             name: '更新时间',
             content: data.update_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '更新IP',
             content: data.update_ip,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '添加时间',
             content: data.create_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '添加IP',
             content: data.create_ip,
-            type: 'text',
-          },
+            type: 'text'
+          }
         ]
       })
     },
     handleCreate() {
       this.create.dialogVisible = true
-    },    
+    },
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
@@ -240,17 +246,17 @@ export default {
           this.$message({
             message: '用户组启用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })    
+        })
       } else {
         disableGroup(data.id).then(() => {
           this.$message({
             message: '用户组禁用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })   
+        })
       }
     },
     handleDelete(index, row) {
@@ -273,7 +279,7 @@ export default {
       }).catch(() => {
 
       })
-    },
+    }
 
   }
 }

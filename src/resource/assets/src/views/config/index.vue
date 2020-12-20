@@ -7,7 +7,7 @@
 
       <div class="filter-container">
         <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-        
+
         <el-select v-model="listQuery.group" placeholder="分组" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="group in groupOptions" :key="group.key" :label="group.display_name" :value="group.key" />
         </el-select>
@@ -15,24 +15,29 @@
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
-        
+
         <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
-        
+
         <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
-        
+
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
         </el-button>
       </div>
- 
-      <el-table v-loading="listLoading" 
+
+      <el-table
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
-        style="width: 100%">  
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+      >
 
         <el-table-column width="130px" label="名称">
           <template slot-scope="scope">
@@ -44,19 +49,19 @@
           <template slot-scope="{row}">
             <span>{{ row.title }}</span>
           </template>
-        </el-table-column>  
+        </el-table-column>
 
         <el-table-column align="center" width="100px" label="类型">
           <template slot-scope="scope">
             <span>{{ scope.row.type }}</span>
           </template>
-        </el-table-column>    
+        </el-table-column>
 
         <el-table-column align="center" width="80px" label="分组">
           <template slot-scope="scope">
             <span>{{ scope.row.group }}</span>
           </template>
-        </el-table-column>         
+        </el-table-column>
 
         <el-table-column width="75px" align="center" label="排序">
           <template slot-scope="{row, $index}">
@@ -67,11 +72,11 @@
                 size="mini"
                 class="editListorderInput"
                 @blur="editableChange($event, row, $index)"
-              ></el-input>
-              <span v-else>{{row.listorder}}</span>
+              />
+              <span v-else>{{ row.listorder }}</span>
             </div>
           </template>
-        </el-table-column>            
+        </el-table-column>
 
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
@@ -81,14 +86,14 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="scope">
-            <el-switch 
-              v-model="scope.row.status" 
+            <el-switch
+              v-model="scope.row.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              :active-value="1" 
+              :active-value="1"
               :inactive-value="0"
               @change="changeStatus($event, scope.row, scope.$index)"
-              ></el-switch>
+            />
           </template>
         </el-table-column>
 
@@ -104,7 +109,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>         
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -123,7 +128,7 @@
     <el-dialog title="编辑配置" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>
-        
+
   </div>
 </template>
 
@@ -131,18 +136,18 @@
 import md5 from 'js-md5'
 import waves from '@/directive/waves'
 import { parseTime, formatOpions } from '@/utils'
-import Pagination from '@/components/Pagination' 
+import Pagination from '@/components/Pagination'
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
-import { 
-  getList, 
+import {
+  getList,
   getDetail,
-  deleteConfig, 
-  enable, 
-  disable, 
-  updateSort, 
-  setting 
+  deleteConfig,
+  enable,
+  disable,
+  updateSort,
+  setting
 } from '@/api/config'
 
 export default {
@@ -166,30 +171,30 @@ export default {
         limit: 10
       },
       groupOptions: [
-        { key: 'other', display_name: '未分组' },        
-      ],       
+        { key: 'other', display_name: '未分组' }
+      ],
       statusOptions: [
         { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' },
+        { key: 'close', display_name: '禁用' }
       ],
       sortOptions: [
-        { key: 'ASC', label: '正序' }, 
+        { key: 'ASC', label: '正序' },
         { key: 'DESC', label: '倒叙' }
-      ],      
+      ],
       create: {
-        dialogVisible: false,
-      },        
+        dialogVisible: false
+      },
       edit: {
         dialogVisible: false,
-        id: '',
-      },      
+        id: ''
+      },
       detail: {
         dialogVisible: false,
-        data: [],
+        data: []
       },
       editable: [],
       editableItem: {},
-      editableOldSort: 0,    
+      editableOldSort: 0
     }
   },
   created() {
@@ -205,13 +210,13 @@ export default {
           this.groupOptions = []
           data.forEach((item, key) => {
             this.groupOptions.push({
-              key: item.key, 
-              display_name: item.label,
+              key: item.key,
+              display_name: item.label
             })
           })
-          this.groupOptions.push({ 
-            key: 'other', 
-            display_name: '未分组',
+          this.groupOptions.push({
+            key: 'other',
+            display_name: '未分组'
           })
 
           resolve(this.groupOptions)
@@ -219,7 +224,7 @@ export default {
           reject(error)
         })
       })
-    },     
+    },
     getList() {
       this.listLoading = true
       getList({
@@ -238,35 +243,34 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },  
+    },
     handleCreate() {
       this.create.dialogVisible = true
-    },    
+    },
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
-    },    
+    },
     editableChangeBtn(index, className) {
-      this.editable = new Array(this.list.length);
- 
-      this.editable[index] = true;
- 
-      this.editableItem = this.list[index];
- 
-      this.$set(this.editable, index, true);
-      
+      this.editable = new Array(this.list.length)
+
+      this.editable[index] = true
+
+      this.editableItem = this.list[index]
+
+      this.$set(this.editable, index, true)
+
       // 让input自动获取焦点
       this.$nextTick(function() {
-        var editInputList = document.getElementsByClassName(className);
-        editInputList[0].children[0].focus();
-      });
- 
-    },    
+        var editInputList = document.getElementsByClassName(className)
+        editInputList[0].children[0].focus()
+      })
+    },
     editableChange(e, data, index) {
-      this.editable[index] = false;
+      this.editable[index] = false
 
       if (this.editableOldSort == data.listorder) {
-        return ;
+        return
       }
 
       this.editableOldSort = data.listorder
@@ -275,10 +279,10 @@ export default {
         this.$message({
           message: '配置排序成功',
           type: 'success',
-          duration: 2 * 1000,
-        })        
-      })  
-    },       
+          duration: 2 * 1000
+        })
+      })
+    },
     handleDetail(index, row) {
       getDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
@@ -288,72 +292,72 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '分组',
             content: data.group,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '类型',
             content: data.type,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '标题',
             content: data.title,
-            type: 'text',
-          },  
+            type: 'text'
+          },
           {
             name: '名称',
             content: data.name,
-            type: 'text',
-          }, 
-                                      
+            type: 'text'
+          },
+
           {
             name: '配置项',
             content: data.options,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '配置值',
             content: data.value,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '描述',
             content: data.description,
-            type: 'text',
+            type: 'text'
           },
 
           {
             name: '排序',
             content: data.listorder,
-            type: 'text',
-          },   
+            type: 'text'
+          },
           {
             name: '显示',
             content: data.is_show,
-            type: 'status',
-          },  
+            type: 'status'
+          },
           {
             name: '激活状态',
             content: data.status,
-            type: 'boolen',
-          },   
+            type: 'boolen'
+          },
 
           {
             name: '最后更新',
             content: data.update_time,
-            type: 'time',
-          }, 
+            type: 'time'
+          },
           {
             name: '添加时间',
             content: data.create_time,
-            type: 'time',
-          },
-                
+            type: 'time'
+          }
+
         ]
       })
     },
@@ -363,17 +367,17 @@ export default {
           this.$message({
             message: '配置启用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })    
+        })
       } else {
         disable(data.id).then(() => {
           this.$message({
             message: '配置禁用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })   
+        })
       }
     },
     handleDelete(index, row) {
@@ -396,7 +400,7 @@ export default {
       }).catch(() => {
 
       })
-    },
+    }
   }
 }
 </script>

@@ -3,33 +3,33 @@ export default {
     dashboard: '首页',
     profile: '我的信息',
     icons: '图标',
-    
+
     System: '系统配置',
-    
-        Setting: '网站设置',
-    
-        Config: '配置管理',
-        
-        Attachment: '附件管理',
-        
-        Menu: '菜单权限',
-    
+
+    Setting: '网站设置',
+
+    Config: '配置管理',
+
+    Attachment: '附件管理',
+
+    Menu: '菜单管理',
+
     Permission: '权限管理',
-    
-        Admin: '管理员',
-        AdminIndex: '管理员列表',
-        
-        AuthGroup: '用户组',
-        AuthGroupTree: '用户组结构',
-        
-        AuthRule: '权限路由',
-        AuthRuleTree: '权限结构',
-    
-        AdminLog: '操作日志',
-    
+
+    Admin: '管理员',
+    AdminIndex: '管理员列表',
+
+    AuthGroup: '用户组',
+    AuthGroupTree: '用户组结构',
+
+    AuthRule: '权限路由',
+    AuthRuleTree: '权限结构',
+
+    AdminLog: '操作日志',
+
     LocalExtension: '本地扩展',
-    
-        Extension: '扩展管理',
+
+    Extension: '扩展管理'
   },
   navbar: {
     dashboard: '首页',

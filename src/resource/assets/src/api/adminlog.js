@@ -26,6 +26,6 @@ export function clearLog(data) {
   return request({
     url: '/log/clear',
     method: 'delete',
-    data,
+    data
   })
 }

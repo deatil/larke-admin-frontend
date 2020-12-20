@@ -1,12 +1,14 @@
 <template>
   <div class="components-container" style="margin: 0;">
 
-    <el-alert type="info" 
+    <el-alert
+      type="info"
       title="注意"
       description="选择头像提交后将会自动提交修改头像为选择头像"
       class="profile-avatar-tip"
       show-icon
-      :closable="false"></el-alert>
+      :closable="false"
+    />
 
     <pan-thumb :image="user.avatar" />
 
@@ -35,34 +37,34 @@ import { updateAvatar } from '@/api/user'
 
 export default {
   name: 'ProfileAvatar',
-  components: { 
-    ImageCropper, 
-    PanThumb 
+  components: {
+    ImageCropper,
+    PanThumb
   },
   props: {
     user: {
       type: Object,
       default: () => {
         return {
-          avatar: '',
+          avatar: ''
         }
       }
     }
-  },  
+  },
   data() {
     return {
       imagecropperShow: false,
-      imagecropperKey: 0,
+      imagecropperKey: 0
     }
   },
   methods: {
     cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.user.avatar = resData.url 
+      this.user.avatar = resData.url
 
       updateAvatar({
-          avatar: resData.id,  
+        avatar: resData.id
       }).then(response => {
         this.$message({
           message: '更新头像成功',

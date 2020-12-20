@@ -6,10 +6,10 @@
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />         
+        <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-        </el-select>      
+        </el-select>
         <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
@@ -18,11 +18,16 @@
         </el-button>
       </div>
 
-      <el-table v-loading="listLoading" 
+      <el-table
         ref="logTable"
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
-        style="width: 100%">
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+      >
 
         <el-table-column min-width="150px" label="文件名">
           <template slot-scope="{row}">
@@ -51,7 +56,7 @@
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="{row}">
             <el-tag :type="row.status | statusFilter" size="mini">
-              {{ (row.status == 1) ? '启用' : '禁用'}}
+              {{ (row.status == 1) ? '启用' : '禁用' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -68,7 +73,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>                
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -78,7 +83,7 @@
 
     <el-dialog title="附件详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
-    </el-dialog>    
+    </el-dialog>
   </div>
 </template>
 
@@ -87,10 +92,10 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime, renderSize } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Detail from '@/components/Larke/Detail'
-import { 
-  getAttachmentList, 
-  getAttachmentDetail, 
-  deleteAttachment, 
+import {
+  getAttachmentList,
+  getAttachmentDetail,
+  deleteAttachment,
   enableAttachment,
   disableAttachment,
   getAttachmentDowncode,
@@ -108,7 +113,7 @@ export default {
         0: 'danger'
       }
       return statusMap[status]
-    },  
+    }
   },
   data() {
     return {
@@ -124,16 +129,16 @@ export default {
       },
       statusOptions: [
         { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' },
-      ],    
+        { key: 'close', display_name: '禁用' }
+      ],
       sortOptions: [
-        { label: '正序', key: 'ASC' }, 
+        { label: '正序', key: 'ASC' },
         { label: '倒叙', key: 'DESC' }
       ],
       detail: {
         dialogVisible: false,
-        data: [],
-      },
+        data: []
+      }
     }
   },
   created() {
@@ -143,7 +148,7 @@ export default {
     getList() {
       this.listLoading = true
       getAttachmentList({
-        searchword: this.listQuery.searchword,    
+        searchword: this.listQuery.searchword,
         status: this.listQuery.status,
         order: this.listQuery.order,
         start: (this.listQuery.page - 1) * this.listQuery.limit,
@@ -157,7 +162,7 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },  
+    },
     handleDetail(index, row) {
       getAttachmentDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
@@ -167,83 +172,83 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '属于',
             content: data.belong_type + '：' + data.belong_id,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '文件名',
             content: data.name,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '存储位置',
             content: data.path,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '文件Mime',
             content: data.mime,
-            type: 'text',
-          },                                       
+            type: 'text'
+          },
           {
             name: '文件类型',
             content: data.extension,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '文件大小',
             content: data.size,
-            type: 'size',
+            type: 'size'
           },
           {
             name: '文件md5',
             content: data.md5,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '文件sha1',
             content: data.sha1,
-            type: 'text',
-          },  
+            type: 'text'
+          },
           {
             name: '存储驱动',
             content: data.driver,
-            type: 'text',
-          },                              
+            type: 'text'
+          },
           {
             name: '附件URL',
             content: data.url,
-            type: 'text',
-          },      
+            type: 'text'
+          },
           {
             name: '激活状态',
             content: data.status,
-            type: 'boolen',
-          }, 
+            type: 'boolen'
+          },
           {
             name: '最后更新',
             content: data.update_time,
-            type: 'time',
-          },    
+            type: 'time'
+          },
           {
             name: '更新IP',
             content: data.update_ip,
-            type: 'text',
-          },                             
+            type: 'text'
+          },
           {
             name: '添加时间',
             content: data.create_time,
-            type: 'time',
-          },    
+            type: 'time'
+          },
           {
             name: '添加IP',
             content: data.create_ip,
-            type: 'text',
-          },                                    
+            type: 'text'
+          }
         ]
       })
     },
@@ -252,9 +257,9 @@ export default {
         this.$message({
           message: '请选择要下载的附件',
           type: 'error',
-          duration: 3 * 1000,
+          duration: 3 * 1000
         })
-        return ;
+        return
       }
 
       getAttachmentDowncode(id).then((res) => {
@@ -284,7 +289,7 @@ export default {
       }).catch(() => {
 
       })
-    },      
+    }
   }
 }
 </script>

@@ -13,7 +13,7 @@
 
         <span v-else-if="row.type == 'image'">
           <template v-if="row.content != ''">
-            <img :src="row.content" style="width:100px;" />
+            <img :src="row.content" style="width:100px;">
           </template>
         </span>
 
@@ -27,7 +27,8 @@
             :expand-depth="row.depth||5"
             copyable
             boxed
-            sort></json-viewer>       
+            sort
+          />
         </span>
 
         <span v-else-if="row.type == 'boolen'">
@@ -60,17 +61,17 @@
 
         <span v-else-if="row.type == 'arr2str'">
           {{ row | parseArr2str }}
-        </span>   
+        </span>
 
         <span v-else-if="row.type == 'size'">
           {{ row.content | renderSize }}
-        </span>               
+        </span>
 
         <span v-else>
           {{ row.content }}
-        </span>        
-      </template>      
-    </el-table-column>        
+        </span>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -80,23 +81,23 @@ import { parseTime } from '@/utils'
 
 export default {
   name: 'DetailComponent',
-  components: { 
+  components: {
   },
   filters: {
     parseArr2str(arr) {
       const data = []
 
       if (arr['content'] instanceof Array) {
-        for (let content of arr['content']) {
+        for (const content of arr['content']) {
           if (content[arr['arrkey']]) {
             data.push(content[arr['arrkey']])
           }
         }
       }
-      
+
       return data.join(',')
     }
-  },  
+  },
   props: {
     data: {
       type: Array,
@@ -104,7 +105,7 @@ export default {
         return []
       }
     }
-  },  
+  },
   data() {
     return {
     }

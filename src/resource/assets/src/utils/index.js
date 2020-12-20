@@ -364,7 +364,7 @@ export function formatOpions(options) {
       var itemArr = item.split(':')
       arr.push({
         key: itemArr[0],
-        label: itemArr[1] || '',
+        label: itemArr[1] || ''
       })
     }
   })
@@ -373,28 +373,28 @@ export function formatOpions(options) {
 }
 
 export function formatFormItem(element) {
-  if (element.type == 'number' 
-    || element.type == 'switch'
-    || element.type == 'rate'
-    || element.type == 'slider'
+  if (element.type == 'number' ||
+    element.type == 'switch' ||
+    element.type == 'rate' ||
+    element.type == 'slider'
   ) {
     element.value = parseInt(element.value)
   }
 
-  if (element.type == 'checkbox'
-    || element.type == 'range-date'
-    || element.type == 'range-time'
+  if (element.type == 'checkbox' ||
+    element.type == 'range-date' ||
+    element.type == 'range-time'
   ) {
     element.value = element.value.split(',')
   }
 
-  if (element.type == 'radio' 
-    || element.type == 'checkbox'
-    || element.type == 'select'
-    || element.type == 'switch'
+  if (element.type == 'radio' ||
+    element.type == 'checkbox' ||
+    element.type == 'select' ||
+    element.type == 'switch'
   ) {
     element.options = formatOpions(element.options)
-  }  
+  }
 
   if (element.type == 'rate') {
     element.options = element.options.split(',')
@@ -419,28 +419,28 @@ export function formatExtensionOpions(options) {
 export function formatExtensionFormItem(olelement) {
   const element = JSON.parse(JSON.stringify(olelement))
 
-  if (element.type == 'number' 
-    || element.type == 'switch'
-    || element.type == 'rate'
-    || element.type == 'slider'
+  if (element.type == 'number' ||
+    element.type == 'switch' ||
+    element.type == 'rate' ||
+    element.type == 'slider'
   ) {
     element.value = parseInt(element.value)
   }
 
-  if (element.type == 'checkbox'
-    || element.type == 'range-date'
-    || element.type == 'range-time'
+  if (element.type == 'checkbox' ||
+    element.type == 'range-date' ||
+    element.type == 'range-time'
   ) {
     element.value = element.value.split(',')
   }
 
-  if (element.type == 'radio' 
-    || element.type == 'checkbox'
-    || element.type == 'select'
-    || element.type == 'switch'
+  if (element.type == 'radio' ||
+    element.type == 'checkbox' ||
+    element.type == 'select' ||
+    element.type == 'switch'
   ) {
     element.options = formatExtensionOpions(element.options)
-  }    
+  }
 
   return element
 }

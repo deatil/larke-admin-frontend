@@ -13,7 +13,7 @@
       </right-panel>
       <div :class="{'fixed-footer':fixedHeader}">
         <footerbar />
-      </div>      
+      </div>
     </div>
   </div>
 </template>
@@ -29,11 +29,11 @@ export default {
   components: {
     AppMain,
     Navbar,
-    Footerbar,    
+    Footerbar,
     RightPanel,
     Settings,
     Sidebar,
-    TagsView,
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
@@ -53,13 +53,13 @@ export default {
       }
     }
   },
+  created() {
+    this.$store.dispatch('user/getInfo')
+  },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
-  },
-  created() {
-    this.$store.dispatch('user/getInfo');
   }
 }
 </script>
@@ -98,7 +98,7 @@ export default {
     width: calc(100% - #{$sideBarWidth});
     transition: width 0.28s;
   }
-  
+
   .fixed-footer {
       position: fixed;
       bottom: 0;
@@ -121,5 +121,5 @@ export default {
   }
   .mobile .fixed-footer {
     width: 100%;
-  }  
+  }
 </style>

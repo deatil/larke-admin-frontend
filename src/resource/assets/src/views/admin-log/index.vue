@@ -6,47 +6,55 @@
       </div>
 
       <div class="filter-container">
-        <el-button class="filter-item" type="warning"
+        <el-button
           v-if="showDeletebtn"
-          style="margin-right: 10px;"  
-          @click="handleDeleteList">
+          class="filter-item"
+          type="warning"
+          style="margin-right: 10px;"
+          @click="handleDeleteList"
+        >
           删除选中
-        </el-button>  
+        </el-button>
 
         <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 150px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-    
-        <el-date-picker v-model="listQuery.start_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择开始时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />        
-        <el-date-picker v-model="listQuery.end_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择结束时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />        
-        
+
+        <el-date-picker v-model="listQuery.start_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择开始时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />
+        <el-date-picker v-model="listQuery.end_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择结束时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />
+
         <el-select v-model="listQuery.method" placeholder="请求方式" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
           <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />
-        </el-select>          
+        </el-select>
         <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 80px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-        </el-select>      
+        </el-select>
         <el-select v-model="listQuery.order" style="width: 80px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
         <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
-        
+
         <el-button class="filter-item" type="danger" icon="el-icon-delete" @click="handleClear">
           清空
         </el-button>
       </div>
 
-      <el-table v-loading="listLoading" 
+      <el-table
         ref="logTable"
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
         @selection-change="handleSelectionChange"
-        style="width: 100%">
-        <el-table-column 
-          type="selection" 
-          width="55" 
-          align="center">
-        </el-table-column>
+      >
+        <el-table-column
+          type="selection"
+          width="55"
+          align="center"
+        />
 
         <el-table-column width="100px" align="center" label="请求方式">
           <template slot-scope="{row}">
@@ -77,7 +85,7 @@
         <el-table-column class-name="status-col" label="状态" width="70">
           <template slot-scope="{row}">
             <el-tag :type="row.status | statusFilter" size="mini">
-              {{ (row.status == 1) ? '启用' : '禁用'}}
+              {{ (row.status == 1) ? '启用' : '禁用' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -90,7 +98,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>                
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -100,7 +108,7 @@
 
     <el-dialog title="日志详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
-    </el-dialog>    
+    </el-dialog>
   </div>
 </template>
 
@@ -124,17 +132,17 @@ export default {
         'PUT': 'warning',
         'DELETE': 'danger',
         'PATCH': 'warning',
-        'OPTIONS': 'info',
+        'OPTIONS': 'info'
       }
       return methodMap[method]
-    }, 
+    },
     statusFilter(status) {
       const statusMap = {
         1: 'success',
         0: 'danger'
       }
       return statusMap[status]
-    },
+    }
   },
   data() {
     return {
@@ -153,27 +161,27 @@ export default {
       },
       statusOptions: [
         { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' },
+        { key: 'close', display_name: '禁用' }
       ],
       methodOptions: [
-        { label: 'GET', key: 'GET' }, 
+        { label: 'GET', key: 'GET' },
         { label: 'HEAD', key: 'HEAD' },
         { label: 'POST', key: 'POST' },
         { label: 'PUT', key: 'PUT' },
         { label: 'DELETE', key: 'DELETE' },
         { label: 'PATCH', key: 'PATCH' },
-        { label: 'OPTIONS', key: 'OPTIONS' },
-      ],      
+        { label: 'OPTIONS', key: 'OPTIONS' }
+      ],
       sortOptions: [
-        { label: '正序', key: 'ASC' }, 
+        { label: '正序', key: 'ASC' },
         { label: '倒叙', key: 'DESC' }
       ],
       detail: {
         dialogVisible: false,
-        data: [],
+        data: []
       },
-      selectedData: [],   
-      showDeletebtn: false,
+      selectedData: [],
+      showDeletebtn: false
     }
   },
   created() {
@@ -183,9 +191,9 @@ export default {
     getList() {
       this.listLoading = true
       getList({
-        searchword: this.listQuery.searchword,   
+        searchword: this.listQuery.searchword,
         start_time: this.listQuery.start_time,
-        end_time: this.listQuery.end_time, 
+        end_time: this.listQuery.end_time,
         status: this.listQuery.status,
         method: this.listQuery.method,
         order: this.listQuery.order,
@@ -205,7 +213,7 @@ export default {
       this.selectedData = []
       data.forEach(element => {
         this.selectedData.push(element.id)
-      });
+      })
 
       if (this.selectedData.length > 0) {
         this.showDeletebtn = true
@@ -222,54 +230,54 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '账号ID',
             content: data.admin_id,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '账号昵称',
             content: data.admin_name,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '请求URL',
             content: data.url,
-            type: 'text',
-          },  
+            type: 'text'
+          },
           {
             name: '请求方式',
             content: data.method,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '请求内容',
             content: data.info,
             type: 'json',
-            depth: 10,
-          },                                       
+            depth: 10
+          },
           {
             name: '请求信息',
             content: data.useragent,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '请求IP',
             content: data.ip,
-            type: 'text',
-          },   
+            type: 'text'
+          },
           {
             name: '请求时间',
             content: data.create_time,
-            type: 'time',
-          },            
+            type: 'time'
+          },
           {
             name: '激活状态',
             content: data.status,
-            type: 'boolen',
-          },                  
+            type: 'boolen'
+          }
         ]
       })
     },
@@ -291,7 +299,7 @@ export default {
           })
         })
       }).catch(() => {})
-    },      
+    },
     handleDeleteList() {
       this.$confirm('确认要删除选中的日志吗？', '提示', {
         confirmButtonText: '确定',
@@ -302,21 +310,21 @@ export default {
           this.$message({
             message: '请选择要删除的日志',
             type: 'error',
-            duration: 3 * 1000,
+            duration: 3 * 1000
           })
-          return ;
+          return
         }
 
         const thiz = this
         clearLog({
-          ids: this.selectedData.join(','),
+          ids: this.selectedData.join(',')
         }).then(res => {
           this.$message({
             message: res.message,
             type: 'success',
             duration: 3 * 1000,
             onClose() {
-              for (let i = thiz.list.length - 1; i >= 0; i --) {
+              for (let i = thiz.list.length - 1; i >= 0; i--) {
                 if (thiz.selectedData.includes(thiz.list[i].id)) {
                   thiz.list.splice(i, 1)
                 }
@@ -327,7 +335,7 @@ export default {
       }).catch(() => {
 
       })
-    },  
+    },
     handleClear() {
       const thiz = this
       this.$confirm('确认要清空一个月之前的日志吗？', '提示', {
@@ -339,7 +347,7 @@ export default {
           this.$message({
             message: res.message,
             type: 'success',
-            duration: 5 * 1000,
+            duration: 5 * 1000
           })
         })
       }).catch(() => {

@@ -41,7 +41,7 @@ export default {
           name: '',
           email: '',
           avatar: '',
-          introduce: '',
+          introduce: ''
         }
       }
     }

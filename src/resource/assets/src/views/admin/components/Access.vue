@@ -1,22 +1,22 @@
 <template>
-  <el-form :model="data" label-width="100px" ref="form">
+  <el-form ref="form" :model="data" label-width="100px">
     <el-form-item label="管理员账号" prop="name">
       <el-input v-model.trim="name" readonly />
-    </el-form-item>  
+    </el-form-item>
 
     <el-form-item label="用户组" prop="access">
-      <el-tree 
+      <el-tree
         ref="tree"
         :props="props"
         :data="list"
         show-checkbox
         node-key="id"
-        @check-change="treeCheck"
         style="padding-top: 5px;"
         :highlight-current="true"
         :default-expand-all="false"
-        :expand-on-click-node="false">
-      </el-tree>
+        :expand-on-click-node="false"
+        @check-change="treeCheck"
+      />
     </el-form-item>
 
     <el-form-item>
@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import { 
-  getDetail as getAdminDetail, 
-  updateAccess as updateAdminAccess 
+import {
+  getDetail as getAdminDetail,
+  updateAccess as updateAdminAccess
 } from '@/api/admin'
 import { getGroupTreeList } from '@/api/authGroup'
 
@@ -42,19 +42,19 @@ export default {
         return {}
       }
     }
-  },    
-  data() {   
+  },
+  data() {
     return {
       id: '',
       name: '',
       data: {
-        access: '',
+        access: ''
       },
       props: {
         label: 'title'
       },
-      list: [], 
-      checkedids: '', 
+      list: [],
+      checkedids: ''
     }
   },
   watch: {
@@ -67,7 +67,7 @@ export default {
       },
       deep: true
     }
-  },  
+  },
   created() {
     const id = this.item.id
     this.id = id
@@ -76,7 +76,7 @@ export default {
 
     this.featchData()
   },
-  methods: { 
+  methods: {
     featchData() {
       Promise.resolve().then(() => {
         return this.fetchGroups()
@@ -90,22 +90,22 @@ export default {
       return new Promise((resolve, reject) => {
         getAdminDetail(this.id).then(response => {
           const groups = response.data.groups
-  
+
           if (groups.length > 0) {
-            groups.forEach(item => {        
+            groups.forEach(item => {
               const node = thiz.$refs.tree.getNode(item.id)
               if (node['isLeaf']) {
                 thiz.$refs.tree.setChecked(node, true)
               }
-            });
+            })
           }
 
           resolve()
         }).catch(err => {
           reject(err)
-        }) 
+        })
       })
-    },    
+    },
     fetchGroups() {
       return new Promise((resolve, reject) => {
         getGroupTreeList().then((res) => {
@@ -115,7 +115,6 @@ export default {
         }).catch(err => {
           reject(err)
         })
-        
       })
     },
     treeCheck() {

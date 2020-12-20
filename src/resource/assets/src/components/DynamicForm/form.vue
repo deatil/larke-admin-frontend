@@ -14,9 +14,9 @@
         :value="value[item.key]"
         :style="{'min-width':columnMinWidth}"
         @input="handleInput($event, item.key)"
-      ></item>
+      />
     </template>
-    <slot></slot>
+    <slot />
 
   </el-form>
 </template>
@@ -27,38 +27,38 @@ import Item from './item'
 export default {
   components: {
     Item
-  },  
+  },
   props: {
     items: {
       type: Array,
-      required: true,
+      required: true
     },
     value: {
       type: Object,
-      required: true,
+      required: true
     },
     columnMinWidth: {
-      type: String,
-    },
+      type: String
+    }
   },
   mounted() {
-    this.setDefaultValue();
+    this.setDefaultValue()
   },
   methods: {
-    handleInput(val, key) {   
+    handleInput(val, key) {
       if (val instanceof Array) {
-        let newVal = []
+        const newVal = []
 
-        val.forEach((item, index) => { 
+        val.forEach((item, index) => {
           if (item) {
-            newVal.push(item)            
+            newVal.push(item)
           }
         })
 
         val = newVal.join(',')
       }
-      
-      this.$emit('input', { ...this.value, [key]: val });
+
+      this.$emit('input', { ...this.value, [key]: val })
     },
     setDefaultValue() {
       for (var i in this.items) {
@@ -67,9 +67,9 @@ export default {
         const value = item.value
         this.handleInput(value, key)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style>

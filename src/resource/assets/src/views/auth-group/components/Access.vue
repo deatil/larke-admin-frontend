@@ -1,28 +1,28 @@
 <template>
-  <el-form :model="data" label-width="100px" ref="form">
+  <el-form ref="form" :model="data" label-width="100px">
     <el-form-item label="用户组名称" prop="title">
       <el-input v-model.trim="title" readonly />
-    </el-form-item>   
+    </el-form-item>
 
     <el-form-item label="权限路由" prop="access">
-      <el-tree 
+      <el-tree
         ref="tree"
         :props="props"
         :data="list"
         show-checkbox
         node-key="id"
-        @check-change="treeCheck"
         style="padding-top: 5px;"
         :highlight-current="true"
         :default-expand-all="false"
         :expand-on-click-node="false"
+        @check-change="treeCheck"
       >
         <template slot-scope="scope">
           <span class="rule-title" :title="scope.data.title">
             {{ scope.data.title }}【{{ scope.data.method }}】
           </span>
-        </template>            
-      </el-tree>  
+        </template>
+      </el-tree>
     </el-form-item>
 
     <el-form-item>
@@ -45,19 +45,19 @@ export default {
         return {}
       }
     }
-  },    
-  data() {   
+  },
+  data() {
     return {
-      id: '', 
-      title: '',     
+      id: '',
+      title: '',
       data: {
-        access: '',
+        access: ''
       },
       props: {
         label: 'title'
       },
-      list: [], 
-      checkedids: '', 
+      list: [],
+      checkedids: ''
     }
   },
   watch: {
@@ -70,7 +70,7 @@ export default {
       },
       deep: true
     }
-  },  
+  },
   created() {
     const id = this.item.id
     this.id = id
@@ -78,7 +78,7 @@ export default {
 
     this.featchData()
   },
-  methods: { 
+  methods: {
     featchData() {
       Promise.resolve().then(() => {
         return this.fetchRules()
@@ -95,20 +95,20 @@ export default {
           this.data.access = rule_accesses.join(',')
 
           if (rule_accesses.length > 0) {
-            rule_accesses.forEach((i, n) => {        
+            rule_accesses.forEach((i, n) => {
               const node = thiz.$refs.tree.getNode(i)
               if (node['isLeaf']) {
                 thiz.$refs.tree.setChecked(node, true)
               }
-            });
+            })
           }
 
           resolve()
         }).catch(err => {
           reject(err)
-        }) 
+        })
       })
-    },    
+    },
     fetchRules() {
       return new Promise((resolve, reject) => {
         getRuleTreeList().then((res) => {
@@ -117,7 +117,7 @@ export default {
           resolve()
         }).catch(err => {
           reject(err)
-        })  
+        })
       })
     },
     treeCheck() {

@@ -18,7 +18,7 @@
               </el-tab-pane>
               <el-tab-pane label="头像" name="avatar">
                 <avatar :user="user" />
-              </el-tab-pane>              
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -44,13 +44,13 @@ export default {
         name: '',
         email: '',
         avatar: require('@/assets/larke/avatar-default.jpg'),
-        introduce: '',        
+        introduce: ''
       },
       activeTab: 'account'
     }
   },
   computed: {
-    
+
   },
   created() {
     this.getUser()
@@ -64,9 +64,9 @@ export default {
           name: nickname,
           email: email,
           avatar: avatar,
-          introduce: introduce,
+          introduce: introduce
         }
-      })   
+      })
     }
   }
 }

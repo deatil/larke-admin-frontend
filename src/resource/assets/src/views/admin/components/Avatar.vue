@@ -27,9 +27,9 @@ import { updateAvatar } from '@/api/user'
 
 export default {
   name: 'ProfileAvatar',
-  components: { 
-    ImageCropper, 
-    PanThumb 
+  components: {
+    ImageCropper,
+    PanThumb
   },
   props: {
     data: {
@@ -37,23 +37,23 @@ export default {
       default: () => {
         return {
           avatar: '',
-          avatarKey: '',
+          avatarKey: ''
         }
       }
     }
-  },  
+  },
   data() {
     return {
       imagecropperShow: false,
-      imagecropperKey: 0,
+      imagecropperKey: 0
     }
   },
   methods: {
     cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.data.avatar = resData.url 
-      this.data.avatarKey = resData.id 
+      this.data.avatar = resData.url
+      this.data.avatarKey = resData.id
     },
     close() {
       this.imagecropperShow = false

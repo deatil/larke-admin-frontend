@@ -14,7 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    config.headers['Content-Type'] = 'application/json;charset=utf-8';
+    config.headers['Content-Type'] = 'application/json;charset=utf-8'
 
     if (store.getters.token) {
       // let each request carry token
@@ -23,7 +23,7 @@ service.interceptors.request.use(
       // config.headers['X-Token'] = getToken()
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }
-    
+
     return config
   },
   error => {
@@ -33,7 +33,7 @@ service.interceptors.request.use(
   }
 )
 
-let subscribers = []
+const subscribers = []
 let isRefreshing = true
 
 // response interceptor
@@ -50,7 +50,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    
+
     if (res.code !== 0) {
       // ACCESS TOKEN TIMEOUT
       if (res.code === 106) {
@@ -83,7 +83,7 @@ service.interceptors.response.use(
             location.reload()
           })
         })
-      } 
+      }
 
       // AccessToken error;
       else if (res.code === 103 || res.code === 105) {
@@ -92,8 +92,8 @@ service.interceptors.response.use(
           type: 'error',
           duration: 3 * 1000
         })
-      }       
-      
+      }
+
       // 只拦截通用错误
       else if (res.code === 1) {
         Message({

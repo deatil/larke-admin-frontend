@@ -70,7 +70,7 @@ export const constantRoutes = [
         component: () => import('@/views/profile/index'),
         name: 'Profile',
         meta: { title: 'profile', icon: 'user', noCache: true }
-      }     
+      }
     ]
   },
 
@@ -85,8 +85,8 @@ export const constantRoutes = [
         meta: { title: 'icons', icon: 'icon', noCache: true }
       }
     ]
-  },
-    
+  }
+
 ]
 
 /**
@@ -107,7 +107,7 @@ export const asyncRoutes = [
         'larke-admin.config.setting',
         'larke-admin.config.index',
         'larke-admin.frontend.menu.index',
-        'larke-admin.attachment.index',
+        'larke-admin.attachment.index'
       ] // you can set roles in root nav
     },
     children: [
@@ -119,7 +119,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Setting',
           icon: 'el-icon-setting',
-          roles: ['larke-admin.config.setting'] 
+          roles: ['larke-admin.config.setting']
         }
       },
 
@@ -131,7 +131,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Config',
           icon: 'el-icon-s-operation',
-          roles: ['larke-admin.config.index'] 
+          roles: ['larke-admin.config.index']
         }
       },
 
@@ -143,9 +143,9 @@ export const asyncRoutes = [
         meta: {
           title: 'Menu',
           icon: 'list',
-          roles: ['larke-admin.frontend.menu.index'] 
+          roles: ['larke-admin.frontend.menu.index']
         }
-      }, 
+      },
 
       // 附件管理
       {
@@ -155,9 +155,9 @@ export const asyncRoutes = [
         meta: {
           title: 'Attachment',
           icon: 'el-icon-paperclip',
-          roles: ['larke-admin.attachment.index'] 
+          roles: ['larke-admin.attachment.index']
         }
-      },     
+      }
     ]
   },
 
@@ -165,7 +165,7 @@ export const asyncRoutes = [
     path: '/permission',
     component: Layout,
     redirect: '/admin/index',
-    alwaysShow: true, 
+    alwaysShow: true,
     name: 'Permission',
     meta: {
       title: 'Permission',
@@ -174,8 +174,8 @@ export const asyncRoutes = [
         'larke-admin.admin.index',
         'larke-admin.auth-group.index',
         'larke-admin.auth-rule.index',
-        'larke-admin.log.index',
-      ] 
+        'larke-admin.log.index'
+      ]
     },
     children: [
       // 管理员
@@ -186,7 +186,7 @@ export const asyncRoutes = [
         meta: {
           title: 'Admin',
           icon: 'peoples',
-          roles: ['larke-admin.admin.index'] 
+          roles: ['larke-admin.admin.index']
         }
       },
 
@@ -198,7 +198,7 @@ export const asyncRoutes = [
         meta: {
           title: 'AuthGroup',
           icon: 'el-icon-s-operation',
-          roles: ['larke-admin.auth-group.index'] 
+          roles: ['larke-admin.auth-group.index']
         }
       },
       {
@@ -221,7 +221,7 @@ export const asyncRoutes = [
         meta: {
           title: 'AuthRule',
           icon: 'el-icon-menu',
-          roles: ['larke-admin.auth-rule.index'] 
+          roles: ['larke-admin.auth-rule.index']
         }
       },
       {
@@ -244,11 +244,11 @@ export const asyncRoutes = [
         meta: {
           title: 'AdminLog',
           icon: 'el-icon-document-add',
-          roles: ['larke-admin.log.index'] 
+          roles: ['larke-admin.log.index']
         }
-      },      
+      }
 
-    ],
+    ]
   },
 
   {
@@ -273,13 +273,13 @@ export const asyncRoutes = [
           icon: 'component',
           roles: ['larke-admin.extension.index'] // or you can only set roles in sub nav
         }
-      },
+      }
     ]
   },
 
   /** when your routing map is too long, you can split it into small modules **/
   // tableRouter,
-  
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

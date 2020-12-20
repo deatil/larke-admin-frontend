@@ -1,28 +1,29 @@
 <template>
-  <dynamic-form 
-    :items="form.items" 
-    :value="form.value" 
+  <dynamic-form
+    :items="form.items"
+    :value="form.value"
+    :column-min-width="form.columnMinWidth"
     @input="input"
-    :columnMinWidth="form.columnMinWidth">
-      <template slot>
-        <el-form-item>
-          <el-button type="primary" @click="submit">提交</el-button>
-        </el-form-item>  
-      </template>
-    </dynamic-form>   
+  >
+    <template slot>
+      <el-form-item>
+        <el-button type="primary" @click="submit">提交</el-button>
+      </el-form-item>
+    </template>
+  </dynamic-form>
 </template>
 
 <script>
 import DynamicForm from '@/components/DynamicForm/form'
 import { formatExtensionFormItem } from '@/utils'
-import { 
-  updateConfig,
+import {
+  updateConfig
 } from '@/api/extension'
 
 export default {
   name: 'ExtensionSetting',
   components: { DynamicForm },
-  directives: {  },
+  directives: { },
   props: {
     item: {
       type: Object,
@@ -30,59 +31,59 @@ export default {
         return {}
       }
     }
-  }, 
+  },
   data() {
-    return {  
+    return {
       form: {
         items: [],
         value: {},
-        columnMinWidth: '100px',
+        columnMinWidth: '100px'
       },
-      inputs: {},
+      inputs: {}
     }
   },
   created() {
     this.getSettings()
   },
-  methods: { 
+  methods: {
     getSettings() {
-      let data = JSON.parse(JSON.stringify(this.item.data))
+      const data = JSON.parse(JSON.stringify(this.item.data))
 
-      data.forEach(element => { 
+      data.forEach(element => {
         if (element.name in this.item.config) {
           element.value = this.item.config[element.name]
         }
 
         element = formatExtensionFormItem(element)
-        
-        let value = element.value || ''
+
+        const value = element.value || ''
 
         this.form.items.push({
-          "type": element.type,
-          "label": element.title,
-          "value": value,
-          "placeholder": element.description || '',
-          "options": element.options || [],
-          "rules": {},
-          "key": element.name,
-          "show": 1,
+          'type': element.type,
+          'label': element.title,
+          'value': value,
+          'placeholder': element.description || '',
+          'options': element.options || [],
+          'rules': {},
+          'key': element.name,
+          'show': 1
         })
 
-        if (JSON.stringify(this.item.config) == '{}' 
-          || JSON.stringify(this.item.config) == '[]' 
-          || JSON.stringify(this.item.config) == 'null' 
+        if (JSON.stringify(this.item.config) == '{}' ||
+          JSON.stringify(this.item.config) == '[]' ||
+          JSON.stringify(this.item.config) == 'null'
         ) {
           this.inputs = {}
         }
-      });
+      })
     },
     input(data) {
       if (data) {
         this.inputs = Object.assign({}, this.inputs, data)
       }
-    }, 
+    },
     submit() {
-      const thiz = this 
+      const thiz = this
       const data = JSON.stringify(this.inputs)
       updateConfig(this.item.name, {
         config: data
@@ -93,11 +94,11 @@ export default {
           duration: 3 * 1000,
           onClose() {
             thiz.form.items = []
-            thiz.item.dialogVisible = false         
-          }          
+            thiz.item.dialogVisible = false
+          }
         })
       })
-    },
+    }
   }
 }
 </script>

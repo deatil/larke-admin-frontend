@@ -1,24 +1,27 @@
 <template>
-  <el-form :model="data" :rules="rules" label-width="100px" ref="authGroupForm">
+  <el-form ref="authGroupForm" :model="data" :rules="rules" label-width="100px">
     <el-form-item label="父级" prop="parentid">
-      <el-select v-model="data.parentid" placeholder="请选择" 
-        clearable 
+      <el-select
+        v-model="data.parentid"
+        placeholder="请选择"
+        clearable
+        filterable
+        :filter-method="parentFilter"
         @change="parentidChange"
-        filterable 
-        :filter-method="parentFilter">
+      >
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
-      </el-select>            
+      </el-select>
     </el-form-item>
     <el-form-item label="名称" prop="title">
       <el-input v-model.trim="data.title" placeholder="请填写用户组名称" />
-    </el-form-item>         
+    </el-form-item>
     <el-form-item label="描述" prop="description">
-      <el-input type="textarea" v-model.trim="data.description" rows="6" placeholder="请填写用户组描述"></el-input>
-    </el-form-item>      
+      <el-input v-model.trim="data.description" type="textarea" rows="6" placeholder="请填写用户组描述" />
+    </el-form-item>
     <el-form-item label="排序" prop="listorder">
       <el-input v-model.trim="data.listorder" placeholder="请填写排序" />
     </el-form-item>
-    <el-form-item label="状态" prop="status"> 
+    <el-form-item label="状态" prop="status">
       <el-radio-group v-model="data.status">
         <el-radio :label="1">启用</el-radio>
         <el-radio :label="0">禁用</el-radio>
@@ -31,10 +34,10 @@
 </template>
 
 <script>
-import { 
+import {
   getGroupDetail,
   getGroupChildrenList,
-  updateGroup 
+  updateGroup
 } from '@/api/authGroup'
 
 export default {
@@ -47,8 +50,8 @@ export default {
         return {}
       }
     }
-  },   
-  data() {   
+  },
+  data() {
     return {
       all: [],
       chilren: [],
@@ -59,30 +62,30 @@ export default {
         title: '',
         description: '',
         listorder: 100,
-        status: 1,
+        status: 1
       },
-      rules:{
-          parentid:[
-            {required:true, message:'父级用户组不能为空', trigger:'change'}
-          ],
-          title:[
-            {required:true, message:'名称不能为空', trigger:'blur'}
-          ],
-          listorder:[
-            {required:true, message:'排序不能为空', trigger:'blur'}
-          ],                           
-      },      
+      rules: {
+        parentid: [
+          { required: true, message: '父级用户组不能为空', trigger: 'change' }
+        ],
+        title: [
+          { required: true, message: '名称不能为空', trigger: 'blur' }
+        ],
+        listorder: [
+          { required: true, message: '排序不能为空', trigger: 'blur' }
+        ]
+      },
       parentOptions: [
-        { key: '0', display_name: '顶级用户组' },
+        { key: '0', display_name: '顶级用户组' }
       ],
-      parentFilterOptions: [],    
+      parentFilterOptions: []
     }
   },
   watch: {
     item: {
       handler(val, oldVal) {
-        if (this.item.dialogVisible == true 
-          && this.id != val.id
+        if (this.item.dialogVisible == true &&
+          this.id != val.id
         ) {
           this.id = val.id
           this.fetchParents().then(() => {
@@ -98,14 +101,14 @@ export default {
     this.id = id
     this.initData().then(() => {
       this.fetchData(id)
-    })  
+    })
   },
-  methods: {  
+  methods: {
     initData() {
       return new Promise((resolve, reject) => {
         const all = this.getAll()
-        const children = this.getChildren()   
-        
+        const children = this.getChildren()
+
         Promise.all([all, children])
           .then(([all, children]) => {
             this.all = all.list
@@ -124,13 +127,13 @@ export default {
       return new Promise((resolve, reject) => {
         getGroupChildrenList({
           id: 0,
-          type: 'list',
+          type: 'list'
         }).then(res => {
           resolve(res.data)
         }).catch(err => {
           reject(err)
         })
-      })  
+      })
     },
     getChildren() {
       return new Promise((resolve, reject) => {
@@ -142,38 +145,38 @@ export default {
         }).catch(err => {
           reject(err)
         })
-      })  
+      })
     },
     fetchParents() {
       return new Promise((resolve, reject) => {
         this.getChildren().then((res) => {
           this.children = res.list
-  
+
           const all = this.all
           const children = this.children
 
           this.parentOptions = [
-            { key: '0', display_name: '顶级用户组' },
+            { key: '0', display_name: '顶级用户组' }
           ]
           this.parentFilterOptions = []
 
-          children.push(this.id)    
+          children.push(this.id)
           all.forEach(item => {
-            if (! children.includes(item.id)) {
+            if (!children.includes(item.id)) {
               this.parentOptions.push({
-                key: item.id, 
+                key: item.id,
                 display_name: item.spacer + ' ' + item.title
-              })     
-            }      
-          }); 
+              })
+            }
+          })
 
-          this.parentFilterOptions = this.parentOptions 
+          this.parentFilterOptions = this.parentOptions
 
           resolve()
         }).catch(err => {
           reject(err)
-        })   
-      })  
+        })
+      })
     },
     fetchData(id) {
       getGroupDetail(id).then(response => {
@@ -187,8 +190,8 @@ export default {
       this.data.parentid = val
       if (val) {
         this.parentOptions = this.parentFilterOptions.filter(item => {
-          if (!!~item.display_name.indexOf(val)
-            || !!~item.display_name.toUpperCase().indexOf(val.toUpperCase())
+          if (!!~item.display_name.indexOf(val) ||
+            !!~item.display_name.toUpperCase().indexOf(val.toUpperCase())
           ) {
             return true
           }
@@ -202,21 +205,21 @@ export default {
         this.parentOptions = this.parentFilterOptions
         this.data.parentid = val
       }
-    },    
+    },
     submit() {
       const thiz = this
 
       this.$refs.authGroupForm.validate(valid => {
-        if (! valid) {
+        if (!valid) {
           return false
         }
 
-        updateGroup(this.id, {     
+        updateGroup(this.id, {
           parentid: this.data.parentid,
           title: this.data.title,
           description: this.data.description,
           listorder: this.data.listorder,
-          status: this.data.status,
+          status: this.data.status
         }).then(response => {
           this.$message({
             message: '更新用户组信息成功',
@@ -225,14 +228,12 @@ export default {
             onClose() {
               if (thiz.$refs.authGroupForm !== undefined) {
                 thiz.$refs.authGroupForm.resetFields()
-              }            
+              }
               thiz.item.dialogVisible = false
             }
           })
         })
-
       })
-
     }
   }
 }

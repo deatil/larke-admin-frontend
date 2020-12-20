@@ -8,48 +8,54 @@
       <div class="filter-container">
         <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加权限
-        </el-button>    
+        </el-button>
 
         <el-button class="filter-item" style="margin-right: 10px;" icon="tree" @click="handleIndex">
           全部权限
-        </el-button>           
+        </el-button>
       </div>
 
-      <el-table v-loading="listLoading" 
+      <el-table
+        v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-        :data="list" border fit highlight-current-row 
-        style="width: 100%">
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%"
+      >
 
-        <el-table-tree-column :expand-all="treeExpandAll" 
-            file-icon="el-icon-document"  
-            folder-icon="el-icon-folder"
-            prop="title" 
-            levelKey="depth"
-            parentKey='parentid'
-            treeKey='id'
-            :show-overflow-tooltip="true"
-            :indent-size="25"
-            label="名称" 
-            width="250" 
-            class-name="larke-admin-auth-rule-tree"
-            header-align="left">           
-        </el-table-tree-column>
+        <el-table-tree-column
+          :expand-all="treeExpandAll"
+          file-icon="el-icon-document"
+          folder-icon="el-icon-folder"
+          prop="title"
+          level-key="depth"
+          parent-key="parentid"
+          tree-key="id"
+          :show-overflow-tooltip="true"
+          :indent-size="25"
+          label="名称"
+          width="250"
+          class-name="larke-admin-auth-rule-tree"
+          header-align="left"
+        />
 
         <el-table-column min-width="100px" label="链接">
           <template slot-scope="{row}">
             <div>
               <el-tag type="info" size="mini" style="margin-bottom:3px;">
                 {{ row.slug }}
-              </el-tag>              
-            </div> 
-                        
+              </el-tag>
+            </div>
+
             <div>
               <el-tag :type="row.method | methodFilter" size="mini">
                 {{ row.method }}
               </el-tag>
 
               <span style="margin-left: 5px;">{{ row.url }}</span>
-            </div>           
+            </div>
           </template>
         </el-table-column>
 
@@ -58,7 +64,7 @@
             <span>{{ scope.row.listorder }}</span>
           </template>
         </el-table-column>
-        
+
         <el-table-column width="160px" align="center" label="添加时间">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -67,14 +73,14 @@
 
         <el-table-column class-name="status-col" label="状态" width="80">
           <template slot-scope="scope">
-            <el-switch 
-              v-model="scope.row.status" 
+            <el-switch
+              v-model="scope.row.status"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              :active-value="1" 
+              :active-value="1"
               :inactive-value="0"
               @change="changeStatus($event, scope.row, scope.$index)"
-              ></el-switch>
+            />
           </template>
         </el-table-column>
 
@@ -90,7 +96,7 @@
 
             <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
-            </el-button>         
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -102,7 +108,7 @@
 
     <el-dialog title="编辑权限" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
-    </el-dialog>    
+    </el-dialog>
 
     <el-dialog title="权限详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
@@ -117,9 +123,9 @@ import { parseTime } from '@/utils'
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
-import { 
+import {
   getRuleTreeList,
-  getRuleDetail, 
+  getRuleDetail,
   deleteRule,
   updateRuleSort,
   enableRule,
@@ -139,10 +145,10 @@ export default {
         'PUT': 'warning',
         'DELETE': 'danger',
         'PATCH': 'warning',
-        'OPTIONS': 'info',
+        'OPTIONS': 'info'
       }
       return methodMap[method]
-    }, 
+    }
   },
   data() {
     return {
@@ -150,16 +156,16 @@ export default {
       listLoading: true,
       detail: {
         dialogVisible: false,
-        data: [],
+        data: []
       },
       treeExpandAll: false,
       create: {
-        dialogVisible: false,
-      },        
+        dialogVisible: false
+      },
       edit: {
         dialogVisible: false,
-        id: '',
-      },       
+        id: ''
+      }
     }
   },
   created() {
@@ -183,79 +189,79 @@ export default {
           {
             name: 'ID',
             content: data.id,
-            type: 'text',
-          },          
+            type: 'text'
+          },
           {
             name: '父级ID',
             content: data.parentid,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '名称',
             content: data.title,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '权限链接',
             content: data.url,
-            type: 'text',
-          },  
+            type: 'text'
+          },
           {
             name: '请求类型',
             content: data.method,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '地址标识',
             content: data.slug,
-            type: 'text',
-          },                                       
+            type: 'text'
+          },
           {
             name: '描述',
             content: data.description,
-            type: 'text',
+            type: 'text'
           },
           {
             name: '排序',
             content: data.listorder,
-            type: 'text',
-          },    
+            type: 'text'
+          },
           {
             name: '验证权限',
             content: data.is_need_auth,
-            type: 'status',
+            type: 'status'
           },
           {
             name: '状态',
             content: data.status,
-            type: 'boolen',
-          }, 
+            type: 'boolen'
+          },
           {
             name: '更新时间',
             content: data.update_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '更新IP',
             content: data.update_ip,
-            type: 'text',
-          }, 
+            type: 'text'
+          },
           {
             name: '添加时间',
             content: data.create_time,
-            type: 'time',
-          },   
+            type: 'time'
+          },
           {
             name: '添加IP',
             content: data.create_ip,
-            type: 'text',
-          },
+            type: 'text'
+          }
         ]
       })
     },
     handleCreate() {
       this.create.dialogVisible = true
-    },    
+    },
     handleEdit(index, row) {
       this.edit.dialogVisible = true
       this.edit.id = row.id
@@ -269,17 +275,17 @@ export default {
           this.$message({
             message: '权限启用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })    
+        })
       } else {
         disableRule(data.id).then(() => {
           this.$message({
             message: '权限禁用成功',
             type: 'success',
-            duration: 2 * 1000,
+            duration: 2 * 1000
           })
-        })   
+        })
       }
     },
     handleDelete(index, row) {
@@ -302,7 +308,7 @@ export default {
       }).catch(() => {
 
       })
-    },
+    }
 
   }
 }

@@ -1,10 +1,10 @@
 import md5 from 'js-md5'
 import { captcha, login, refreshToken, logout } from '@/api/passport'
 import { getInfo, getRoles } from '@/api/user'
-import { 
+import {
   getToken, setToken, removeToken,
   getTokenExpiresIn, setTokenExpiresIn, removeTokenExpiresIn,
-  getRefreshToken, setRefreshToken, removeRefreshToken  
+  getRefreshToken, setRefreshToken, removeRefreshToken
 } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -14,7 +14,7 @@ const state = {
   refresh_token: getRefreshToken(),
   name: '',
   nickname: '',
-  avatar: '',
+  avatar: require('@/assets/larke/avatar-default.jpg'),
   introduction: '',
   roles: []
 }
@@ -56,14 +56,14 @@ const actions = {
       })
     })
   },
-  
+
   // user login
   login({ commit }, userInfo) {
     const { username, password, captcha, captchaKey } = userInfo
     return new Promise((resolve, reject) => {
-      login({ 
-        name: username.trim(), 
-        password: md5(password), 
+      login({
+        name: username.trim(),
+        password: md5(password),
         captcha: captcha
       }, {
         'Larke-Admin-Captcha-Id': captchaKey
@@ -100,7 +100,7 @@ const actions = {
         commit('SET_NAME', name)
         commit('SET_NICKNAME', nickname)
         commit('SET_AVATAR', avatar)
-        
+
         // commit('SET_INTRODUCTION', introduction)
 
         resolve(data)
@@ -128,7 +128,7 @@ const actions = {
       })
     })
   },
- 
+
   // user logout
   logout({ commit, state, dispatch }) {
     // 请求后台退出，先取消本地存储再请求退出
@@ -141,7 +141,7 @@ const actions = {
         commit('SET_EXPIRED_IN', '')
         commit('SET_REFRESH_TOKEN', '')
         commit('SET_ROLES', [])
-    
+
         removeToken()
         removeTokenExpiresIn()
         removeRefreshToken()
@@ -163,7 +163,7 @@ const actions = {
   refreshToken({ commit }) {
     return new Promise((resolve, reject) => {
       const refresh_token = getRefreshToken()
-      refreshToken({ 
+      refreshToken({
         refresh_token: refresh_token
       }).then(response => {
         const { data } = response
@@ -194,7 +194,7 @@ const actions = {
       removeToken()
       removeTokenExpiresIn()
       removeRefreshToken()
-      
+
       resolve()
     })
   },

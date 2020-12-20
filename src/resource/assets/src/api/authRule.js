@@ -58,7 +58,7 @@ export function clearRule(data) {
   return request({
     url: '/auth/rule/clear',
     method: 'delete',
-    data,
+    data
   })
 }
 

@@ -12,7 +12,7 @@ const mutations = {
   },
   SET_VERSION: (state, version) => {
     state.version = version
-  },  
+  },
   SET_INFO: (state, info) => {
     state.info = info
   }
@@ -33,7 +33,7 @@ const actions = {
         reject(error)
       })
     })
-  },
+  }
 }
 
 export default {

@@ -9,11 +9,12 @@
           <div class="card-panel-text">
             管理员
           </div>
-          <count-to 
-            :start-val="0" 
-            :end-val="admins" 
-            :duration="2600" 
-            class="card-panel-num" />
+          <count-to
+            :start-val="0"
+            :end-val="admins"
+            :duration="2600"
+            class="card-panel-num"
+          />
         </div>
       </div>
     </el-col>
@@ -26,11 +27,12 @@
           <div class="card-panel-text">
             附件
           </div>
-          <count-to 
-            :start-val="0" 
-            :end-val="attachments" 
-            :duration="3000" 
-            class="card-panel-num" />
+          <count-to
+            :start-val="0"
+            :end-val="attachments"
+            :duration="3000"
+            class="card-panel-num"
+          />
         </div>
       </div>
     </el-col>
@@ -61,7 +63,7 @@
           <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
         </div>
       </div>
-    </el-col>    
+    </el-col>
   </el-row>
 </template>
 
@@ -71,24 +73,24 @@ import { getList as getAdminList } from '@/api/admin'
 import { getAttachmentList } from '@/api/attachment'
 
 export default {
-  data() {
-    return {
-      admins: 0,
-      attachments: 0,
-    }
-  },
   components: {
     CountTo
   },
+  data() {
+    return {
+      admins: 0,
+      attachments: 0
+    }
+  },
   created() {
     this.initData()
-  },    
+  },
   methods: {
     initData() {
       const thiz = this
 
       // 管理员
-      getAdminList({  
+      getAdminList({
         start: 1,
         limit: 0
       }).then(response => {
@@ -96,14 +98,14 @@ export default {
       })
 
       // 附件
-      getAttachmentList({  
+      getAttachmentList({
         start: 1,
         limit: 0
       }).then(response => {
         thiz.attachments = response.data.total
       })
     }
-  },
+  }
 }
 </script>
 

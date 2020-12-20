@@ -33,7 +33,7 @@
           </router-link>
           <el-dropdown-item @click.native="clearCache">
             清空缓存
-          </el-dropdown-item>          
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
@@ -80,8 +80,8 @@ export default {
         this.$message({
           message: '清空网站缓存成功',
           type: 'success',
-          duration: 3 * 1000,
-        })        
+          duration: 3 * 1000
+        })
       })
     },
     async logout() {

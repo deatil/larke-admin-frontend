@@ -5,34 +5,35 @@
         <span>网站设置</span>
       </div>
 
-      <el-tabs 
-        type="border-card" 
+      <el-tabs
         v-model="activeName"
+        type="border-card"
         @tab-click="handleClick"
       >
-        <el-tab-pane 
-          v-for="group in groups" 
+        <el-tab-pane
+          v-for="group in groups"
           :key="group.key"
           :name="group.key"
           :label="group.label"
         >
-          <dynamic-form 
+          <dynamic-form
             v-if="group.key === activeName"
-            :items="group.items" 
-            :value="form.value" 
+            :items="group.items"
+            :value="form.value"
+            :column-min-width="form.columnMinWidth"
             @input="input"
-            :columnMinWidth="form.columnMinWidth">
-              <template slot>
-                <el-form-item>
-                  <el-button type="primary" @click="submit">提交</el-button>
-                </el-form-item>  
-              </template>
-            </dynamic-form>
-        </el-tab-pane> 
-      </el-tabs>     
-        
+          >
+            <template slot>
+              <el-form-item>
+                <el-button type="primary" @click="submit">提交</el-button>
+              </el-form-item>
+            </template>
+          </dynamic-form>
+        </el-tab-pane>
+      </el-tabs>
+
     </el-card>
-        
+
   </div>
 </template>
 
@@ -40,16 +41,16 @@
 import DynamicForm from '@/components/DynamicForm/form'
 import { formatOpions, formatFormItem } from '@/utils'
 
-import { 
-  getSettings, 
+import {
+  getSettings,
   setting,
-  getDetail,
+  getDetail
 } from '@/api/config'
 
 export default {
   name: 'ConfigIndex',
   components: { DynamicForm },
-  directives: {  },
+  directives: { },
   filters: {
 
   },
@@ -58,14 +59,14 @@ export default {
       activeName: '',
       list: null,
       groups: [
-        { key: 'loading..', label: '加载中..', items: [] },        
-      ],       
+        { key: 'loading..', label: '加载中..', items: [] }
+      ],
       form: {
         items: [],
         value: {},
-        columnMinWidth: '100px',
+        columnMinWidth: '100px'
       },
-      inputs: {},
+      inputs: {}
     }
   },
   created() {
@@ -73,24 +74,23 @@ export default {
   },
   methods: {
     handleClick(tab) {
-      const tabName =tab.name
+      const tabName = tab.name
     },
     initData() {
       return new Promise((resolve, reject) => {
         const group = this.fetchGroup()
-        const settings = this.getSettings()   
-        
+        const settings = this.getSettings()
+
         Promise.all([group, settings])
           .then(([group, settings]) => {
-
             this.groups.forEach((groupItem, key) => {
               settings.items.forEach(settingItem => {
                 if (groupItem.key == settingItem.group) {
                   this.groups[key].items.push(settingItem)
                 }
-              })              
+              })
             })
-            
+
             this.activeName = this.groups[0].key
             resolve(this.groups)
           })
@@ -98,7 +98,7 @@ export default {
             reject(error)
           })
       })
-    },    
+    },
     fetchGroup() {
       return new Promise((resolve, reject) => {
         getDetail('group').then(response => {
@@ -107,9 +107,9 @@ export default {
           this.groups = []
           data.forEach((item, key) => {
             this.groups.push({
-              key: item.key, 
+              key: item.key,
               label: item.label,
-              items: [],
+              items: []
             })
           })
 
@@ -118,10 +118,9 @@ export default {
           reject(error)
         })
       })
-    },     
+    },
     getSettings() {
       return new Promise((resolve, reject) => {
-      
         getSettings().then(response => {
           this.list = response.data.list
 
@@ -129,30 +128,29 @@ export default {
             element = formatFormItem(element)
 
             this.form.items.push({
-              "group": element.group,
-              "type": element.type,
-              "label": element.title,
-              "value": element.value,
-              "placeholder": element.description,
-              "options": element.options,
-              "rules": {},
-              "key": element.name,
-              "show": element.is_show,
+              'group': element.group,
+              'type': element.type,
+              'label': element.title,
+              'value': element.value,
+              'placeholder': element.description,
+              'options': element.options,
+              'rules': {},
+              'key': element.name,
+              'show': element.is_show
             })
-          });
+          })
 
           resolve(this.form)
         }).catch(error => {
           reject(error)
         })
-
       })
     },
     input(data) {
       if (data) {
         this.inputs = Object.assign({}, this.inputs, data)
       }
-    }, 
+    },
     submit() {
       setting({
         fields: this.inputs
@@ -163,7 +161,7 @@ export default {
           duration: 3 * 1000
         })
       })
-    },
+    }
   }
 }
 </script>
