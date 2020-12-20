@@ -88,7 +88,7 @@ export default {
         config: data
       }).then(() => {
         this.$message({
-          message: '扩展设置更新成功',
+          message: '扩展配置更新成功',
           type: 'success',
           duration: 3 * 1000,
           onClose() {
