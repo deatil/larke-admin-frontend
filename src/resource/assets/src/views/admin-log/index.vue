@@ -254,12 +254,12 @@ export default {
           },
           {
             name: '请求内容',
-            content: data.info,
+            content: JSON.parse(data.info),
             type: 'json',
             depth: 10
           },
           {
-            name: '请求信息',
+            name: 'UA信息',
             content: data.useragent,
             type: 'text'
           },
