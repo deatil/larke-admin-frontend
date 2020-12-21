@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-export default {
+const route = {
   path: '/sign-cert',
   component: Layout,
   redirect: '/sign-cert/hmac',
@@ -63,3 +63,5 @@ export default {
 
   ]
 }
+
+export default route

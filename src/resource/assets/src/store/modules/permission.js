@@ -1,5 +1,4 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-import extensions from '@/utils/extensions'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -51,10 +50,6 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-
-      // 加载扩展路由
-      // asyncRoutes2 = asyncRoutes.context(extensions)
-      console.log(asyncRoutes)
 
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
 

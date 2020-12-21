@@ -45,6 +45,16 @@ export function updateConfig(name, data) {
   })
 }
 
+export function updateSort(id, listorder) {
+  return request({
+    url: `/extension/${id}/sort`,
+    method: 'patch',
+    data: {
+      listorder
+    }
+  })
+}
+
 export function enable(name) {
   return request({
     url: `/extension/${name}/enable`,

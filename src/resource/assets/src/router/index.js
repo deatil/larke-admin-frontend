@@ -6,8 +6,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* Router Modules */
-// import tableRouter from './modules/table'
+/* 扩展路由 */
+import signcert from '@/extension/sign-cert/router'
 
 /**
  * constantRoutes
@@ -277,8 +277,8 @@ export const asyncRoutes = [
     ]
   },
 
-  /** when your routing map is too long, you can split it into small modules **/
-  // tableRouter,
+  // 扩展路由
+  signcert,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

@@ -93,7 +93,22 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" label="安装时间">
+        <el-table-column width="75px" align="center" label="排序">
+          <template slot-scope="{row, $index}">
+            <div @click.stop="{{editableChangeBtn($index, 'editListorderInput')}}">
+              <el-input
+                v-if="sort.editable[$index]"
+                v-model="row.listorder"
+                size="mini"
+                class="editListorderInput"
+                @blur="editableChange($event, row, $index)"
+              />
+              <span v-else>{{ row.listorder }}</span>
+            </div>
+          </template>
+        </el-table-column>        
+
+        <el-table-column width="160px" align="left" label="安装时间">
           <template slot-scope="scope">
             <div class="extension-installtime">
               <el-tooltip effect="dark" content="扩展安装时间" placement="top">
@@ -132,19 +147,23 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="280">
+        <el-table-column align="left" label="操作" width="200">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
-              详情
-            </el-button>
+            <div>
+              <el-button type="primary" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
+                详情
+              </el-button>
 
-            <el-button v-if="JSON.parse(scope.row.config)" type="info" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
-              配置
-            </el-button>
+              <el-button v-if="JSON.parse(scope.row.config)" type="info" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
+                配置
+              </el-button>
+            </div>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">
-              卸载
-            </el-button>
+            <div style="margin-top:5px;">
+              <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">
+                卸载
+              </el-button>              
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -192,6 +211,7 @@ import {
   getList,
   uninstall,
   updateConfig,
+  updateSort,
   enable,
   disable
 } from '@/api/extension'
@@ -234,6 +254,11 @@ export default {
         name: '',
         data: [],
         config: {}
+      },
+      sort: {
+        editable: [],
+        editableItem: {},
+        editableOldSort: 0,    
       }
     }
   },
@@ -259,6 +284,37 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
+    editableChangeBtn(index, className) {
+      this.sort.editable = new Array(this.list.length)
+
+      this.sort.editable[index] = true
+
+      this.sort.editableItem = this.list[index]
+
+      this.$set(this.sort.editable, index, true)
+
+      this.$nextTick(function() {
+        var editInputList = document.getElementsByClassName(className)
+        editInputList[0].children[0].focus()
+      })
+    },
+    editableChange(e, data, index) {
+      this.sort.editable[index] = false
+
+      if (this.sort.editableOldSort == data.listorder) {
+        return
+      }
+
+      this.sort.editableOldSort = data.listorder
+
+      updateSort(data.name, data.listorder).then(() => {
+        this.$message({
+          message: '扩展排序更新成功',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
+    },    
     handleDetail(index, row) {
       this.detail.dialogVisible = true
       const data = row
