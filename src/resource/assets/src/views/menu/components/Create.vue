@@ -11,7 +11,22 @@
       >
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>
+
+      <el-button type="primary" class="fast-select" @click="ruleFastSelect">快速选择</el-button>
     </el-form-item>
+
+    <el-form-item label="快速选择" v-if="rule.visible">
+      <el-select
+        placeholder="请选择权限信息"
+        clearable
+        filterable
+        :filter-method="ruleFilter"
+        v-model="rule.id"
+        @change="ruleChange"
+      >
+        <el-option v-for="item in rule.ruleOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
+      </el-select>      
+    </el-form-item>    
 
     <el-form-item label="名称" prop="title">
       <el-input v-model.trim="data.title" placeholder="请填写菜单名称" />
@@ -52,6 +67,7 @@ import {
   getMenuChildren,
   createMenu
 } from '@/api/menu'
+import { getRuleChildrenList } from '@/api/authRule'
 
 export default {
   name: 'MenuCreate',
@@ -103,11 +119,19 @@ export default {
       parentOptions: [
         { key: '0', display_name: '顶级菜单' }
       ],
-      parentFilterOptions: []
+      parentFilterOptions: [],
+      rule: {
+        visible: false,        
+        id: '',
+        ruleList: [], 
+        ruleOptions: [],
+        ruleFilterOptions: [],  
+      }      
     }
   },
   created() {
     this.initData()
+    this.getRules()
   },
   methods: {
     initData() {
@@ -156,6 +180,68 @@ export default {
         this.parentOptions = this.parentFilterOptions
       }
     },
+
+    ruleFastSelect() {
+      this.rule.visible = !this.rule.visible
+    },
+    getRules() {
+      return new Promise((resolve, reject) => {
+        getRuleChildrenList({
+          id: 0,
+          type: 'list'
+        }).then(res => {
+          this.rule.ruleList = []
+          this.rule.ruleOptions = []
+          this.rule.ruleFilterOptions = []
+
+          res.data.list.forEach(item => {
+            this.rule.ruleList.push(item)
+            this.rule.ruleOptions.push({
+              key: item.id,
+              display_name: item.spacer + ' ' + item.title + '【' + item.method + '】'
+            })
+          })
+
+          this.rule.ruleFilterOptions = this.rule.ruleOptions
+
+          resolve(res.data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },    
+    ruleFilter(val) {
+      if (val) {
+        this.rule.ruleOptions = this.rule.ruleFilterOptions.filter(item => {
+          if (!!~item.display_name.indexOf(val) ||
+            !!~item.display_name.toUpperCase().indexOf(val.toUpperCase())
+          ) {
+            return true
+          }
+        })
+      } else {
+        this.rule.ruleOptions = this.rule.ruleFilterOptions
+      }
+    },
+    ruleChange(val) {
+      if (val) {
+        this.rule.ruleOptions = this.rule.ruleFilterOptions
+        this.rules
+
+        const clickItem = this.rule.ruleList.filter(item => {
+          if (val == item.id) {
+            return true
+          }
+        })
+        const item = clickItem[0]
+        
+        this.data.title = item.title
+        this.data.slug = item.slug
+        this.data.url = item.url
+        this.data.method = item.method
+      }
+    },
+
     submit() {
       const thiz = this
 
@@ -182,3 +268,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.fast-select {
+  margin-left: 15px;
+}
+</style>

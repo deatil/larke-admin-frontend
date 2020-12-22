@@ -6,7 +6,7 @@
       </div>
 
       <el-alert
-        type="warning"
+        type="info"
         title="菜单设置及新增需注意"
         description="菜单权限对当前的前端模版只有标识和层级有使用"
         class="menu-tip"

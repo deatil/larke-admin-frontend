@@ -70,7 +70,7 @@ const actions = {
       }).then(response => {
         const { data } = response
         const token = data.access_token.trim()
-        const expires_in = data.expires_in + Date.parse(new Date())
+        const expires_in = parseInt(data.expires_in) + (Date.parse(new Date())/1000)
         const refresh_token = data.refresh_token
         commit('SET_TOKEN', token)
         commit('SET_EXPIRED_IN', expires_in)

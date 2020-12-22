@@ -1,4 +1,29 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import extensions from '@/utils/extensions'
+
+/** 
+ * 合并扩展路由 
+ */
+function mergeExtension(routes, extensionRoutes) {
+  const res = []
+
+  const route404 = routes.pop()
+
+  routes.forEach(route => {
+    const tmp = { ...route }
+    res.push(tmp)
+  })
+
+  extensionRoutes.forEach(route => {
+    const tmp = { ...route }
+    res.push(tmp)
+  }) 
+
+  const tmp404 = { ...route404 }
+  res.push(tmp404)
+
+  return res  
+}
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -51,7 +76,9 @@ const actions = {
     return new Promise(resolve => {
       let accessedRoutes
 
-      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      const asyncRoutes2 = mergeExtension(asyncRoutes, extensions)
+
+      accessedRoutes = filterAsyncRoutes(asyncRoutes2, roles)
 
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

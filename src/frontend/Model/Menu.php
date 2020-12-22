@@ -192,7 +192,12 @@ class Menu
         
         $menus[] = $data;
         
-        return $this->save($menus);
+        $status = $this->save($menus);
+        if ($status === false) {
+            return false;
+        }
+        
+        return collect($data);
     }
     
     public function update($id, $data = [])

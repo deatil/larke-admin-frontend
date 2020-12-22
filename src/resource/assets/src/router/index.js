@@ -6,9 +6,6 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* 扩展路由 */
-import signcert from '@/extension/sign-cert/router'
-
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -276,9 +273,6 @@ export const asyncRoutes = [
       }
     ]
   },
-
-  // 扩展路由
-  signcert,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
