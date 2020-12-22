@@ -124,6 +124,26 @@ class Menu
         return [];
     }
     
+    public function findBySlug($slug)
+    {
+        if (empty($slug)) {
+            return [];
+        }
+        
+        $menus = $this->read();
+        if (empty($menus)) {
+            return [];
+        }
+        
+        foreach ($menus as $menu) {
+            if ($menu['slug'] == $slug) {
+                return $menu;
+            }
+        }
+        
+        return [];
+    }
+    
     public function findChildren($id)
     {
         if (empty($id)) {
@@ -197,7 +217,7 @@ class Menu
             return false;
         }
         
-        return collect($data);
+        return $data;
     }
     
     public function update($id, $data = [])

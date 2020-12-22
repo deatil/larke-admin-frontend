@@ -44,6 +44,7 @@ class ImportMenus extends Command
                 'method', 
                 'slug', 
                 'listorder as sort',
+                'status', 
             ])
             ->get()
             ->toArray();
