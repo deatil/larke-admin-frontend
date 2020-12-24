@@ -1,5 +1,7 @@
+import { isNumber, arraySort } from '@/utils'
 import { asyncRoutes, constantRoutes } from '@/router'
 import extensions from '@/utils/extensions'
+import routes from '@/routes'
 
 /** 
  * 合并扩展路由 
@@ -23,6 +25,34 @@ function mergeExtension(routes, extensionRoutes) {
   res.push(tmp404)
 
   return res  
+}
+
+/** 菜单排序 */
+function routesSort(route) {
+  const newRoutes = { ...routes }
+
+  let i = 0
+  for (let key in newRoutes) {
+    if (! isNumber(newRoutes[key])) {
+      i++
+      newRoutes[key] = 100+i      
+    }
+  }
+
+  route.forEach(function(item, key) {
+    if (item.name in newRoutes) {
+      const sort = newRoutes[item.name]
+      if (sort == undefined || sort == '') {
+        route[key]['sort'] = 100
+      } else {
+        route[key]['sort'] = sort
+      }
+    } else {
+      route[key]['sort'] = 100
+    }
+  })
+
+  arraySort(route, 'sort')
 }
 
 /**
@@ -76,9 +106,12 @@ const actions = {
     return new Promise(resolve => {
       let accessedRoutes
 
-      const asyncRoutes2 = mergeExtension(asyncRoutes, extensions)
+      const newAsyncRoutes = mergeExtension(asyncRoutes, extensions)
 
-      accessedRoutes = filterAsyncRoutes(asyncRoutes2, roles)
+      // 排序
+      routesSort(newAsyncRoutes)
+
+      accessedRoutes = filterAsyncRoutes(newAsyncRoutes, roles)
 
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

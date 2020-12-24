@@ -48,6 +48,40 @@ Vue.component(ElTreeGrid.name, ElTreeGrid)
 
 Vue.use(JsonViewer)
 
+/* 提示快速封装 */
+Vue.prototype.successTip = function(msg, callback) {
+  this.$message({
+    showClase: true,
+    message: msg,
+    type: 'success',
+    duration: 3 * 1000,
+    onClose: callback
+  })  
+}
+Vue.prototype.errorTip = function(msg, callback) {
+  this.$message({
+    showClase: true,
+    message: msg,
+    type: 'error',
+    duration: 3 * 1000,
+    onClose: callback
+  })  
+}
+Vue.prototype.infoTip = function(msg) {
+  this.$message.info(msg)
+}
+Vue.prototype.confirmTip = function(msg, okCallback, noCallback) {
+  this.$confirm(msg, '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    okCallback()
+  }).catch(() => {
+    noCallback()
+  })
+}
+
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

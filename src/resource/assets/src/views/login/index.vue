@@ -63,9 +63,11 @@
           class="captcha-input"
         />
 
-        <span class="captcha-img" @click="refreshCaptcha">
-          <img :src="captchaImg" :title="$t('login.refresh_captcha')">
-        </span>
+        <el-tooltip effect="light" content="点击刷新验证码" placement="top">
+          <span class="captcha-img" @click="refreshCaptcha">
+            <img :src="captchaImg" :title="$t('login.refresh_captcha')">
+          </span>        
+        </el-tooltip>
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
@@ -351,16 +353,17 @@ $light_gray:#eee;
     width: 65%;
   }
   .captcha-img {
-    width: 110px;
-    height: 47px;
+    width: 100px;
+    height: 39px;
     vertical-align: middle;
     display: inline-block;
-    position: relative;
+    position: absolute;
+    top: 5px;
+    right: 10px;
   }
   .captcha-img img {
     width: 100px;
-    position: absolute;
-    top: 3px;
+    cursor: pointer;
   }
 
   @media only screen and (max-width: 470px) {

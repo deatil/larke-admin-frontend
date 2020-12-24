@@ -323,15 +323,15 @@ class Menu
             return [];
         }
         
-        $roles = app('larke.admin.admin')->getRuleids();
+        $slugs = app('larke.admin.admin')->getRuleSlugs();
         
         $list = collect($menus)
-            ->filter(function($data) use($roles) {
-                if (! isset($data['id'])) {
+            ->filter(function($data) use($slugs) {
+                if (! isset($data['slug'])) {
                     return false;
                 }
                 
-                if (in_array($data['id'], $roles)) {
+                if (in_array($data['slug'], $slugs)) {
                     return true;
                 }
                 

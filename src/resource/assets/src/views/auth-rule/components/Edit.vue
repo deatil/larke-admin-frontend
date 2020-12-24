@@ -265,17 +265,12 @@ export default {
           is_need_auth: this.data.is_need_auth,
           status: this.data.status
         }).then(response => {
-          this.$message({
-            message: '更新权限信息成功',
-            type: 'success',
-            duration: 5 * 1000,
-            onClose() {
+          this.successTip('更新权限信息成功', function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.$refs.authRuleForm.resetFields()
               }
               thiz.item.dialogVisible = false
-            }
-          })
+            })
         })
       })
     }

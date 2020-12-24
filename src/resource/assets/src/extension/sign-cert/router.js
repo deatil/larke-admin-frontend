@@ -19,7 +19,7 @@ const route = {
   children: [
     {
       path: '/sign-cert/hmac',
-      component: () => import('./views/hmac'),
+      component: () => import('./views/hmac/index'),
       name: 'SignCertHmac',
       meta: {
         title: 'SignCertHmac',
@@ -27,32 +27,65 @@ const route = {
         roles: ['larke-admin.sign-cert.hmac']
       }
     },
+    {
+      path: '/sign-cert/hmac-check',
+      component: () => import('./views/hmac/check'),
+      name: 'SignCertHmacCheck',
+      meta: {
+        title: 'SignCertHmacCheck',
+        roles: ['larke-admin.sign-cert.hmac-check'],
+        activeMenu: '/sign-cert/hmac'
+      },
+      hidden: true
+    },
 
     {
       path: '/sign-cert/rsa',
-      component: () => import('./views/rsa'),
-      name: 'SignCertRsa',
+      component: () => import('./views/rsa/index'),
+      name: 'SignCertHmacCheck',
       meta: {
-        title: 'SignCertRsa',
+        title: 'SignCertHmacCheck',
         icon: 'peoples',
         roles: ['larke-admin.sign-cert.rsa']
       }
     },
+    {
+      path: '/sign-cert/rsa-check',
+      component: () => import('./views/rsa/check'),
+      name: 'SignCertRsaCheck',
+      meta: {
+        title: 'SignCertRsaCheck',
+        roles: ['larke-admin.sign-cert.rsa-check'],
+        activeMenu: '/sign-cert/rsa'
+      },
+      hidden: true
+    },
 
     {
       path: '/sign-cert/ecdsa',
-      component: () => import('./views/ecdsa'),
-      name: 'SignCertEcdsa',
+      component: () => import('./views/ecdsa/index'),
+      name: 'SignCertEcdsaCheck',
       meta: {
-        title: 'SignCertEcdsa',
+        title: 'SignCertEcdsaCheck',
         icon: 'peoples',
         roles: ['larke-admin.sign-cert.ecdsa']
       }
     },
+    {
+      path: '/sign-cert/ecdsa-check',
+      component: () => import('./views/ecdsa/check'),
+      name: 'SignCertEcdsa',
+      meta: {
+        title: 'SignCertEcdsa',
+        roles: ['larke-admin.sign-cert.ecdsa-check'],
+        activeMenu: '/sign-cert/ecdsa'
+      },
+      hidden: true
+    },    
 
     {
       path: '/sign-cert/eddsa',
-      component: () => import('./views/eddsa'),
+      component: () => import('./views/eddsa/index'),
       name: 'SignCertEddsa',
       meta: {
         title: 'SignCertEddsa',
@@ -60,6 +93,17 @@ const route = {
         roles: ['larke-admin.sign-cert.eddsa']
       }
     },
+    {
+      path: '/sign-cert/eddsa-check',
+      component: () => import('./views/eddsa/check'),
+      name: 'AuthGroupTree',
+      meta: {
+        title: 'AuthGroupTree',
+        roles: ['larke-admin.sign-cert.eddsa-check'],
+        activeMenu: '/sign-cert/eddsa'
+      },
+      hidden: true
+    },    
 
   ]
 }

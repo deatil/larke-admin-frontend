@@ -177,17 +177,12 @@ export default {
         }
 
         createRule(this.data).then(response => {
-          this.$message({
-            message: '添加权限成功',
-            type: 'success',
-            duration: 2 * 1000,
-            onClose() {
+          this.successTip('添加权限成功', function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.$refs.authRuleForm.resetFields()
               }
               thiz.item.dialogVisible = false
-            }
-          })
+            })
         })
       })
     }

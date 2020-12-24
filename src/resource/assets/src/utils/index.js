@@ -356,6 +356,61 @@ export function removeClass(ele, cls) {
   }
 }
 
+/** 多层级对象合并 */
+export function assiginObj(target, sources) {
+  let newobj = {};
+  let keys1 = Object.keys(target);
+  let keys2 = Object.keys(sources);
+  for (const key of keys1) {
+      if (typeof target[key] === 'object' 
+        && typeof sources[key] === 'object'
+      ) {
+          newobj[key] = assiginObj(target[key], sources[key])
+      } else {
+          let value = keys2.indexOf(key) >= 0 ? sources[key] : target[key]
+          newobj[key] = value
+      }
+  }
+  for (const key of keys2) {
+      if (!newobj[key]) {
+          newobj[key] = sources[key]
+      }
+  }
+  return newobj
+}
+
+// 排序
+export function sortBy(attr, rev) {
+  //第二个参数没有传递 默认升序排列
+  if (rev == undefined) {
+      rev = 1;
+  }else{
+      rev = (rev) ? 1 : -1;
+  }
+   
+  return function(a, b) {
+      a = a[attr];
+      b = b[attr];
+      if (a < b) {
+          return rev * -1;
+      }
+      if (a > b) {
+          return rev * 1;
+      }
+      return 0;
+  }
+}
+
+// 数组对象排序
+export function arraySort(array, attr, rev) {
+  array.sort(sortBy(attr, rev))
+}
+
+// 数字判断
+export function isNumber(value) {
+  return typeof value === 'number' && !isNaN(value);
+}
+
 export function formatOpions(options) {
   const optionArr = options.split(/[(\s\n)\s\n]+/)
   var arr = []
