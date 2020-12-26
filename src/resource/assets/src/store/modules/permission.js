@@ -50,6 +50,10 @@ function routesSort(route) {
     } else {
       route[key]['sort'] = 100
     }
+
+    if (item.children) {
+      routesSort(item.children)
+    }    
   })
 
   arraySort(route, 'sort')

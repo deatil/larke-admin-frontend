@@ -42,9 +42,9 @@ const route = {
     {
       path: '/sign-cert/rsa',
       component: () => import('./views/rsa/index'),
-      name: 'SignCertHmacCheck',
+      name: 'SignCertRsa',
       meta: {
-        title: 'SignCertHmacCheck',
+        title: 'SignCertRsa',
         icon: 'peoples',
         roles: ['larke-admin.sign-cert.rsa']
       }
@@ -64,9 +64,9 @@ const route = {
     {
       path: '/sign-cert/ecdsa',
       component: () => import('./views/ecdsa/index'),
-      name: 'SignCertEcdsaCheck',
+      name: 'SignCertEcdsa',
       meta: {
-        title: 'SignCertEcdsaCheck',
+        title: 'SignCertEcdsa',
         icon: 'peoples',
         roles: ['larke-admin.sign-cert.ecdsa']
       }
@@ -74,9 +74,9 @@ const route = {
     {
       path: '/sign-cert/ecdsa-check',
       component: () => import('./views/ecdsa/check'),
-      name: 'SignCertEcdsa',
+      name: 'SignCertEcdsaCheck',
       meta: {
-        title: 'SignCertEcdsa',
+        title: 'SignCertEcdsaCheck',
         roles: ['larke-admin.sign-cert.ecdsa-check'],
         activeMenu: '/sign-cert/ecdsa'
       },
@@ -96,9 +96,9 @@ const route = {
     {
       path: '/sign-cert/eddsa-check',
       component: () => import('./views/eddsa/check'),
-      name: 'AuthGroupTree',
+      name: 'SignCertEddsaCheck',
       meta: {
-        title: 'AuthGroupTree',
+        title: 'SignCertEddsaCheck',
         roles: ['larke-admin.sign-cert.eddsa-check'],
         activeMenu: '/sign-cert/eddsa'
       },

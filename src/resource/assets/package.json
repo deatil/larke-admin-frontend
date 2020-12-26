@@ -27,6 +27,7 @@
     "fuse.js": "3.4.4",
     "js-cookie": "2.2.0",
     "js-md5": "0.7.3",
+    "js-base64": "3.6.0",
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
     "normalize.css": "7.0.0",
