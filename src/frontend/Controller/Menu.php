@@ -87,12 +87,12 @@ class Menu extends BaseController
      */
     public function indexChildren(Request $request, MenuModel $menuModel)
     {
-        $id = $request->get('id', 0);
+        $id = $request->input('id', 0);
         if (is_array($id)) {
             return $this->error(__('ID错误'));
         }
         
-        $type = $request->get('type');
+        $type = $request->input('type');
         
         $result = $menuModel->getList();
         
@@ -268,7 +268,7 @@ class Menu extends BaseController
      */
     public function saveJson(Request $request, MenuModel $menuModel)
     {
-        $json = $request->get('json');
+        $json = $request->input('json');
         if (empty($json)) {
             return $this->error(__('json不能为空'));
         }
