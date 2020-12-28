@@ -40,6 +40,17 @@ const route = {
     },
 
     {
+      path: '/sign-cert/rsa-pfx',
+      component: () => import('./views/rsa-pfx/index'),
+      name: 'SignCertRsaPfx',
+      meta: {
+        title: 'SignCertRsaPfx',
+        icon: 'peoples',
+        roles: ['larke-admin.sign-cert.rsa-pfx']
+      }
+    },
+
+    {
       path: '/sign-cert/ecdsa',
       component: () => import('./views/ecdsa/index'),
       name: 'SignCertEcdsa',
