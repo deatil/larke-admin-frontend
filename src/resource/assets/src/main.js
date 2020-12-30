@@ -76,9 +76,13 @@ Vue.prototype.confirmTip = function(msg, okCallback, noCallback) {
     cancelButtonText: '取消',
     type: 'warning'
   }).then(() => {
-    okCallback()
+    if (typeof okCallback == 'function') {
+      okCallback()
+    }
   }).catch(() => {
-    noCallback()
+    if (typeof noCallback == 'function') {
+      noCallback()
+    }
   })
 }
 

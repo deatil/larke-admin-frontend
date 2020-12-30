@@ -31,13 +31,13 @@
 
 ### 安装步骤
 
-开始执行以下命令安装前端扩展包
+1. 开始执行以下命令安装前端扩展包
 
 ```php
 composer require lake/larke-admin-frontend
 ```
 
-然后运行下面的命令，推送配置文件及静态文件
+2. 然后运行下面的命令，推送配置文件及静态文件
 
 ```php
 php artisan vendor:publish --tag=larke-admin-frontend-config
@@ -49,17 +49,17 @@ php artisan vendor:publish --tag=larke-admin-frontend-assets
 
 你也可以找到 `config/frontend.php` 配置文件
 
-你可能第一次安装需要运行以下命令更新前端适配菜单信息
+3. 你可能第一次安装需要运行以下命令更新前端适配菜单信息
 
 ```php
 php artisan larke-admin-frontend:import-menus --force
 ```
 
-你可以替换前端文件为你自己的打包好的前端文件
+4. 你可以替换前端文件为你自己的打包好的前端文件
 
 菜单接口可根据包提供的接口更改为适合你的菜单字段
 
-前端编译文档可以查看文档 `public/admin/README.zh-CN.md`
+5. 前端编译文档可以查看文档 `public/admin/README.zh-CN.md`
 
 在编译前你需要复制 `.env.development.larke` 重命名为 `.env.development`，复制 `vue.config.js.larke` 重命名为 `vue.config.js`
 
@@ -68,11 +68,11 @@ php artisan larke-admin-frontend:import-menus --force
 
 感谢以下的项目,排名不分先后
 
-vue
+ - vue
 
-element-ui
+ - element-ui
 
-vue-element-admin-i18n
+ - vue-element-admin-i18n
 
 
 ### 开源协议

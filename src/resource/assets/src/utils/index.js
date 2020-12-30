@@ -411,6 +411,27 @@ export function isNumber(value) {
   return typeof value === 'number' && !isNaN(value);
 }
 
+// json判断
+export function isJson(str) {console.log(str)
+  if (typeof str != 'string') {
+    return false
+  }
+
+  let obj = null
+
+  try {
+    obj = JSON.parse(str)
+  } catch(e) {
+    return false
+  }
+
+  if (typeof obj == 'object' && obj) {
+    return true
+  }
+
+  return false
+}
+
 export function formatOpions(options) {
   const optionArr = options.split(/[(\s\n)\s\n]+/)
   var arr = []

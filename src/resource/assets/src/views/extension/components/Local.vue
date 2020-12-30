@@ -160,6 +160,25 @@ export default {
               thiz.item.dialogVisible = false
             }
           })
+        }).catch((err) => {
+          loading.close()
+
+          if (err.code == 410) {
+            let require = []
+
+            const data = err.data.require
+            err.data.require.forEach(function(item, key) {
+              if (! item.match) {
+                let tmp = item.name + '：'
+                  + ' have(' + (item.install_version || '--') + ')'
+                  + ' need(' + item.version + ')'
+
+                require.push(tmp)
+              }
+            })
+
+            thiz.confirmTip(err.message + "【" + require.join('，') + "】")
+          }
         })
       }).catch(() => {
 
@@ -179,7 +198,7 @@ export default {
           background: 'rgba(0, 0, 0, 0.7)'
         })
 
-        upgrade(row.name).then(() => {
+        upgrade(row.name).then((res) => {
           loading.close()
 
           this.$message({
@@ -190,6 +209,25 @@ export default {
               thiz.item.dialogVisible = false
             }
           })
+        }).catch((err) => {
+          loading.close()
+
+          if (err.code == 410) {
+            let require = []
+
+            const data = err.data.require
+            err.data.require.forEach(function(item, key) {
+              if (! item.match) {
+                let tmp = item.name + '：'
+                  + ' have(' + (item.install_version || '--') + ')'
+                  + ' need(' + item.version + ')'
+
+                require.push(tmp)
+              }
+            })
+
+            thiz.confirmTip(err.message + "【" + require.join('，') + "】")
+          }
         })
       }).catch(() => {
 

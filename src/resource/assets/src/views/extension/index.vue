@@ -362,7 +362,7 @@ export default {
         },
         {
           name: '依赖扩展',
-          content: data.require_extensions,
+          content: data.requires,
           type: 'json',
           depth: 3
         },
