@@ -49,7 +49,7 @@
         <el-table-column min-width="100px" label="简介">
           <template slot-scope="scope">
             <div class="extension-introduce">
-              <span>{{ scope.row.introduce }}</span>
+              <span>{{ scope.row.description }}</span>
             </div>
 
             <div style="margin-top:3px;">
@@ -71,24 +71,19 @@
 
         <el-table-column min-width="100px" label="作者">
           <template slot-scope="scope">
-            <div class="extension-author">
-              <span>
-                <span>{{ scope.row.author }}</span>
-              </span>
-            </div>
+            <div v-for="item in scope.row.authorlist" :key="item.name" class="extension-author">
+              <div>
+                <span style="margin-right:10px;">
+                  <span>{{ item.name }}</span>
+                </span>
+              </div>
 
-            <div style="margin-top:3px;">
-              <el-tag v-if="scope.row.authoremail" type="info" size="mini" style="margin-right:10px;">
-                <i class="el-icon-message" />&nbsp;
-                <span>{{ scope.row.authoremail }}</span>
-              </el-tag>
-            </div>
-
-            <div style="margin-top:3px;">
-              <el-tag v-if="scope.row.authorsite" type="info" size="mini" style="margin-right:10px;">
-                <i class="el-icon-mouse" />&nbsp;
-                <span>{{ scope.row.authorsite }}</span>
-              </el-tag>
+              <div>
+                <el-tag v-if="item.email" type="info" size="mini" style="margin-right:10px;">
+                  <i class="el-icon-message" />&nbsp;
+                  <span>{{ item.email }}</span>
+                </el-tag>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -154,15 +149,15 @@
                 详情
               </el-button>
 
-              <el-button v-if="JSON.parse(scope.row.config)" type="info" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
-                配置
+              <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">
+                卸载
               </el-button>
             </div>
 
             <div style="margin-top:5px;">
-              <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">
-                卸载
-              </el-button>              
+              <el-button v-if="scope.row.config != '[]'" type="info" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
+                配置
+              </el-button>
             </div>
           </template>
         </el-table-column>
@@ -332,34 +327,36 @@ export default {
         },
         {
           name: '当前版本',
-          content: data.version,
+          content: 'v' + data.version,
           type: 'text'
         },
         {
           name: '适配系统版本',
-          content: data.adaptation,
+          content: 'v' + data.adaptation,
           type: 'text'
         },
         {
           name: '描述',
-          content: data.introduce,
+          content: data.description,
           type: 'text'
         },
+        {
+          name: '关键字',
+          content: data.keywordlist,
+          type: 'json',
+          depth: 2
+        },    
+        {
+          name: '项目主页',
+          content: data.homepage,
+          type: 'text'
+        },              
         {
           name: '作者',
-          content: data.author,
-          type: 'text'
-        },
-        {
-          name: '作者邮箱',
-          content: data.authoremail,
-          type: 'text'
-        },
-        {
-          name: '作者网站',
-          content: data.authorsite,
-          type: 'text'
-        },
+          content: data.authorlist,
+          type: 'json',
+          depth: 3
+        },      
         {
           name: '依赖扩展',
           content: data.requires,

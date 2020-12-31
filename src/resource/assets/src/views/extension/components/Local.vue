@@ -25,7 +25,7 @@
     <el-table-column min-width="100px" label="简介">
       <template slot-scope="scope">
         <div style="margin-bottom:3px;">
-          <span>{{ scope.row.introduce }}</span>
+          <span>{{ scope.row.description }}</span>
         </div>
 
         <div>
@@ -64,24 +64,17 @@
 
     <el-table-column min-width="100px" label="作者">
       <template slot-scope="scope">
-        <div class="extension-author" style="margin-bottom:3px;">
-          <span>
-            <span>{{ scope.row.author }}</span>
-          </span>
-        </div>
+        <div v-for="item in scope.row.authors" :key="item.name" class="extension-author">
+          <div class="author-name">
+            <span>{{ item.name }}</span>
+          </div>          
 
-        <div>
-          <el-tag v-if="scope.row.authoremail" type="info" size="mini" style="margin-right:10px;">
-            <i class="el-icon-message" />&nbsp;
-            <span>{{ scope.row.authoremail }}</span>
-          </el-tag>
-        </div>
-
-        <div>
-          <el-tag v-if="scope.row.authorsite" type="info" size="mini" style="margin-right:10px;">
-            <i class="el-icon-mouse" />&nbsp;
-            <span>{{ scope.row.authorsite }}</span>
-          </el-tag>
+          <div class="author-email">
+            <el-tag v-if="item.email" type="info" size="mini">
+              <i class="el-icon-message" />&nbsp;
+              <span>{{ item.email }}</span>
+            </el-tag>
+          </div>  
         </div>
       </template>
     </el-table-column>
@@ -241,5 +234,6 @@ export default {
 .extension-name {
   color: #909399;
   font-size: 13px;
+  margin-bottom: 3px;
 }
 </style>

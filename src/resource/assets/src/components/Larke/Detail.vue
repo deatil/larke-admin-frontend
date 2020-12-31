@@ -6,7 +6,7 @@
       </template>
     </el-table-column>
     <el-table-column align="left" label="内容" min-width="270">
-      <template slot-scope="{row}">
+      <template slot-scope="{row}" v-if="row.content">
         <span v-if="row.type == 'text'">
           {{ row.content }}
         </span>
@@ -25,9 +25,10 @@
           <json-viewer
             :value="row.content"
             :expand-depth="row.depth||5"
+            :preview-mode="row.preview||false"
+            :sort="row.sort||false"
             copyable
             boxed
-            sort
           />
         </span>
 
