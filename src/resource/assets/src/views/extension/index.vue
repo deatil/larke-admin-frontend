@@ -20,7 +20,18 @@
           {{ $t('table.search') }}
         </el-button>
 
-        <el-button class="filter-item" style="margin-right: 10px;" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
+        <el-upload
+          class="filter-item" 
+          style="margin-right: 10px;"
+          action=""
+          :on-change="onUploadChange"
+          :auto-upload="false"
+          :show-file-list="false"
+        >
+          <el-button v-waves slot="trigger" :loading="uploadLoading" type="primary">上传扩展</el-button>
+        </el-upload>        
+
+        <el-button v-waves class="filter-item" style="margin-right: 10px;" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
           安装/更新
         </el-button>
       </div>
@@ -204,6 +215,7 @@ import Local from './components/Local'
 import Setting from './components/Setting'
 import {
   getList,
+  upload,
   uninstall,
   updateConfig,
   updateSort,
@@ -237,6 +249,7 @@ export default {
         { label: '正序', key: 'ASC' },
         { label: '倒叙', key: 'DESC' }
       ],
+      uploadLoading: false,
       detail: {
         dialogVisible: false,
         data: []
@@ -279,6 +292,27 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
+    onUploadChange(file) {
+      this.uploadLoading = true
+
+      const isZip = (file.raw.type === 'application/x-zip-compressed');
+
+      if (!isZip) {
+        this.$message.error('上传扩展只能是zip格式!');
+        return false;
+      }
+
+      const formData = new FormData()
+      formData.append('file', file.raw) 
+
+      upload(formData).then(response => {
+        this.successTip('扩展上传成功')
+
+        this.uploadLoading = false
+      }).catch(response => {
+        this.uploadLoading = false
+      })
+    },     
     editableChangeBtn(index, className) {
       this.sort.editable = new Array(this.list.length)
 

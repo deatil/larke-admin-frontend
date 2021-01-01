@@ -16,6 +16,14 @@ export function getLocalList(params) {
   })
 }
 
+export function upload(data) {
+  return request({
+    url: `/extension/upload`,
+    method: 'post',
+    data
+  })
+}
+
 export function install(name) {
   return request({
     url: `/extension/install/${name}`,
