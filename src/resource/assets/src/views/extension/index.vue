@@ -250,6 +250,7 @@ export default {
         { label: '倒叙', key: 'DESC' }
       ],
       uploadLoading: false,
+      uploadFile: null,
       detail: {
         dialogVisible: false,
         data: []
@@ -304,15 +305,36 @@ export default {
 
       const formData = new FormData()
       formData.append('file', file.raw) 
+
+      this.uploadFile = file.raw
       
+      const thiz = this
+      upload(formData).then(response => {
+        thiz.successTip('扩展上传成功')
+
+        thiz.uploadLoading = false
+        thiz.uploadFile = null
+      }).catch(err => {
+        thiz.uploadLoading = false
+
+        if (err.code == 411) {
+          thiz.confirmTip('扩展已经存在，是否上传覆盖？', function() {
+            thiz.reUpload()
+          })
+        }
+      })
+    }, 
+    reUpload() {
+      const formData = new FormData()
+      formData.append('file', this.uploadFile) 
+      formData.append('force', 1) 
+
       upload(formData).then(response => {
         this.successTip('扩展上传成功')
 
-        this.uploadLoading = false
-      }).catch(response => {
-        this.uploadLoading = false
+        this.uploadFile = null
       })
-    },     
+    },
     editableChangeBtn(index, className) {
       this.sort.editable = new Array(this.list.length)
 
