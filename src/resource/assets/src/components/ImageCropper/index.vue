@@ -147,7 +147,7 @@ export default {
     field: {
       type: String,
       default: 'avatar'
-    },
+    },  
     // 原名key，类似于id，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
     ki: {
       type: Number,
@@ -261,6 +261,8 @@ export default {
       // 需求图宽高比
       ratio: width / height,
       // 原图地址、生成图片地址
+      filemime: null,
+      filename: null,
       sourceImg: null,
       sourceImgUrl: '',
       createImgUrl: '',
@@ -478,6 +480,9 @@ export default {
     },
     // 设置图片源
     setSourceImg(file) {
+      this.filename = file.name
+      this.filemime = file.type
+
       const fr = new FileReader()
       fr.onload = e => {
         this.sourceImgUrl = fr.result
@@ -772,8 +777,8 @@ export default {
       const fmData = new FormData()
       fmData.append(
         field,
-        data2blob(createImgUrl, mime),
-        field + '.' + imgFormat
+        data2blob(createImgUrl, this.filemime),
+        this.filename
       )
       // 添加其他参数
       if (typeof params === 'object' && params) {

@@ -304,7 +304,7 @@ export default {
 
       const formData = new FormData()
       formData.append('file', file.raw) 
-
+      
       upload(formData).then(response => {
         this.successTip('扩展上传成功')
 
