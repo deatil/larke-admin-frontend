@@ -8,6 +8,14 @@
     highlight-current-row
     style="width: 100%"
   >
+    <el-table-column align="center" width="70px" label="Icon">
+      <template slot-scope="scope">
+        <div class="extension-icon">
+          <img :src="scope.row.icon" style="width:90%;" />
+        </div>
+      </template>
+    </el-table-column>
+
     <el-table-column width="120px" label="扩展">
       <template slot-scope="scope">
 
