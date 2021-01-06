@@ -1,17 +1,19 @@
 {
     "name": "lake/larke-admin-frontend",
-    "description": "The library is the larke-admin frontend.",
-    "license": "Apache-2.0",
-    "type": "library",
+    "description": "A frontend for larke-admin with vue2 and element-ui.",
     "keywords": [
-        "lake",
         "larke",
         "admin",
+        "vue",
+        "element-ui",
+        "vue-element-admin",
         "frontend",
         "larke-admin",
         "larke-admin-frontend"
     ],
     "homepage": "https://github.com/deatil/larke-admin-frontend",
+    "type": "library",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "deatil",
@@ -21,7 +23,7 @@
     ],
     "require": {
         "php": "^7.3",
-        "lake/larke-admin":"^1.0"
+        "lake/larke-admin":"1.1.*"
     },
     "autoload": {
         "psr-4": {

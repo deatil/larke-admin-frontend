@@ -13,7 +13,7 @@
         <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
-        <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
           {{ $t('table.search') }}
         </el-button>
       </div>
@@ -63,7 +63,7 @@
 
         <el-table-column align="center" label="操作" width="250">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)">
+            <el-button type="info" size="mini" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 

@@ -15,7 +15,7 @@
       />
 
       <div class="filter-container">
-        <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加菜单
         </el-button>
       </div>
@@ -76,7 +76,7 @@
               编辑
             </el-button>
 
-            <el-button type="primary" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 

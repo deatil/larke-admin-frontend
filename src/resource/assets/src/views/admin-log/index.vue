@@ -6,37 +6,74 @@
       </div>
 
       <div class="filter-container">
-        <el-button
-          v-if="showDeletebtn"
-          class="filter-item"
-          type="warning"
-          style="margin-right: 10px;"
-          @click="handleDeleteList"
-        >
-          删除选中
-        </el-button>
+        <el-row :gutter="10">
+          <el-col :md="6" :sm="8">
+            <div>
+              <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable class="filter-item" @keyup.enter.native="handleFilter" />
+            </div>
+          </el-col>
+          <el-col :md="5" :sm="7">
+            <div>
+              <el-date-picker v-model="listQuery.start_time" format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="选择开始时间" clearable style="width: 100%;" class="filter-item" />
+           </div>            
+          </el-col> 
+          <el-col :md="5" :sm="7">
+            <div>
+              <el-date-picker v-model="listQuery.end_time" format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="选择结束时间" clearable style="width: 100%;" class="filter-item" />       
+            </div>            
+          </el-col>                            
+        </el-row>
 
-        <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 150px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-
-        <el-date-picker v-model="listQuery.start_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择开始时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />
-        <el-date-picker v-model="listQuery.end_time" format="yyyy-MM-dd HH:mm" type="datetime" placeholder="选择结束时间" clearable style="width: 180px;margin-right: 10px;" class="filter-item" />
-
-        <el-select v-model="listQuery.method" placeholder="请求方式" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
-          <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />
-        </el-select>
-        <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 80px;margin-right: 10px;">
-          <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-        </el-select>
-        <el-select v-model="listQuery.order" style="width: 80px;margin-right: 10px;" class="filter-item" @change="handleFilter">
-          <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-        </el-select>
-        <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
-          {{ $t('table.search') }}
-        </el-button>
-
-        <el-button class="filter-item" type="danger" icon="el-icon-delete" @click="handleClear">
-          清空
-        </el-button>
+        <el-row :gutter="10">
+          <el-col v-if="showDeletebtn" :md="3" :sm="3">
+            <div>
+              <el-button
+                v-waves 
+                class="filter-item"
+                type="warning"
+                style="width:100%;"
+                @click="handleDeleteList"
+              >
+                删除选中
+              </el-button>       
+            </div>
+          </el-col>
+          <el-col :md="4" :sm="5">
+            <div>
+              <el-select v-model="listQuery.method" placeholder="请求方式" clearable class="filter-item" style="width: 100%;">
+                <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />
+              </el-select>
+            </div>            
+          </el-col> 
+          <el-col :md="3" :sm="3">
+            <div>
+              <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 100%;">
+                <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+              </el-select>
+            </div>            
+          </el-col>   
+          <el-col :md="3" :sm="3">
+            <div>
+              <el-select v-model="listQuery.order" class="filter-item" @change="handleFilter" style="width: 100%;">
+                <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+              </el-select>   
+            </div>            
+          </el-col> 
+          <el-col :md="3" :sm="3">
+            <div>
+              <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter" style="width: 100%;">
+                {{ $t('table.search') }}
+              </el-button>
+            </div>            
+          </el-col>            
+          <el-col :md="3" :sm="3">
+            <div>
+              <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="handleClear" style="width: 100%;">
+                清空
+              </el-button>
+            </div>            
+          </el-col>  
+        </el-row>
       </div>
 
       <el-table
@@ -92,7 +129,7 @@
 
         <el-table-column align="center" label="操作" width="170">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleDetail(scope.$index, scope.row)">
+            <el-button type="info" size="mini" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 

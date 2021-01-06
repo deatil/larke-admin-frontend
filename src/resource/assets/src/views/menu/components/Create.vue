@@ -12,7 +12,7 @@
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>
 
-      <el-button type="primary" class="fast-select" @click="ruleFastSelect">快速选择</el-button>
+      <el-button :type="!rule.visible ? 'primary' : 'danger'" class="fast-select" @click="ruleFastSelect">{{ !rule.visible ? '快速选择' : '关闭选择' }}</el-button>
     </el-form-item>
 
     <el-form-item label="快速选择" v-if="rule.visible">
@@ -58,6 +58,8 @@
 
     <el-form-item>
       <el-button type="primary" @click="submit">提交</el-button>
+
+      <el-button type="warning" @click="reset">清空</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -242,6 +244,10 @@ export default {
       }
     },
 
+    reset() {
+      this.rule.id = ''
+      this.$refs.menuCreateform.resetFields()
+    },
     submit() {
       const thiz = this
 

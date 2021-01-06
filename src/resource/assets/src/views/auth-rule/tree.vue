@@ -6,11 +6,11 @@
       </div>
 
       <div class="filter-container">
-        <el-button class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加权限
         </el-button>
 
-        <el-button class="filter-item" style="margin-right: 10px;" icon="tree" @click="handleIndex">
+        <el-button class="filter-item" icon="tree" @click="handleIndex">
           全部权限
         </el-button>
       </div>
@@ -90,7 +90,7 @@
               编辑
             </el-button>
 
-            <el-button type="primary" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 

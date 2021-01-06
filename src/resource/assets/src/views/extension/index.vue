@@ -156,7 +156,7 @@
         <el-table-column align="left" label="操作" width="200">
           <template slot-scope="scope">
             <div>
-              <el-button type="primary" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
+              <el-button type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
                 详情
               </el-button>
 
@@ -166,7 +166,7 @@
             </div>
 
             <div style="margin-top:5px;">
-              <el-button v-if="scope.row.config != '[]'" type="info" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
+              <el-button v-if="scope.row.config != '[]'" type="primary" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
                 配置
               </el-button>
             </div>

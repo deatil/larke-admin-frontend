@@ -4,6 +4,7 @@
 ### 项目介绍
 
 *  `larke-admin` 的前端页面及菜单api接口
+*  框架为 `vue2` 和 `element-ui`
 *  本项目为 `后台前端页面`，`后台api服务` 可查看 [Larke Admin](https://github.com/deatil/larke-admin) 项目
 
 
@@ -72,7 +73,7 @@ php artisan larke-admin-frontend:import-menus --force
 
  - element-ui
 
- - vue-element-admin-i18n
+ - vue-element-admin
 
 
 ### 开源协议
