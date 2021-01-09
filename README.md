@@ -64,6 +64,12 @@ php artisan larke-admin-frontend:import-menus --force
 
 在编译前你需要复制 `.env.development.larke` 重命名为 `.env.development`，复制 `vue.config.js.larke` 重命名为 `vue.config.js`
 
+6. 当前编译环境
+
+ - node v9.9.0
+ 
+ - npm 6.14.8
+
 
 ### 特别鸣谢
 

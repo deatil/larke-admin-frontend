@@ -110,6 +110,7 @@ const actions = {
     return new Promise(resolve => {
       let accessedRoutes
 
+      // 合并扩展路由
       const newAsyncRoutes = mergeExtension(asyncRoutes, extensions)
 
       // 排序
