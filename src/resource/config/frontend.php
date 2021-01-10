@@ -6,7 +6,7 @@ return [
     ],
     
     'menu' => [
-        'file' => env('LARKE_ADMIN_FRONTEND_MENU_FILE', database_path('data/menus.json')),
+        'file' => env('LARKE_ADMIN_FRONTEND_MENU_FILE', storage_path('data/menus.json')),
     ],
     
     'role' => [
