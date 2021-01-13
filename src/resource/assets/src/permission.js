@@ -42,8 +42,7 @@ router.beforeEach(async(to, from, next) => {
             next(`/login?redirect=${to.path}`)
             NProgress.done()
             return ;
-          }
-          
+          }         
 
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
