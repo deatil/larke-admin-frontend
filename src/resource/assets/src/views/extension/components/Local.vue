@@ -44,7 +44,7 @@
               </el-tag>
             </el-tooltip>
 
-            <el-tooltip effect="dark" content="当前扩展更新版本" placement="top">
+            <el-tooltip effect="dark" content="当前扩展最新版本" placement="top">
               <el-tag type="danger" size="mini" style="margin-right:10px;">
                 up{{ scope.row.version }}
               </el-tag>
