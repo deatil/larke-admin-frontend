@@ -199,10 +199,12 @@ export default {
             })
             .catch(err => {
               this.$message({
-                message: err || 'Error',
+                message: err.message || 'Error',
                 type: 'error',
                 duration: 2 * 1000
               })
+
+              this.refreshCaptcha()
 
               this.loading = false
             })
