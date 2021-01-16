@@ -16,6 +16,13 @@ export function getLocalList(params) {
   })
 }
 
+export function refreshLocal() {
+  return request({
+    url: '/extension/refresh',
+    method: 'put'
+  })
+}
+
 export function upload(data) {
   return request({
     url: `/extension/upload`,

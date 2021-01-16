@@ -31,9 +31,13 @@
           <el-button v-waves slot="trigger" :loading="uploadLoading" type="primary">上传扩展</el-button>
         </el-upload>        
 
-        <el-button v-waves class="filter-item" style="margin-right: 10px;" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
+        <el-button v-waves class="filter-item" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
           安装/更新
         </el-button>
+
+        <el-button v-waves class="filter-item" type="danger" icon="el-icon-refresh" @click="handleRefresh">
+          刷新
+        </el-button> 
       </div>
 
       <el-table
@@ -215,6 +219,7 @@ import Local from './components/Local'
 import Setting from './components/Setting'
 import {
   getList,
+  refreshLocal,
   upload,
   uninstall,
   updateConfig,
@@ -292,6 +297,17 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
+    },
+    handleRefresh() {
+      const thiz = this
+      this.confirmTip('确认要刷新本地扩展缓存吗？', function() {
+        refreshLocal().then(response => {
+          thiz.successTip('刷新本地扩展缓存成功!', function() {
+            thiz.listQuery.page = 1
+            thiz.getList()
+          });
+        })
+      })
     },
     onUploadChange(file) {
       this.uploadLoading = true
