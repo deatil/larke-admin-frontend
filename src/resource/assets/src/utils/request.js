@@ -95,7 +95,11 @@ service.interceptors.response.use(
       }
 
       // 只拦截通用错误
-      else if (res.code === 1 || res.code === 99997) {
+      else if (res.code === 1 
+        || res.code === 99997
+        || res.code === 99998
+        || res.code === 99999
+      ) {
         Message({
           message: res.message || 'Error',
           type: 'error',

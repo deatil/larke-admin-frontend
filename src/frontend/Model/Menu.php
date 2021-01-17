@@ -14,8 +14,6 @@ class Menu
 {
     /**
      * 检测格式
-     *
-     * @param boolen
      */
     public function validateInfo(array $info)
     {
@@ -36,8 +34,6 @@ class Menu
     
     /**
      * 获取数据
-     *
-     * @param boolen
      */
     public function getFileData($file = null)
     {
@@ -56,8 +52,6 @@ class Menu
     
     /**
      * 保存数据
-     *
-     * @param boolen
      */
     public function saveFileData($data, $file = null)
     {
@@ -79,6 +73,9 @@ class Menu
         return $status;
     }
     
+    /**
+     * 读取
+     */
     public function read($file = null)
     {
         $data = $this->getFileData($file);
@@ -90,6 +87,9 @@ class Menu
         return $content;
     }
     
+    /**
+     * 保存
+     */
     public function save(array $content, $file = null)
     {
         $content = collect($content)
@@ -104,6 +104,9 @@ class Menu
         return $this->saveFileData($data, $file);
     }
     
+    /**
+     * 读取一条
+     */
     public function find($id)
     {
         if (empty($id)) {
@@ -124,6 +127,9 @@ class Menu
         return [];
     }
     
+    /**
+     * 根据slug读取
+     */
     public function findBySlug($slug)
     {
         if (empty($slug)) {
@@ -144,6 +150,9 @@ class Menu
         return [];
     }
     
+    /**
+     * 读取子数据
+     */
     public function findChildren($id)
     {
         if (empty($id)) {
@@ -165,6 +174,9 @@ class Menu
         return $menuChildren;
     }
     
+    /**
+     * 删除
+     */
     public function delete($id)
     {
         if (empty($id)) {
@@ -186,6 +198,9 @@ class Menu
         return false;
     }
     
+    /**
+     * 添加
+     */
     public function insert($data = [])
     {
         if (empty($data)) {
@@ -220,6 +235,9 @@ class Menu
         return $data;
     }
     
+    /**
+     * 更新
+     */
     public function update($id, $data = [])
     {
         if (empty($id)) {
@@ -247,6 +265,9 @@ class Menu
         return $this->save($menus);
     }
     
+    /**
+     * 获取列表
+     */
     public function getList()
     {
         $menus = $this->read();
@@ -257,6 +278,9 @@ class Menu
         return $menus;
     }
     
+    /**
+     * 获取树结构
+     */
     public function getTree($childType = 'child')
     {
         if (empty($childType)) {
@@ -280,7 +304,9 @@ class Menu
     
     /**
      * 获取第一层级子菜单
+     *
      * @param string $id 菜单id
+     *
      * @return array
      */
     public function getChildren($id)
