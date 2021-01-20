@@ -12,7 +12,7 @@ const route =  {
     roles: [
       'larke-admin.config.setting',
       'larke-admin.config.index',
-      'larke-admin.frontend.menu.index',
+      'larke-admin-frontend.menu.index',
       'larke-admin.attachment.index'
     ] // you can set roles in root nav
   },
@@ -49,7 +49,7 @@ const route =  {
       meta: {
         title: 'Menu',
         icon: 'list',
-        roles: ['larke-admin.frontend.menu.index']
+        roles: ['larke-admin-frontend.menu.index']
       }
     },
 

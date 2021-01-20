@@ -16,6 +16,7 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
  * @desc 菜单管理
  * @order 111
  * @auth true
+ * @slug larke-admin-frontend.menu
  *
  * @create 2020-11-3
  * @author deatil

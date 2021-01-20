@@ -14,8 +14,9 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
  * @desc 前端菜单配置
  * @order 110
  * @auth true
+ * @slug larke-admin-frontend.frontend
  *
- * @create 2020-11-4
+ * @create 2020-11-5
  * @author deatil
  */
 class Frontend extends BaseController

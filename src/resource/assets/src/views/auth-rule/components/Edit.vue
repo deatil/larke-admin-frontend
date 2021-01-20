@@ -41,7 +41,7 @@
     <el-form-item label="鉴定权限" prop="is_need_auth">
       <el-radio-group v-model="data.is_need_auth">
         <el-radio :label="1">启用</el-radio>
-        <el-radio :label="0">否</el-radio>
+        <el-radio :label="0">禁用</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item label="状态" prop="status">

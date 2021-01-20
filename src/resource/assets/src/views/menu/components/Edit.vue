@@ -12,7 +12,7 @@
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>
 
-      <el-button type="primary" class="fast-select" @click="ruleFastSelect">快速选择</el-button>
+      <el-button :type="rule.visible ? 'primary' : ''" class="fast-select" @click="ruleFastSelect">{{ rule.visible ? '取消选择' : '快速选择'}}</el-button>
     </el-form-item>
 
     <el-form-item label="快速选择" v-if="rule.visible">
@@ -151,7 +151,7 @@ export default {
     }
   },
   created() {
-    const id = this.item.id
+    const id = String(this.item.id)
     this.id = id
     this.initData().then(() => {
       this.fetchData()
@@ -236,6 +236,7 @@ export default {
     fetchData(id) {
       this.pid = this.item.pid
       this.data = this.item.data
+      this.data.pid = String(this.data.pid)
     },
     parentFilter(val) {
       this.data.pid = val
