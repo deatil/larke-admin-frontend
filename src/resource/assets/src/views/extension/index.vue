@@ -173,6 +173,10 @@
               <el-button v-if="scope.row.config != '[]'" type="primary" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
                 配置
               </el-button>
+
+              <el-button type="warning" size="mini" icon="el-icon-cpu" @click="handleCommand(scope.$index, scope.row)">
+                脚本
+              </el-button>
             </div>
           </template>
         </el-table-column>
@@ -206,6 +210,15 @@
     >
       <setting :item="setting" />
     </el-dialog>
+
+    <el-dialog
+      v-if="command.dialogVisible"
+      title="扩展脚本"
+      append-to-body
+      :visible.sync="command.dialogVisible"
+    >
+      <command :item="command" />
+    </el-dialog>
   </div>
 </template>
 
@@ -217,6 +230,7 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 import Detail from '@/components/Larke/Detail'
 import Local from './components/Local'
 import Setting from './components/Setting'
+import Command from './components/Command'
 import {
   getList,
   refreshLocal,
@@ -230,7 +244,7 @@ import {
 
 export default {
   name: 'ExtensionIndex',
-  components: { Pagination, Detail, Local, Setting },
+  components: { Pagination, Detail, Local, Setting, Command },
   directives: { waves },
   filters: {
   },
@@ -263,16 +277,21 @@ export default {
       local: {
         dialogVisible: false
       },
+      sort: {
+        editable: [],
+        editableItem: {},
+        editableOldSort: 0,    
+      },
       setting: {
         dialogVisible: false,
         name: '',
         data: [],
         config: {}
       },
-      sort: {
-        editable: [],
-        editableItem: {},
-        editableOldSort: 0,    
+      command: {
+        dialogVisible: false,
+        name: '',
+        title: ''
       }
     }
   },
@@ -521,6 +540,11 @@ export default {
       this.setting.name = row.name
       this.setting.data = row.configs
       this.setting.config = row.config_datas
+    },
+    handleCommand(index, row) {
+      this.command.dialogVisible = true
+      this.command.name = row.name
+      this.command.title = row.title
     }
   }
 }

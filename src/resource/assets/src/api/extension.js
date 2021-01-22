@@ -16,6 +16,13 @@ export function getLocalList(params) {
   })
 }
 
+export function getCommand(name) {
+  return request({
+    url: `/extension/command/${name}`,
+    method: 'get'
+  })
+}
+
 export function refreshLocal() {
   return request({
     url: '/extension/refresh',
