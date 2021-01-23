@@ -1,18 +1,14 @@
 export default {
   route: {
-    dashboard: '首页',
+    dashboard: '控制台',
     profile: '我的信息',
     icons: '图标',
 
     System: '系统配置',
-
     Setting: '网站设置',
-
     Config: '配置管理',
-
-    Attachment: '附件管理',
-
     Menu: '菜单管理',
+    Attachment: '附件管理',
 
     Permission: '权限管理',
 
@@ -46,9 +42,6 @@ export default {
     password: '密码',
     captcha: '验证码',
     refresh_captcha: '刷新验证码',
-    any: '随便填',
-    thirdparty: '第三方登录',
-    thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
   },
   permission: {
     addRole: '新增角色',

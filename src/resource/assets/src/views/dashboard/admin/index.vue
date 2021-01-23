@@ -64,7 +64,7 @@ export default {
       var hour = dateObj.getHours()
       var minute = dateObj.getMinutes()
       var second = dateObj.getSeconds()
-      var timeValue = '' + ((hour >= 12) ? (hour >= 18) ? '晚上' : '下午' : '上午')
+      var timeValue = '' + ((hour >= 12) ? ((hour >= 18) ? '晚上' : '下午') : ((hour >= 8) ? '上午' : '凌晨'))
       var newDate = this.dateFilter(year) + '年' + this.dateFilter(month) + '月' + this.dateFilter(date) + '日 ' + ' ' + this.dateFilter(hour) + ':' + this.dateFilter(minute) + ':' + this.dateFilter(second)
       var nowTime = newDate + ' ' + week
       return [nowTime, timeValue]
