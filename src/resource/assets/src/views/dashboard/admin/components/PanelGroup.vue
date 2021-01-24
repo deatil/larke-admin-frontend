@@ -18,6 +18,7 @@
         </div>
       </div>
     </el-col>
+    
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-paperclip">
@@ -98,11 +99,11 @@ export default {
     this.initData()
   },
   methods: {
-    initData() {
+    async initData() {
       const thiz = this
 
       // 管理员
-      getAdminList({
+      await getAdminList({
         start: 1,
         limit: 0
       }).then(response => {
@@ -110,7 +111,7 @@ export default {
       })
 
       // 附件
-      getAttachmentList({
+      await getAttachmentList({
         start: 1,
         limit: 0
       }).then(response => {
@@ -118,7 +119,7 @@ export default {
       })
 
       // 启用扩展
-      getExtensionList({
+      await getExtensionList({
         status: 'open',
         start: 1,
         limit: 0
@@ -127,7 +128,7 @@ export default {
       })
 
       // 用户组
-      getGroupList({
+      await getGroupList({
         start: 1,
         limit: 0
       }).then(response => {
