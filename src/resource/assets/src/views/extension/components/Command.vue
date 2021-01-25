@@ -17,8 +17,20 @@
       <el-input v-model.trim="data.name" readonly />
     </el-form-item>
 
+    <el-form-item label="安装仓库">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository'])" class="filter-item" size="mini" type="primary" @click="handleRepository('register')">
+          安装
+        </el-button> 
+    </el-form-item>
+
     <el-form-item label="安装脚本" prop="description">
       <el-input v-model="data.require" type="textarea" rows="3" placeholder="扩展的composer安装脚本" />
+    </el-form-item>
+
+    <el-form-item label="卸载仓库">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository'])" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
+          卸载
+        </el-button> 
     </el-form-item>
 
     <el-form-item label="卸载脚本" prop="description">
@@ -32,11 +44,15 @@
 </template>
 
 <script>
-import { getCommand } from '@/api/extension'
+import waves from '@/directive/waves' // waves directive
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
+import { getCommand, repository } from '@/api/extension'
 
 export default {
   name: 'ExtensionCommand',
   components: { },
+  directives: { waves, permission },
   props: {
     item: {
       type: Object,
@@ -75,10 +91,19 @@ export default {
     this.featchData()
   },
   methods: {
+    checkPermission,
     featchData() {
       getCommand(this.data.name).then(response => {
         this.data.require = response.data.command.require
         this.data.remove = response.data.command.remove
+      })
+    },
+    handleRepository(type) {
+      const thiz = this
+      this.confirmTip('该项操作会修改composer.josn文件，确认要进行操作吗？', function() {
+        repository(thiz.data.name, type).then(response => {
+          thiz.successTip('操作成功')
+        })
       })
     },
     close() {

@@ -91,3 +91,12 @@ export function disable(name) {
   })
 }
 
+export function repository(name, type) {
+  return request({
+    url: `/extension/repository/${name}`,
+    method: 'put',
+    data: {
+      type
+    }
+  })
+}
