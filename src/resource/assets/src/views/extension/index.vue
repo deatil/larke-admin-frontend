@@ -28,14 +28,14 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button v-waves slot="trigger" :loading="uploadLoading" type="primary">上传扩展</el-button>
+          <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.upload'])" slot="trigger" :loading="uploadLoading" type="primary">上传扩展</el-button>
         </el-upload>        
 
-        <el-button v-waves class="filter-item" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.local'])" class="filter-item" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
           安装/更新
         </el-button>
 
-        <el-button v-waves class="filter-item" type="danger" icon="el-icon-refresh" @click="handleRefresh">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.refresh'])" class="filter-item" type="danger" icon="el-icon-refresh" @click="handleRefresh">
           刷新
         </el-button> 
       </div>
@@ -111,6 +111,7 @@
                 v-model="row.listorder"
                 size="mini"
                 class="editListorderInput"
+                :disabled="!checkPermission(['larke-admin.extension.listorder'])"
                 @blur="editableChange($event, row, $index)"
               />
               <span v-else>{{ row.listorder }}</span>
@@ -152,6 +153,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
+              :disabled="!checkPermission(['larke-admin.extension.enable', 'larke-admin.extension.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -160,21 +162,21 @@
         <el-table-column align="left" label="操作" width="200">
           <template slot-scope="scope">
             <div>
-              <el-button type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
+              <el-button v-waves type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
                 详情
               </el-button>
 
-              <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">
+              <el-button v-waves v-permission="['larke-admin.extension.uninstall']" type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">
                 卸载
               </el-button>
             </div>
 
             <div style="margin-top:5px;">
-              <el-button v-if="scope.row.config != '[]'" type="primary" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
+              <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.config'])" v-if="scope.row.config != '[]'" type="primary" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
                 配置
               </el-button>
 
-              <el-button type="warning" size="mini" icon="el-icon-cpu" @click="handleCommand(scope.$index, scope.row)">
+              <el-button v-waves v-permission="['larke-admin.extension.command']" type="warning" size="mini" icon="el-icon-cpu" @click="handleCommand(scope.$index, scope.row)">
                 脚本
               </el-button>
             </div>
@@ -225,6 +227,8 @@
 <script>
 import md5 from 'js-md5'
 import waves from '@/directive/waves' // waves directive
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Detail from '@/components/Larke/Detail'
@@ -245,7 +249,7 @@ import {
 export default {
   name: 'ExtensionIndex',
   components: { Pagination, Detail, Local, Setting, Command },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
   },
   data() {
@@ -299,6 +303,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
       getList({

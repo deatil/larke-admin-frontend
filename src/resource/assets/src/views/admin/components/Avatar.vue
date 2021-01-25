@@ -26,7 +26,7 @@ import PanThumb from '@/components/PanThumb'
 import { updateAvatar } from '@/api/user'
 
 export default {
-  name: 'ProfileAvatar',
+  name: 'AdminAvatar',
   components: {
     ImageCropper,
     PanThumb

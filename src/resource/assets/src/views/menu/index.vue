@@ -15,7 +15,7 @@
       />
 
       <div class="filter-container">
-        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin-frontend.menu.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加菜单
         </el-button>
       </div>
@@ -72,7 +72,7 @@
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin-frontend.menu.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
@@ -80,7 +80,7 @@
               详情
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin-frontend.menu.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -105,6 +105,8 @@
 <script>
 import md5 from 'js-md5'
 import waves from '@/directive/waves' // waves directive
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import { parseTime } from '@/utils'
 import Detail from '@/components/Larke/Detail'
 import Create from './components/Create'
@@ -117,7 +119,7 @@ import {
 export default {
   name: 'MenuIndex',
   components: { Detail, Edit, Create },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
     methodFilter(method) {
       const methodMap = {
@@ -155,6 +157,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
 

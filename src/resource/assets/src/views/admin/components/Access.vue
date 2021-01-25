@@ -4,7 +4,7 @@
       <el-input v-model.trim="name" readonly />
     </el-form-item>
 
-    <el-form-item label="用户组" prop="access">
+    <el-form-item label="分组" prop="access">
       <el-tree
         ref="tree"
         :props="props"

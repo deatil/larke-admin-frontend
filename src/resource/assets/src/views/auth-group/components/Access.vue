@@ -1,6 +1,6 @@
 <template>
   <el-form ref="form" :model="data" label-width="100px">
-    <el-form-item label="用户组名称" prop="title">
+    <el-form-item label="分组名称" prop="title">
       <el-input v-model.trim="title" readonly />
     </el-form-item>
 
@@ -132,7 +132,7 @@ export default {
         access: this.checkedids
       }).then(response => {
         this.$message({
-          message: '用户组授权成功',
+          message: '分组授权成功',
           type: 'success',
           duration: 2 * 1000,
           onClose() {

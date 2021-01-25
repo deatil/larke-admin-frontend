@@ -63,7 +63,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            用户组
+            分组
           </div>
           <count-to 
             :start-val="0" 
@@ -127,7 +127,7 @@ export default {
         thiz.extensions = response.data.total
       })
 
-      // 用户组
+      // 分组
       await getGroupList({
         start: 1,
         limit: 0

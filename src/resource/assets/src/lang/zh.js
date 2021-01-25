@@ -15,8 +15,8 @@ export default {
     Admin: '管理员',
     AdminIndex: '管理员列表',
 
-    AuthGroup: '用户组',
-    AuthGroupTree: '用户组结构',
+    AuthGroup: '管理分组',
+    AuthGroupTree: '分组结构',
 
     AuthRule: '权限路由',
     AuthRuleTree: '权限结构',

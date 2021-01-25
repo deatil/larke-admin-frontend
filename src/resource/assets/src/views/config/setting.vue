@@ -48,7 +48,7 @@ import {
 } from '@/api/config'
 
 export default {
-  name: 'ConfigIndex',
+  name: 'ConfigSetting',
   components: { DynamicForm },
   directives: { },
   filters: {

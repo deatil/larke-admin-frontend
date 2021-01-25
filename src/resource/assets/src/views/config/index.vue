@@ -24,7 +24,7 @@
           {{ $t('table.search') }}
         </el-button>
 
-        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button :disabled="!checkPermission(['larke-admin.config.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
         </el-button>
       </div>
@@ -71,6 +71,7 @@
                 v-model="row.listorder"
                 size="mini"
                 class="editListorderInput"
+                :disabled="!checkPermission(['larke-admin.config.listorder'])"
                 @blur="editableChange($event, row, $index)"
               />
               <span v-else>{{ row.listorder }}</span>
@@ -92,6 +93,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
+              :disabled="!checkPermission(['larke-admin.config.enable', 'larke-admin.config.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -99,15 +101,15 @@
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.config.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
-            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.config.detail'])" type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.config.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -135,6 +137,8 @@
 <script>
 import md5 from 'js-md5'
 import waves from '@/directive/waves'
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import { parseTime, formatOpions } from '@/utils'
 import Pagination from '@/components/Pagination'
 import Detail from '@/components/Larke/Detail'
@@ -153,7 +157,7 @@ import {
 export default {
   name: 'ConfigIndex',
   components: { Pagination, Detail, Edit, Create },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
 
   },
@@ -202,6 +206,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     fetchGroup() {
       return new Promise((resolve, reject) => {
         getDetail('group').then(response => {

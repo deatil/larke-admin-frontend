@@ -6,7 +6,7 @@
       </div>
 
       <div class="filter-container">
-        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button :disabled="!checkPermission(['larke-admin.auth-rule.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           添加权限
         </el-button>
 
@@ -44,8 +44,15 @@
         <el-table-column min-width="100px" label="链接">
           <template slot-scope="{row}">
             <div>
-              <el-tag type="info" size="mini" style="margin-bottom:3px;">
-                {{ row.slug }}
+              <el-tag type="info" size="mini" style="margin-bottom:3px;" @click="handleClipboard(row.slug, $event)">
+                <el-tooltip placement="top">
+                  <div slot="content">
+                    点击复制 {{ row.slug }}
+                  </div>
+                  <div class="slug-item">
+                    {{ row.slug }}
+                  </div>
+                </el-tooltip> 
               </el-tag>
             </div>
 
@@ -79,6 +86,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
+              :disabled="!checkPermission(['larke-admin.auth-rule.enable', 'larke-admin.auth-rule.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -86,15 +94,15 @@
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-rule.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
-            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.auth-rule.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -119,6 +127,9 @@
 <script>
 import md5 from 'js-md5'
 import waves from '@/directive/waves' // waves directive
+import clipboard from '@/utils/clipboard'
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import { parseTime } from '@/utils'
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
@@ -135,7 +146,7 @@ import {
 export default {
   name: 'AuthRuleTree',
   components: { Detail, Edit, Create },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
     methodFilter(method) {
       const methodMap = {
@@ -172,6 +183,10 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
+    handleClipboard(text, event) {
+      clipboard(text, event)
+    },
     getList() {
       this.listLoading = true
 
@@ -325,5 +340,8 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.slug-item {
+  cursor: pointer;
 }
 </style>

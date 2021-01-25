@@ -20,11 +20,11 @@
           {{ $t('table.search') }}
         </el-button>
 
-        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.admin.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
         </el-button>
 
-        <el-button class="filter-item" type="danger" icon="el-icon-switch-button" @click="handleLogout">
+        <el-button v-waves v-permission="['larke-admin.admin.delete']" class="filter-item" type="danger" icon="el-icon-switch-button" @click="handleLogout">
           账号退出
         </el-button>
       </div>
@@ -52,7 +52,7 @@
 
         <el-table-column width="100px" align="center" label="授权">
           <template slot-scope="scope">
-            <el-button type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
+            <el-button type="warning" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" @click="handleAccess(scope.$index, scope.row)">
               授权
             </el-button>
           </template>
@@ -72,6 +72,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
+              :disabled="!checkPermission(['larke-admin.admin.enable', 'larke-admin.admin.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -79,19 +80,19 @@
 
         <el-table-column align="center" label="操作" width="320">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.admin.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
-            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.admin.detail'])" type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button type="warning" size="mini" style="margin-left:10px;" @click="handlePassword(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.admin.password'])" type="warning" size="mini" style="margin-left:10px;" @click="handlePassword(scope.$index, scope.row)">
               改密
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.admin.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -146,6 +147,8 @@ import md5 from 'js-md5'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
@@ -163,7 +166,7 @@ import {
 export default {
   name: 'AdminIndex',
   components: { Pagination, Detail, Edit, Create, Access },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
 
   },
@@ -218,6 +221,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
       getList({
@@ -280,7 +284,7 @@ export default {
             type: 'text'
           },
           {
-            name: '用户组',
+            name: '分组',
             content: data.groups,
             type: 'arr2str',
             arrkey: 'title'

@@ -58,7 +58,7 @@ import { formatOpions } from '@/utils'
 import { getDetail, update } from '@/api/config'
 
 export default {
-  name: 'AdminEdit',
+  name: 'ConfigEdit',
   components: { },
   props: {
     item: {

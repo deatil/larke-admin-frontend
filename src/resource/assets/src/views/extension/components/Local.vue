@@ -89,11 +89,11 @@
 
     <el-table-column align="center" label="操作" width="100">
       <template slot-scope="scope">
-        <el-button v-if="scope.row.install.length == 0" type="primary" size="mini" @click="handleInstall(scope.$index, scope.row)">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.install'])" v-if="scope.row.install.length == 0" type="primary" size="mini" @click="handleInstall(scope.$index, scope.row)">
           安装
         </el-button>
 
-        <el-button v-if="scope.row.upgrade == 1" type="warning" size="mini" @click="handleUpgrade(scope.$index, scope.row)">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.upgrade'])" v-if="scope.row.upgrade == 1" type="warning" size="mini" @click="handleUpgrade(scope.$index, scope.row)">
           更新
         </el-button>
       </template>
@@ -102,6 +102,9 @@
 </template>
 
 <script>
+import waves from '@/directive/waves' // waves directive
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import {
   getLocalList,
   install,
@@ -111,6 +114,7 @@ import {
 export default {
   name: 'ExtensionLocal',
   components: { },
+  directives: { waves, permission },
   props: {
     item: {
       type: Object,
@@ -130,6 +134,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
       getLocalList().then(response => {

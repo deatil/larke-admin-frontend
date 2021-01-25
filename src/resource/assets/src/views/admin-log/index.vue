@@ -32,6 +32,7 @@
                 class="filter-item"
                 type="warning"
                 style="width:100%;"
+                :disabled="!checkPermission(['larke-admin.log.clear'])"
                 @click="handleDeleteList"
               >
                 删除选中
@@ -68,7 +69,7 @@
           </el-col>            
           <el-col :md="3" :sm="3">
             <div>
-              <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="handleClear" style="width: 100%;">
+              <el-button v-waves class="filter-item" type="danger" :disabled="!checkPermission(['larke-admin.log.clear'])" icon="el-icon-delete" @click="handleClear" style="width: 100%;">
                 清空
               </el-button>
             </div>            
@@ -129,11 +130,11 @@
 
         <el-table-column align="center" label="操作" width="170">
           <template slot-scope="scope">
-            <el-button type="info" size="mini" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.log.detail'])" type="info" size="mini" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.log.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -152,6 +153,8 @@
 <script>
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import Detail from '@/components/Larke/Detail'
 import { getList, getDetail, deleteLog, clearLog } from '@/api/adminlog'
@@ -159,7 +162,7 @@ import { getList, getDetail, deleteLog, clearLog } from '@/api/adminlog'
 export default {
   name: 'AdminLogIndex',
   components: { Pagination, Detail },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
     methodFilter(method) {
       const methodMap = {
@@ -225,6 +228,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
       getList({

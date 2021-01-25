@@ -63,15 +63,15 @@
 
         <el-table-column align="center" label="操作" width="250">
           <template slot-scope="scope">
-            <el-button type="info" size="mini" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.attachment.detail'])" type="info" size="mini" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button type="warning" size="mini" @click="handleDownload(scope.row.id)">
+            <el-button :disabled="!checkPermission(['larke-admin.attachment.download-code', 'larke-admin.attachment.download'])" type="warning" size="mini" @click="handleDownload(scope.row.id)">
               下载
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.attachment.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -91,6 +91,8 @@
 import waves from '@/directive/waves' // waves directive
 import { parseTime, renderSize } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import Detail from '@/components/Larke/Detail'
 import {
   getAttachmentList,
@@ -103,9 +105,9 @@ import {
 } from '@/api/attachment'
 
 export default {
-  name: 'AdminLogIndex',
+  name: 'AttachmentIndex',
   components: { Pagination, Detail },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -145,6 +147,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
       getAttachmentList({

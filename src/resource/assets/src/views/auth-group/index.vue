@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>用户组</span>
+        <span>分组</span>
       </div>
 
       <div class="filter-container">
@@ -20,12 +20,12 @@
           {{ $t('table.search') }}
         </el-button>
 
-        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
+        <el-button :disabled="!checkPermission(['larke-admin.auth-group.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
         </el-button>
 
-        <el-button class="filter-item" icon="tree" @click="handleTree">
-          用户组结构
+        <el-button v-permission="['larke-admin.auth-group.index-tree']" class="filter-item" icon="tree" @click="handleTree">
+          分组结构
         </el-button>
       </div>
 
@@ -47,7 +47,7 @@
 
         <el-table-column width="100px" align="center" label="授权">
           <template slot-scope="scope">
-            <el-button type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-group.access'])" type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
               授权
             </el-button>
           </template>
@@ -61,6 +61,7 @@
                 v-model="row.listorder"
                 size="mini"
                 class="editListorderInput"
+                :disabled="!checkPermission(['larke-admin.auth-group.listorder'])"
                 @blur="editableChange($event, row, $index)"
               />
               <span v-else>{{ row.listorder }}</span>
@@ -82,6 +83,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
+              :disabled="!checkPermission(['larke-admin.auth-group.enable', 'larke-admin.auth-group.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -89,15 +91,15 @@
 
         <el-table-column align="center" label="操作" width="260">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-group.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
-            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-group.detail'])" type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.auth-group.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
@@ -107,19 +109,19 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog title="添加用户组" :visible.sync="create.dialogVisible">
+    <el-dialog title="添加分组" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog title="编辑用户组" :visible.sync="edit.dialogVisible" @close="closeEdit">
+    <el-dialog title="编辑分组" :visible.sync="edit.dialogVisible" @close="closeEdit">
       <edit :item="edit" />
     </el-dialog>
 
-    <el-dialog title="用户组详情" :visible.sync="detail.dialogVisible">
+    <el-dialog title="分组详情" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-dialog title="用户组授权" :visible.sync="access.dialogVisible">
+    <el-dialog title="分组授权" :visible.sync="access.dialogVisible">
       <access :item="access" />
     </el-dialog>
   </div>
@@ -130,6 +132,8 @@ import md5 from 'js-md5'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
@@ -148,7 +152,7 @@ import {
 export default {
   name: 'AuthGroupIndex',
   components: { Pagination, Detail, Edit, Create, Access },
-  directives: { waves },
+  directives: { waves, permission },
   filters: {
   },
   data() {
@@ -196,6 +200,7 @@ export default {
     this.getList()
   },
   methods: {
+    checkPermission,
     getList() {
       this.listLoading = true
       getGroupList({

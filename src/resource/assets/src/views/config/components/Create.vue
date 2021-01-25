@@ -58,7 +58,7 @@ import { formatOpions } from '@/utils'
 import { getDetail, create } from '@/api/config'
 
 export default {
-  name: 'AdminCreate',
+  name: 'ConfigCreate',
   components: { },
   props: {
     item: {

@@ -121,7 +121,7 @@ export default {
         { key: 'OPTIONS', display_name: 'OPTIONS' }
       ],
       parentOptions: [
-        { key: '0', display_name: '顶级用户组' }
+        { key: '0', display_name: '顶级分组' }
       ],
       parentFilterOptions: [],
       rule: {

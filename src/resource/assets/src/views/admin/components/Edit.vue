@@ -62,7 +62,7 @@ export default {
         name: '',
         nickname: '',
         email: '',
-        avatar: '',
+        avatar: require('@/assets/larke/avatar-default.jpg'),
         avatarKey: '',
         introduce: '',
         status: 1
@@ -89,8 +89,11 @@ export default {
   },
   methods: {
     fetchData(id) {
+      const defaultAvatar = require('@/assets/larke/avatar-default.jpg')
+
       getDetail(id).then(response => {
         this.data = response.data
+        this.data.avatar = this.data.avatar || defaultAvatar
       }).catch(err => {
         console.log(err)
       })

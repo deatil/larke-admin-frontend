@@ -29,7 +29,7 @@ const route =  {
       }
     },
 
-    // 用户组
+    // 分组
     {
       path: '/auth/group/index',
       component: () => import('@/views/auth-group/index'),

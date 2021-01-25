@@ -13,10 +13,10 @@
       </el-select>
     </el-form-item>
     <el-form-item label="名称" prop="title">
-      <el-input v-model.trim="data.title" placeholder="请填写用户组名称" />
+      <el-input v-model.trim="data.title" placeholder="请填写分组名称" />
     </el-form-item>
     <el-form-item label="描述" prop="description">
-      <el-input v-model.trim="data.description" type="textarea" rows="6" placeholder="请填写用户组描述" />
+      <el-input v-model.trim="data.description" type="textarea" rows="6" placeholder="请填写分组描述" />
     </el-form-item>
     <el-form-item label="排序" prop="listorder">
       <el-input v-model.trim="data.listorder" placeholder="请填写排序" />
@@ -66,7 +66,7 @@ export default {
       },
       rules: {
         parentid: [
-          { required: true, message: '父级用户组不能为空', trigger: 'change' }
+          { required: true, message: '父级分组不能为空', trigger: 'change' }
         ],
         title: [
           { required: true, message: '名称不能为空', trigger: 'blur' }
@@ -76,7 +76,7 @@ export default {
         ]
       },
       parentOptions: [
-        { key: '0', display_name: '顶级用户组' }
+        { key: '0', display_name: '顶级分组' }
       ],
       parentFilterOptions: []
     }
@@ -156,7 +156,7 @@ export default {
           const children = this.children
 
           this.parentOptions = [
-            { key: '0', display_name: '顶级用户组' }
+            { key: '0', display_name: '顶级分组' }
           ]
           this.parentFilterOptions = []
 
@@ -222,7 +222,7 @@ export default {
           status: this.data.status
         }).then(response => {
           this.$message({
-            message: '更新用户组信息成功',
+            message: '更新分组信息成功',
             type: 'success',
             duration: 5 * 1000,
             onClose() {
