@@ -28,7 +28,7 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.upload'])" slot="trigger" :loading="uploadLoading" type="primary">上传扩展</el-button>
+          <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.upload'])" slot="trigger" :loading="uploadLoading" type="primary" icon="el-icon-upload">上传扩展</el-button>
         </el-upload>        
 
         <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.local'])" class="filter-item" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
@@ -86,7 +86,7 @@
 
         <el-table-column min-width="100px" label="作者">
           <template slot-scope="scope">
-            <div v-for="item in scope.row.authorlist" :key="item.name" class="extension-author">
+            <div v-for="item in scope.row.authorlist.slice(0, 1)" :key="item.name" class="extension-author">
               <div>
                 <span style="margin-right:10px;">
                   <span>{{ item.name }}</span>
@@ -105,7 +105,7 @@
 
         <el-table-column width="75px" align="center" label="排序">
           <template slot-scope="{row, $index}">
-            <div @click.stop="{{editableChangeBtn($index, 'editListorderInput')}}">
+            <div @click.stop="{{ editableChangeBtn($index, 'editListorderInput') }}">
               <el-input
                 v-if="sort.editable[$index]"
                 v-model="row.listorder"
@@ -412,7 +412,7 @@ export default {
 
       this.detail.data = [
         {
-          name: '扩展',
+          name: '扩展包名',
           content: data.name,
           type: 'text'
         },
@@ -423,12 +423,12 @@ export default {
         },
         {
           name: '当前版本',
-          content: 'v' + data.version,
+          content: data.version,
           type: 'text'
         },
         {
           name: '适配系统版本',
-          content: 'v' + data.adaptation,
+          content: data.adaptation,
           type: 'text'
         },
         {

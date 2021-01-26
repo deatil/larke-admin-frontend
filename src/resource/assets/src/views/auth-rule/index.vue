@@ -127,17 +127,17 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="260">
+        <el-table-column align="center" label="操作" width="280">
           <template slot-scope="scope">
             <el-button :disabled="!checkPermission(['larke-admin.auth-rule.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
-            <el-button :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button v-permission="['larke-admin.auth-rule.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin.auth-rule.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>

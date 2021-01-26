@@ -3,7 +3,7 @@
     <el-alert
         type="warning"
         title="特别注意"
-        description="扩展脚本是为了非composer扩展可以下载依赖使用的脚本，如果使用composer下载的扩展可不用使用脚本"
+        description="扩展脚本是为了非composer扩展可以下载依赖使用的脚本，如果使用composer下载的扩展可不用使用该脚本。使用 '注册仓库' 后只需要执行命令 'composer require vendor/package' 即可"
         style="margin-bottom:15px;"
         show-icon
         :closable="false"
@@ -18,7 +18,7 @@
     </el-form-item>
 
     <el-form-item label="注册仓库">
-        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-register'])" class="filter-item" size="mini" type="primary" @click="handleRepository('register')">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-register']) || data.has_repository" class="filter-item" size="mini" type="primary" @click="handleRepository('register')">
           仓库注册扩展
         </el-button> 
         <div class="text-grey">
@@ -31,7 +31,7 @@
     </el-form-item>
 
     <el-form-item label="移除仓库">
-        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-remove'])" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-remove']) || !data.has_repository" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
           仓库移除扩展
         </el-button> 
         <div class="text-grey">
@@ -78,6 +78,7 @@ export default {
         title: '',
         require: '',
         remove: '',
+        has_repository: false,
       },
     }
   },
@@ -106,6 +107,7 @@ export default {
       getCommand(this.data.name).then(response => {
         this.data.require = response.data.command.require
         this.data.remove = response.data.command.remove
+        this.data.has_repository = response.data.command.has_repository
       })
     },
     handleRepository(type) {
@@ -114,10 +116,12 @@ export default {
         if (type == 'register') {
           repositoryRegister(thiz.data.name).then(response => {
             thiz.successTip(response.message)
+            thiz.data.has_repository = true
           })
         } else {
           repositoryRemove(thiz.data.name).then(response => {
             thiz.successTip(response.message)
+            thiz.data.has_repository = false
           })
         }
       })

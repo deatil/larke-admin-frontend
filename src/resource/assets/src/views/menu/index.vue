@@ -6,7 +6,7 @@
       </div>
 
       <el-alert
-        type="success"
+        type="warning"
         title="菜单设置及新增需注意"
         description="菜单权限对当前的前端模版只有标识和层级有使用"
         class="menu-tip"
@@ -70,17 +70,17 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="260">
+        <el-table-column align="center" label="操作" width="280">
           <template slot-scope="scope">
             <el-button :disabled="!checkPermission(['larke-admin-frontend.menu.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               编辑
             </el-button>
 
-            <el-button type="info" size="mini" style="margin-left:10px;" @click="handleDetail(scope.$index, scope.row)">
+            <el-button type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
               详情
             </el-button>
 
-            <el-button v-permission="['larke-admin-frontend.menu.delete']" type="danger" size="mini" icon="el-icon-delete" style="margin-left:10px;" @click="handleDelete(scope.$index, scope.row)">
+            <el-button v-permission="['larke-admin-frontend.menu.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
               删除
             </el-button>
           </template>
