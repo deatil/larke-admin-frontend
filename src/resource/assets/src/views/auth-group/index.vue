@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>分组</span>
+        <span>管理分组</span>
       </div>
 
       <div class="filter-container">
