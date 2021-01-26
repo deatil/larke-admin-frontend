@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" label-width="100px">
     <el-alert
-        type="success"
+        type="warning"
         title="特别注意"
         description="扩展脚本是为了非composer扩展可以下载依赖使用的脚本，如果使用composer下载的扩展可不用使用脚本"
         style="margin-bottom:15px;"
@@ -17,20 +17,26 @@
       <el-input v-model.trim="data.name" readonly />
     </el-form-item>
 
-    <el-form-item label="安装仓库">
-        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository'])" class="filter-item" size="mini" type="primary" @click="handleRepository('register')">
-          安装
+    <el-form-item label="注册仓库">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-register'])" class="filter-item" size="mini" type="primary" @click="handleRepository('register')">
+          仓库注册扩展
         </el-button> 
+        <div class="text-grey">
+          本地扩展注册到composer.json仓库，在安装脚本不成功时使用
+        </div>
     </el-form-item>
 
     <el-form-item label="安装脚本" prop="description">
       <el-input v-model="data.require" type="textarea" rows="3" placeholder="扩展的composer安装脚本" />
     </el-form-item>
 
-    <el-form-item label="卸载仓库">
-        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository'])" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
-          卸载
+    <el-form-item label="移除仓库">
+        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-remove'])" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
+          仓库移除扩展
         </el-button> 
+        <div class="text-grey">
+          本地扩展从composer.json仓库移除，在卸载脚本不成功时使用
+        </div>
     </el-form-item>
 
     <el-form-item label="卸载脚本" prop="description">
@@ -47,7 +53,11 @@
 import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
-import { getCommand, repository } from '@/api/extension'
+import { 
+  getCommand, 
+  repositoryRegister, 
+  repositoryRemove 
+} from '@/api/extension'
 
 export default {
   name: 'ExtensionCommand',
@@ -101,9 +111,15 @@ export default {
     handleRepository(type) {
       const thiz = this
       this.confirmTip('该项操作会修改composer.josn文件，确认要进行操作吗？', function() {
-        repository(thiz.data.name, type).then(response => {
-          thiz.successTip('操作成功')
-        })
+        if (type == 'register') {
+          repositoryRegister(thiz.data.name).then(response => {
+            thiz.successTip(response.message)
+          })
+        } else {
+          repositoryRemove(thiz.data.name).then(response => {
+            thiz.successTip(response.message)
+          })
+        }
       })
     },
     close() {

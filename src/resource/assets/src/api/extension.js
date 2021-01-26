@@ -91,12 +91,17 @@ export function disable(name) {
   })
 }
 
-export function repository(name, type) {
+export function repositoryRegister(name) {
   return request({
-    url: `/extension/repository/${name}`,
-    method: 'put',
-    data: {
-      type
-    }
+    url: `/extension/${name}/repository-register`,
+    method: 'put'
   })
 }
+
+export function repositoryRemove(name) {
+  return request({
+    url: `/extension/${name}/repository-remove`,
+    method: 'put'
+  })
+}
+
