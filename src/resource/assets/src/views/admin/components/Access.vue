@@ -7,11 +7,11 @@
     <el-form-item label="分组" prop="access">
       <el-tree
         ref="tree"
+        class="admin-access"
         :props="props"
         :data="list"
         show-checkbox
         node-key="id"
-        style="padding-top: 5px;"
         :highlight-current="true"
         :default-expand-all="false"
         :expand-on-click-node="false"
@@ -144,3 +144,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.admin-access {
+  background-color: #FFFFFF;
+  background-image: none;
+  border-radius: 5px;
+  border: 1px solid #DCDFE6;
+  padding: 8px 5px;
+}
+</style>
