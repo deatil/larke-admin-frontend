@@ -77,44 +77,30 @@ export default {
     this.featchData()
   },
   methods: {
-    featchData() {
-      Promise.resolve().then(() => {
-        return this.fetchGroups()
-      }).then(() => {
-        return this.fetchAdminDetail()
-      })
+    async featchData() {
+      await this.fetchGroups()
+
+      await this.fetchAdminDetail()
     },
     fetchAdminDetail() {
       const thiz = this
 
-      return new Promise((resolve, reject) => {
-        getAdminDetail(this.id).then(response => {
-          const groups = response.data.groups
+      return getAdminDetail(this.id).then(response => {
+        const groups = response.data.groups
 
-          if (groups.length > 0) {
-            groups.forEach(item => {
-              const node = thiz.$refs.tree.getNode(item.id)
-              if (node['isLeaf']) {
-                thiz.$refs.tree.setChecked(node, true)
-              }
-            })
-          }
-
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+        if (groups.length > 0) {
+          groups.forEach(item => {
+            const node = thiz.$refs.tree.getNode(item.id)
+            if (node['isLeaf']) {
+              thiz.$refs.tree.setChecked(node, true)
+            }
+          })
+        }
       })
     },
     fetchGroups() {
-      return new Promise((resolve, reject) => {
-        getGroupTreeList().then((res) => {
-          this.list = res.data.list
-
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+      return getGroupTreeList().then((res) => {
+        this.list = res.data.list
       })
     },
     treeCheck() {

@@ -79,45 +79,31 @@ export default {
     this.featchData()
   },
   methods: {
-    featchData() {
-      Promise.resolve().then(() => {
-        return this.fetchRules()
-      }).then(() => {
-        return this.fetchGroupDetail()
-      })
+    async featchData() {
+      await this.fetchRules()
+
+      await this.fetchGroupDetail()
     },
     fetchGroupDetail() {
       const thiz = this
 
-      return new Promise((resolve, reject) => {
-        getGroupDetail(this.id).then(response => {
-          const rule_accesses = response.data.rule_accesses
-          this.data.access = rule_accesses.join(',')
+      return getGroupDetail(this.id).then(response => {
+        const rule_accesses = response.data.rule_accesses
+        this.data.access = rule_accesses.join(',')
 
-          if (rule_accesses.length > 0) {
-            rule_accesses.forEach((i, n) => {
-              const node = thiz.$refs.tree.getNode(i)
-              if (node['isLeaf']) {
-                thiz.$refs.tree.setChecked(node, true)
-              }
-            })
-          }
-
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+        if (rule_accesses.length > 0) {
+          rule_accesses.forEach((i, n) => {
+            const node = thiz.$refs.tree.getNode(i)
+            if (node['isLeaf']) {
+              thiz.$refs.tree.setChecked(node, true)
+            }
+          })
+        }
       })
     },
     fetchRules() {
-      return new Promise((resolve, reject) => {
-        getRuleTreeList().then((res) => {
-          this.list = res.data.list
-
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+      return getRuleTreeList().then((res) => {
+        this.list = res.data.list
       })
     },
     treeCheck() {
