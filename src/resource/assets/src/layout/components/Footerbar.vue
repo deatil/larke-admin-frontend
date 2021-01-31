@@ -1,6 +1,6 @@
 <template>
   <div class="footerbar">
-    <span class="copyright">Copyright@{{ systemName }} v{{ systemVersion }}</span>
+    <span class="copyright">Copyright@{{ systemTitle }} v{{ systemVersion }}</span>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   name: 'Footer',
   computed: {
     ...mapGetters([
-      'systemName',
+      'systemTitle',
       'systemVersion'
     ])
   },

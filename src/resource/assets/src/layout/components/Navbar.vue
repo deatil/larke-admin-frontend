@@ -76,12 +76,14 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     clearCache() {
-      clearCache().then(() => {
-        this.$message({
-          message: '清空网站缓存成功',
-          type: 'success',
-          duration: 3 * 1000
-        })
+      clearCache().then((res) => {
+        if (res.code == 0) {
+          this.$message({
+            message: '清空网站缓存成功',
+            type: 'success',
+            duration: 3 * 1000
+          })
+        }
       })
     },
     async logout() {

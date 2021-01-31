@@ -83,6 +83,8 @@ service.interceptors.response.use(
             location.reload()
           })
         })
+
+        return false;
       }
 
       // AccessToken error;
@@ -92,6 +94,8 @@ service.interceptors.response.use(
           type: 'error',
           duration: 3 * 1000
         })
+
+        return false;
       }
 
       // 只拦截通用错误

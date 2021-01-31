@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-editor-container">
+  <div class="dashboard-container">
 
     <el-card class="admin-tip">
       {{ nickname }} {{ nowTimeCall }}好，当前的时间为：{{ nowTime }}
@@ -7,23 +7,46 @@
 
     <panel-group />
 
-    <el-row :gutter="12">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}" style="padding-right:8px;margin-bottom:30px;">
-        <system-table />
+    <el-row :gutter="32">
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <raddar-chart />
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <pie-chart />
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <bar-chart />
+        </div>
       </el-col>
     </el-row>
+
+    <component :is="currentSystem" />
   </div>
 </template>
 
 <script>
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
 import PanelGroup from './components/PanelGroup'
 import SystemTable from './components/SystemTable'
+import RaddarChart from './components/RaddarChart'
+import PieChart from './components/PieChart'
+import BarChart from './components/BarChart'
 
 export default {
   name: 'DashboardAdmin',
   components: {
     PanelGroup,
-    SystemTable
+    SystemTable,
+
+    RaddarChart,
+    PieChart,
+    BarChart,
   },
   data() {
     return {
@@ -32,7 +55,9 @@ export default {
       nowTime: '',
       nowTimeCall: '晚上',
 
-      timer: ''
+      timer: '',
+
+      currentSystem: 'SystemTable',
     }
   },
   created() {
@@ -42,6 +67,10 @@ export default {
     }
 
     this.timer = setInterval(this.setNowTime, 1000)
+
+    if (! checkPermission(['larke-admin.system.info'])) {
+      this.currentSystem = ''
+    }
   },
   beforeDestroy() {
     clearInterval(this.timer)
@@ -82,16 +111,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard-editor-container {
+.dashboard-container {
   padding: 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
 
-  .github-corner {
-    position: absolute;
-    top: 0px;
-    border: 0;
-    right: 0;
+  .chart-wrapper {
+    background: #fff;
+    padding: 16px 16px 0;
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width:1024px) {
+  .chart-wrapper {
+    padding: 8px;
   }
 }
 </style>

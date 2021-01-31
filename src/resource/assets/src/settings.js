@@ -2,6 +2,12 @@ module.exports = {
   title: 'Larke Admin',
 
   /**
+   * @type {string} 
+   * @description Laeke-Admin frontend version
+   */
+  version: '1.1.6',
+
+  /**
    * @type {boolean} true | false
    * @description Whether show the settings right-panel
    */

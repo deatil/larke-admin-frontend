@@ -78,6 +78,8 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
 import { getList as getAdminList } from '@/api/admin'
 import { getAttachmentList } from '@/api/attachment'
 import { getList as getExtensionList } from '@/api/extension'
@@ -102,38 +104,46 @@ export default {
     async initData() {
       const thiz = this
 
-      // 管理员
-      await getAdminList({
-        start: 1,
-        limit: 0
-      }).then(response => {
-        thiz.admins = response.data.total
-      })
+      if (checkPermission(['larke-admin.admin.index'])) {
+        // 管理员
+        await getAdminList({
+          start: 1,
+          limit: 0
+        }).then(response => {
+          thiz.admins = response.data.total
+        })
+      }
 
-      // 附件
-      await getAttachmentList({
-        start: 1,
-        limit: 0
-      }).then(response => {
-        thiz.attachments = response.data.total
-      })
+      if (checkPermission(['larke-admin.attachment.index'])) {
+        // 附件
+        await getAttachmentList({
+          start: 1,
+          limit: 0
+        }).then(response => {
+          thiz.attachments = response.data.total
+        })
+      }
 
-      // 启用扩展
-      await getExtensionList({
-        status: 'open',
-        start: 1,
-        limit: 0
-      }).then(response => {
-        thiz.extensions = response.data.total
-      })
+      if (checkPermission(['larke-admin.extension.index'])) {
+        // 启用扩展
+        await getExtensionList({
+          status: 'open',
+          start: 1,
+          limit: 0
+        }).then(response => {
+          thiz.extensions = response.data.total
+        })
+      }
 
-      // 分组
-      await getGroupList({
-        start: 1,
-        limit: 0
-      }).then(response => {
-        thiz.groups = response.data.total
-      })
+      if (checkPermission(['larke-admin.auth-group.index'])) {
+        // 分组
+        await getGroupList({
+          start: 1,
+          limit: 0
+        }).then(response => {
+          thiz.groups = response.data.total
+        })
+      }
     }
   }
 }

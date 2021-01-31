@@ -50,9 +50,6 @@ router.beforeEach(async(to, from, next) => {
           // dynamically add accessible routes
           router.addRoutes(accessRoutes)
 
-          // system info
-          store.dispatch('system/getInfo')
-
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
