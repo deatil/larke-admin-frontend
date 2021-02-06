@@ -44,5 +44,14 @@ module.exports = {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  errorLog: 'production'
+  errorLog: 'production',
+
+  /**
+   * @type array
+   * @description Lang map
+   */
+  langMap: {
+    'en': 'en',
+    'zh': 'zh-cn'
+  }
 }

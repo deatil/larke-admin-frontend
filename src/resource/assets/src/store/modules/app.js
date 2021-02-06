@@ -1,5 +1,8 @@
 import Cookies from 'js-cookie'
 import { getLanguage } from '@/lang/index'
+import { setLang } from '@/api/system'
+import settings from './settings'
+import user from './user'
 
 const state = {
   sidebar: {
@@ -32,6 +35,13 @@ const mutations = {
   SET_LANGUAGE: (state, language) => {
     state.language = language
     Cookies.set('language', language)
+
+    if (user.state.token != '') {
+      const langMap = settings.state.langMap
+      if (language in langMap) {
+        setLang(langMap[language])
+      }
+    }
   },
   SET_SIZE: (state, size) => {
     state.size = size

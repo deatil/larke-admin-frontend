@@ -11,7 +11,20 @@ export function getLang(group, locale = '') {
   return request({
     url: '/system/lang',
     method: 'get',
-    params: { group, locale }
+    params: { 
+      group, 
+      locale 
+    }
+  })
+}
+
+export function setLang(locale = '') {
+  return request({
+    url: '/system/set-lang',
+    method: 'put',
+    params: { 
+      locale 
+    }
   })
 }
 

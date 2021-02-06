@@ -356,6 +356,29 @@ export function removeClass(ele, cls) {
   }
 }
 
+function getPathFileName(path) {
+  var pos = path.lastIndexOf('/');
+  return path.substring(pos + 1);
+}
+
+// 获取文件名
+export function getFileName (name) {
+  const newName = getPathFileName(name)
+  return newName.substring(0, newName.lastIndexOf("."))
+}
+
+// 获取 .后缀名
+export function getFileDotExtension (name) {
+  const newName = getPathFileName(name)
+  return namnewNamee.substring(newName.lastIndexOf("."))
+}
+
+// 只获取后缀名
+export function getFileExtension (name) {
+  const newName = getPathFileName(name)
+  return newName.substring(newName.lastIndexOf(".")+1)
+}
+
 /** 多层级对象合并 */
 export function assiginObj(target, sources) {
   let newobj = {};

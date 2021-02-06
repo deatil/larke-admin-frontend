@@ -8,7 +8,8 @@ const {
   tagsView, 
   fixedHeader, 
   sidebarLogo, 
-  supportPinyinSearch 
+  supportPinyinSearch,
+  langMap
 } = defaultSettings
 
 const state = {
@@ -19,7 +20,8 @@ const state = {
   tagsView,
   fixedHeader,
   sidebarLogo,
-  supportPinyinSearch
+  supportPinyinSearch,
+  langMap
 }
 
 const mutations = {
