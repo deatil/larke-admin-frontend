@@ -49,6 +49,14 @@
         highlight-current-row
         style="width: 100%"
       >
+        <el-table-column align="center" width="70px" label="Icon">
+          <template slot-scope="scope">
+            <div class="extension-icon" @click="handleShowIcon(scope.$index, scope.row)">
+              <img :src="scope.row.icon" style="width:90%;" />
+            </div>
+          </template>
+        </el-table-column>
+
         <el-table-column width="150px" label="扩展">
           <template slot-scope="scope">
             <div class="extension-title">
@@ -187,6 +195,12 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
+    <el-dialog 
+      :visible.sync="icon.dialogVisible" 
+      :title="icon.title">
+      <img :src="icon.img" class="extension-icon-img">
+    </el-dialog>
+
     <el-dialog
       title="扩展详情"
       append-to-body
@@ -274,6 +288,11 @@ export default {
       ],
       uploadLoading: false,
       uploadFile: null,
+      icon: {
+        title: '',
+        img: '',
+        dialogVisible: false
+      },
       detail: {
         dialogVisible: false,
         data: []
@@ -374,6 +393,11 @@ export default {
 
         this.uploadFile = null
       })
+    },
+    handleShowIcon(index, row) {
+      this.icon.title = row.title
+      this.icon.img = row.icon
+      this.icon.dialogVisible = true
     },
     editableChangeBtn(index, className) {
       this.sort.editable = new Array(this.list.length)
@@ -573,5 +597,16 @@ export default {
 }
 .extension-upgradetime {
   color: #909399;
+}
+.extension-icon {
+  display: block;
+  margin: 0 auto;
+  width: 100%;  
+  cursor: pointer;
+}
+.extension-icon-img {
+  display: block;
+  margin: 0 auto;
+  width: 65%;
 }
 </style>

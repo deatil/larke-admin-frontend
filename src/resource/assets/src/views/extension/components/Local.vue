@@ -263,16 +263,16 @@ export default {
 </script>
 
 <style scoped>
+.extension-name {
+  color: #909399;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
 .extension-icon {
   display: block;
   margin: 0 auto;
   width: 100%;  
   cursor: pointer;
-}
-.extension-name {
-  color: #909399;
-  font-size: 13px;
-  margin-bottom: 3px;
 }
 .extension-icon-img {
   display: block;
