@@ -57,7 +57,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="150px" label="扩展">
+        <el-table-column width="130px" label="扩展">
           <template slot-scope="scope">
             <div class="extension-title">
               <span>{{ scope.row.title }}</span>
