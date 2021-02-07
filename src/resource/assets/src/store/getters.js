@@ -17,6 +17,7 @@ const getters = {
 
   systemTitle: state => state.settings.title,
   systemVersion: state => state.settings.version,
+  langMap: state => state.settings.langMap,
 
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs

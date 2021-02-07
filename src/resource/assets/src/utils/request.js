@@ -24,6 +24,13 @@ service.interceptors.request.use(
       config.headers['Authorization'] = 'Bearer ' + getToken()
     }
 
+    // 设置语言
+    const language = store.getters.language
+    const langMap = store.getters.langMap
+    if (language in langMap) {
+      config.headers['Locale-language'] = langMap[language]
+    }
+
     return config
   },
   error => {
