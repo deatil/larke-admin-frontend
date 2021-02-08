@@ -58,7 +58,7 @@
           :placeholder="$t('login.captcha')"
           name="captcha"
           type="text"
-          tabindex="1"
+          tabindex="3"
           autocomplete="on"
           class="captcha-input"
         />
@@ -66,7 +66,7 @@
         <el-tooltip effect="light" content="点击刷新验证码" placement="top">
           <span class="captcha-img" @click="refreshCaptcha">
             <img :src="captchaImg" :title="$t('login.refresh_captcha')">
-          </span>        
+          </span>
         </el-tooltip>
       </el-form-item>
 
@@ -102,7 +102,7 @@ export default {
       }
     }
     const validateCaptcha = (rule, value, callback) => {
-      if (value.length != 4) {
+      if (value.length !== 4) {
         callback(new Error('The captcha must 4 digits'))
       } else {
         callback()
@@ -184,6 +184,7 @@ export default {
           this.loginForm.captchaKey = captchaKey
           this.captchaImg = captchaImg
         })
+        // eslint-disable-next-line handle-callback-err
         .catch(err => {
           return false
         })
