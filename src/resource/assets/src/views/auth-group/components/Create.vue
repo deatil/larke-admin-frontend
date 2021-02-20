@@ -104,7 +104,7 @@ export default {
           this.parentFilterOptions = this.parentOptions
         }
 
-      } catch (e) {
+      } catch (error) {
         console.log('err' + error)
       }
     },
