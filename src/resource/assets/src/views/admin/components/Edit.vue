@@ -120,6 +120,7 @@ export default {
             duration: 5 * 1000,
             onClose() {
               if (thiz.$refs.form !== undefined) {
+                thiz.id = ''
                 thiz.$refs.form.resetFields()
               }
               thiz.item.dialogVisible = false

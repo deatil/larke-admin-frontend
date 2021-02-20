@@ -20,7 +20,7 @@
           name="username"
           type="text"
           tabindex="1"
-          autocomplete="on"
+          autocomplete="off"
         />
       </el-form-item>
 
@@ -37,7 +37,7 @@
             :placeholder="$t('login.password')"
             name="password"
             tabindex="2"
-            autocomplete="on"
+            autocomplete="off"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
@@ -58,8 +58,8 @@
           :placeholder="$t('login.captcha')"
           name="captcha"
           type="text"
-          tabindex="1"
-          autocomplete="on"
+          tabindex="3"
+          autocomplete="off"
           class="captcha-input"
         />
 
@@ -70,7 +70,11 @@
         </el-tooltip>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+      <el-button 
+        :loading="loading" 
+        type="primary" 
+        style="width:100%;margin-bottom:30px;" 
+        @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
 

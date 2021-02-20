@@ -130,93 +130,59 @@ export default {
           this.id != val.id
         ) {
           this.id = val.id
-          this.fetchParents().then(() => {
-            this.fetchData(val.id)
-          })
+          this.initData()
         }
       },
       deep: true
     }
   },
   created() {
-    const id = this.item.id
-    this.id = id
-    this.initData().then(() => {
-      this.fetchData(id)
-    })
+    this.id = this.item.id
+    this.initData()
   },
   methods: {
-    initData() {
-      return new Promise((resolve, reject) => {
-        const all = this.getAll()
-        const children = this.getChildren()
+    async initData() {
+      const all = await this.getAll()
+      const children = await this.getChildren()
 
-        Promise.all([all, children])
-          .then(([all, children]) => {
-            this.all = all.list
-            this.children = children.list
+      this.all = all.data.list
+      this.children = children.data.list
 
-            this.fetchParents().then(() => {})
-
-            resolve()
-          })
-          .catch(() => {})
-      })
+      this.fetchParents()
+      this.fetchData(this.id)
     },
     getAll() {
-      return new Promise((resolve, reject) => {
-        getRuleChildrenList({
-          id: 0,
-          type: 'list'
-        }).then(res => {
-          resolve(res.data)
-        }).catch(err => {
-          reject(err)
-        })
+      return getRuleChildrenList({
+        id: 0,
+        type: 'list'
       })
     },
     getChildren() {
-      return new Promise((resolve, reject) => {
-        getRuleChildrenList({
-          id: this.id,
-          type: 'ids'
-        }).then(res => {
-          resolve(res.data)
-        }).catch(err => {
-          reject(err)
-        })
+      return getRuleChildrenList({
+        id: this.id,
+        type: 'ids'
       })
     },
     fetchParents() {
-      return new Promise((resolve, reject) => {
-        this.getChildren().then((res) => {
-          this.children = res.list
+      const all = this.all
+      const children = this.children
 
-          const all = this.all
-          const children = this.children
+      this.parentOptions = [
+        { key: '0', display_name: '顶级权限' }
+      ]
+      this.parentFilterOptions = []
 
-          this.parentOptions = [
-            { key: '0', display_name: '顶级权限' }
-          ]
-          this.parentFilterOptions = []
-
-          children.push(this.id)
-          all.forEach(item => {
-            if (!children.includes(item.id)) {
-              this.parentOptions.push({
-                key: item.id,
-                display_name: item.spacer + ' ' + item.title + '【' + item.method + '】'
-              })
-            }
+      children.push(this.id)
+      all.forEach(item => {
+        if (!children.includes(item.id)) {
+          this.parentOptions.push({
+            key: item.id,
+            display_name: item.spacer + ' ' + item.title + '【' + item.method + '】'
           })
-
-          this.parentFilterOptions = this.parentOptions
-
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+        }
       })
+
+      this.parentFilterOptions = this.parentOptions
     },
     fetchData(id) {
       getRuleDetail(id).then(response => {
@@ -267,6 +233,7 @@ export default {
         }).then(response => {
           this.successTip('更新权限信息成功', function() {
               if (thiz.$refs.authRuleForm !== undefined) {
+                thiz.id = ''
                 thiz.$refs.authRuleForm.resetFields()
               }
               thiz.item.dialogVisible = false

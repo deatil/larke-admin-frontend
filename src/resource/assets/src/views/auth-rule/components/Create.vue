@@ -122,32 +122,24 @@ export default {
     this.initData()
   },
   methods: {
-    initData() {
-      const all = new Promise((resolve, reject) => {
-        getRuleChildrenList({
-          id: 0,
-          type: 'list'
-        }).then(res => {
-          resolve(res.data)
-        }).catch(err => {
-          reject(err)
-        })
+    async initData() {
+      const all = await getRuleChildrenList({
+        id: 0,
+        type: 'list'
       })
 
-      Promise.all([all])
-        .then(([all]) => {
-          all.list.forEach(item => {
-            this.parentOptions.push({
-              key: item.id,
-              display_name: item.spacer + ' ' + item.title + '【' + item.method + '】'
-            })
+      const list = all.data.list
+
+      if (list.length > 0) {
+        list.forEach(item => {
+          this.parentOptions.push({
+            key: item.id,
+            display_name: item.spacer + ' ' + item.title + '【' + item.method + '】'
           })
-
-          this.parentFilterOptions = this.parentOptions
         })
-        .catch(() => {
 
-        })
+        this.parentFilterOptions = this.parentOptions
+      }
     },
     parentFilter(val) {
       this.data.parentid = val

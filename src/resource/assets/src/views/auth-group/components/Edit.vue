@@ -9,14 +9,22 @@
         :filter-method="parentFilter"
         @change="parentidChange"
       >
-        <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
+        <el-option 
+          v-for="item in parentOptions" 
+          :key="item.key" 
+          :label="item.display_name | entityToString" 
+          :value="item.key" />
       </el-select>
     </el-form-item>
     <el-form-item label="名称" prop="title">
       <el-input v-model.trim="data.title" placeholder="请填写分组名称" />
     </el-form-item>
     <el-form-item label="描述" prop="description">
-      <el-input v-model.trim="data.description" type="textarea" rows="6" placeholder="请填写分组描述" />
+      <el-input 
+        v-model.trim="data.description" 
+        type="textarea" 
+        rows="6" 
+        placeholder="请填写分组描述" />
     </el-form-item>
     <el-form-item label="排序" prop="listorder">
       <el-input v-model.trim="data.listorder" placeholder="请填写排序" />
@@ -88,95 +96,56 @@ export default {
           this.id != val.id
         ) {
           this.id = val.id
-          this.fetchParents().then(() => {
-            this.fetchData(val.id)
-          })
+          this.initData()
         }
       },
       deep: true
     }
   },
   created() {
-    const id = this.item.id
-    this.id = id
-    this.initData().then(() => {
-      this.fetchData(id)
-    })
+    this.id = this.item.id
+    this.initData()
   },
   methods: {
-    initData() {
-      return new Promise((resolve, reject) => {
-        const all = this.getAll()
-        const children = this.getChildren()
+    async initData() {
+      const all = await this.getAll()
+      const children = await this.getChildren()
 
-        Promise.all([all, children])
-          .then(([all, children]) => {
-            this.all = all.list
-            this.children = children.list
+      this.all = all.data.list
+      this.children = children.data.list
 
-            this.fetchParents().then(() => {})
-
-            resolve()
-          })
-          .catch(() => {
-
-          })
-      })
+      this.fetchParents()
+      this.fetchData(this.id)
     },
     getAll() {
-      return new Promise((resolve, reject) => {
-        getGroupChildrenList({
-          id: 0,
-          type: 'list'
-        }).then(res => {
-          resolve(res.data)
-        }).catch(err => {
-          reject(err)
-        })
+      return getGroupChildrenList({
+        id: 0,
+        type: 'list'
       })
     },
     getChildren() {
-      return new Promise((resolve, reject) => {
-        getGroupChildrenList({
-          id: this.id,
-          type: 'ids'
-        }).then(res => {
-          resolve(res.data)
-        }).catch(err => {
-          reject(err)
-        })
+      return getGroupChildrenList({
+        id: this.id,
+        type: 'ids'
       })
     },
     fetchParents() {
-      return new Promise((resolve, reject) => {
-        this.getChildren().then((res) => {
-          this.children = res.list
+      this.parentOptions = [
+        { key: '0', display_name: '顶级分组' }
+      ]
+      this.parentFilterOptions = []
 
-          const all = this.all
-          const children = this.children
-
-          this.parentOptions = [
-            { key: '0', display_name: '顶级分组' }
-          ]
-          this.parentFilterOptions = []
-
-          children.push(this.id)
-          all.forEach(item => {
-            if (!children.includes(item.id)) {
-              this.parentOptions.push({
-                key: item.id,
-                display_name: item.spacer + ' ' + item.title
-              })
-            }
+      this.children.push(this.id)
+      this.all.forEach(item => {
+        if (! this.children.includes(item.id)) {
+          this.parentOptions.push({
+            key: item.id,
+            display_name: item.spacer + ' ' + item.title
           })
-
-          this.parentFilterOptions = this.parentOptions
-
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+        }
       })
+
+      this.parentFilterOptions = this.parentOptions
     },
     fetchData(id) {
       getGroupDetail(id).then(response => {
@@ -227,6 +196,7 @@ export default {
             duration: 5 * 1000,
             onClose() {
               if (thiz.$refs.authGroupForm !== undefined) {
+                thiz.id = ''
                 thiz.$refs.authGroupForm.resetFields()
               }
               thiz.item.dialogVisible = false

@@ -342,6 +342,7 @@ export default {
             duration: 5 * 1000,
             onClose() {
               if (thiz.$refs.menuEditForm !== undefined) {
+                thiz.id = ''
                 thiz.$refs.menuEditForm.resetFields()
               }
               thiz.item.dialogVisible = false

@@ -134,11 +134,10 @@ export default {
     }
   },
   created() {
-    const id = this.item.id
-    this.id = id
+    this.id = this.item.id
 
     this.fetchGroup()
-    this.fetchData(id)
+    this.fetchData(this.id)
   },
   methods: {
     fetchData(id) {
@@ -191,6 +190,7 @@ export default {
             duration: 5 * 1000,
             onClose() {
               if (thiz.$refs.form !== undefined) {
+                thiz.id = ''
                 thiz.$refs.form.resetFields()
               }
               thiz.item.dialogVisible = false

@@ -83,21 +83,18 @@ export default {
     this.initData()
   },
   methods: {
-    initData() {
-      const all = new Promise((resolve, reject) => {
-        getGroupChildrenList({
+    async initData() {
+
+      try {
+        const groupChildren = await getGroupChildrenList({
           id: 0,
           type: 'list'
-        }).then(res => {
-          resolve(res.data)
-        }).catch(err => {
-          reject(err)
         })
-      })
 
-      Promise.all([all])
-        .then(([all]) => {
-          all.list.forEach(item => {
+        const list = groupChildren.data.list
+
+        if (list.length > 0) {
+          list.forEach(item => {
             this.parentOptions.push({
               key: item.id,
               display_name: item.spacer + ' ' + item.title
@@ -105,10 +102,11 @@ export default {
           })
 
           this.parentFilterOptions = this.parentOptions
-        })
-        .catch(() => {
+        }
 
-        })
+      } catch (e) {
+        console.log('err' + error)
+      }
     },
     parentFilter(val) {
       this.data.parentid = val
