@@ -25,7 +25,9 @@ const route =  {
       meta: {
         title: 'Setting',
         icon: 'el-icon-setting',
-        roles: ['larke-admin.config.setting']
+        roles: [
+          'larke-admin.config.setting'
+        ]
       }
     },
 
@@ -37,7 +39,9 @@ const route =  {
       meta: {
         title: 'Config',
         icon: 'el-icon-s-operation',
-        roles: ['larke-admin.config.index']
+        roles: [
+          'larke-admin.config.index'
+        ]
       }
     },
 
@@ -49,7 +53,9 @@ const route =  {
       meta: {
         title: 'Menu',
         icon: 'list',
-        roles: ['larke-admin-frontend.menu.index']
+        roles: [
+          'larke-admin-frontend.menu.index'
+        ]
       }
     },
 
@@ -61,7 +67,9 @@ const route =  {
       meta: {
         title: 'Attachment',
         icon: 'el-icon-paperclip',
-        roles: ['larke-admin.attachment.index']
+        roles: [
+          'larke-admin.attachment.index'
+        ]
       }
     }
   ]

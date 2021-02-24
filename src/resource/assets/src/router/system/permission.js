@@ -25,7 +25,9 @@ const route =  {
       meta: {
         title: 'Admin',
         icon: 'peoples',
-        roles: ['larke-admin.admin.index']
+        roles: [
+          'larke-admin.admin.index'
+        ]
       }
     },
 
@@ -37,7 +39,9 @@ const route =  {
       meta: {
         title: 'AuthGroup',
         icon: 'el-icon-s-operation',
-        roles: ['larke-admin.auth-group.index']
+        roles: [
+          'larke-admin.auth-group.index'
+        ]
       }
     },
     {
@@ -46,8 +50,10 @@ const route =  {
       name: 'AuthGroupTree',
       meta: {
         title: 'AuthGroupTree',
-        roles: ['larke-admin.auth-group.index'],
-        activeMenu: '/auth/group/index'
+        activeMenu: '/auth/group/index',
+        roles: [
+          'larke-admin.auth-group.index'
+        ]
       },
       hidden: true
     },
@@ -60,7 +66,9 @@ const route =  {
       meta: {
         title: 'AuthRule',
         icon: 'el-icon-menu',
-        roles: ['larke-admin.auth-rule.index']
+        roles: [
+          'larke-admin.auth-rule.index'
+        ]
       }
     },
     {
@@ -69,8 +77,10 @@ const route =  {
       name: 'AuthRuleTree',
       meta: {
         title: 'AuthRuleTree',
-        roles: ['larke-admin.auth-rule.index'],
-        activeMenu: '/auth/rule/index'
+        activeMenu: '/auth/rule/index',
+        roles: [
+          'larke-admin.auth-rule.index'
+        ]
       },
       hidden: true
     },
@@ -83,7 +93,9 @@ const route =  {
       meta: {
         title: 'AdminLog',
         icon: 'el-icon-document-add',
-        roles: ['larke-admin.log.index']
+        roles: [
+          'larke-admin.log.index'
+        ]
       }
     }
 
