@@ -13,6 +13,8 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../resource/config/frontend.php', 'frontend');
         
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../resource/lang');
+        
         $this->loadRoutesFrom(__DIR__ . '/../resource/routes/admin.php');
         
         if ($this->app->runningInConsole()) {

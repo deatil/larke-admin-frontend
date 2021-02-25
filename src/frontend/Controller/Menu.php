@@ -90,7 +90,7 @@ class Menu extends BaseController
     {
         $id = $request->input('id', 0);
         if (is_array($id)) {
-            return $this->error(__('ID错误'));
+            return $this->error(__('父级ID错误'));
         }
         
         $type = $request->input('type');
