@@ -106,6 +106,17 @@ php artisan larke-admin-frontend:import-menus --force
  - npm 6.14.8
 
 
+### 扩展推荐
+
+| 名称 | 描述 |
+| --- | --- |
+| [demo](https://github.com/deatil/larke-admin-demo) | 扩展示例 |
+| [签名证书](https://github.com/deatil/larke-admin-signcert) | 生成RSA,EDDSA,ECDSA等非对称签名证书 |
+| [日志查看器](https://github.com/deatil/larke-admin-logviewer) | laravel日志查看扩展 |
+
+注：扩展目录默认为 `/extension` 目录
+
+
 ### 特别鸣谢
 
 感谢以下的项目,排名不分先后
