@@ -2,49 +2,49 @@
   <el-form ref="form" label-width="100px">
     <el-alert
         type="warning"
-        title="特别注意"
-        description="扩展脚本是为了非composer扩展可以下载依赖使用的脚本，如果使用composer下载的扩展可不用使用该脚本。使用 '注册仓库' 后只需要执行命令 'composer require vendor/package' 即可"
+        :title="$t('特别注意')"
+        :description="$t('扩展脚本是为了非composer扩展可以下载依赖使用的脚本，如果使用composer下载的扩展可不用使用该脚本。使用 \'注册仓库\' 后只需要执行命令 \'composer require vendor/package\' 即可')"
         style="margin-bottom:15px;"
         show-icon
         :closable="false"
     />  
 
-    <el-form-item label="扩展">
+    <el-form-item :label="$t('扩展')">
       <el-input v-model.trim="data.title" readonly />
     </el-form-item>
 
-    <el-form-item label="包名">
+    <el-form-item :label="$t('包名')">
       <el-input v-model.trim="data.name" readonly />
     </el-form-item>
 
-    <el-form-item label="注册仓库">
+    <el-form-item :label="$t('注册仓库')">
         <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-register']) || data.has_repository" class="filter-item" size="mini" type="primary" @click="handleRepository('register')">
-          仓库注册扩展
+          {{ $t('仓库注册扩展') }}
         </el-button> 
         <div class="text-grey">
-          本地扩展注册到composer.json仓库，在安装脚本不成功时使用
+          {{ $t('本地扩展注册到composer.json仓库，在安装脚本不成功时使用') }}
         </div>
     </el-form-item>
 
-    <el-form-item label="安装脚本" prop="description">
-      <el-input v-model="data.require" type="textarea" rows="3" placeholder="扩展的composer安装脚本" />
+    <el-form-item :label="$t('安装脚本')" prop="description">
+      <el-input v-model="data.require" type="textarea" rows="3" :placeholder="$t('扩展的composer安装脚本')" />
     </el-form-item>
 
     <el-form-item label="移除仓库">
         <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-remove']) || !data.has_repository" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
-          仓库移除扩展
+          {{ $t('仓库移除扩展') }}
         </el-button> 
-        <div class="text-grey">
-          本地扩展从composer.json仓库移除，在卸载脚本不成功时使用
+        <div class="text-grey">         
+          {{ $t('本地扩展从composer.json仓库移除，在卸载脚本不成功时使用') }}
         </div>
     </el-form-item>
 
-    <el-form-item label="卸载脚本" prop="description">
-      <el-input v-model="data.remove" type="textarea" rows="3" placeholder="扩展的composer卸载脚本" />
+    <el-form-item :label="$t('卸载脚本')" prop="description">
+      <el-input v-model="data.remove" type="textarea" rows="3" :placeholder="$t('扩展的composer卸载脚本')" />
     </el-form-item>
 
     <el-form-item>
-      <el-button type="warning" @click="close">关闭页面</el-button>
+      <el-button type="warning" @click="close">{{ $t('关闭页面') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -53,6 +53,7 @@
 import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
+import LangSelect from '@/components/LangSelect'
 import { 
   getCommand, 
   repositoryRegister, 
@@ -112,7 +113,7 @@ export default {
     },
     handleRepository(type) {
       const thiz = this
-      this.confirmTip('该项操作会修改composer.josn文件，确认要进行操作吗？', function() {
+      this.confirmTip(this.$t('该项操作会修改composer.josn文件，确认要进行操作吗？'), function() {
         if (type == 'register') {
           repositoryRegister(thiz.data.name).then(response => {
             thiz.successTip(response.message)

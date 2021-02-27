@@ -14,7 +14,7 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
  *
  * @title 菜单管理
  * @desc 菜单管理
- * @order 111
+ * @order 650
  * @auth true
  * @slug larke-admin-frontend.menu
  *
@@ -28,7 +28,7 @@ class Menu extends BaseController
      *
      * @title 菜单列表
      * @desc 菜单列表管理
-     * @order 1111
+     * @order 651
      * @auth true
      *
      * @param  Request  $request
@@ -49,7 +49,7 @@ class Menu extends BaseController
      *
      * @title 菜单树列表
      * @desc 菜单树列表管理
-     * @order 1112
+     * @order 652
      * @auth true
      *
      * @param  Request  $request
@@ -80,7 +80,7 @@ class Menu extends BaseController
      *
      * @title 菜单子列表
      * @desc 菜单子列表管理
-     * @order 1113
+     * @order 653
      * @auth true
      *
      * @param  Request  $request
@@ -130,7 +130,7 @@ class Menu extends BaseController
      *
      * @title 菜单创建
      * @desc 菜单创建管理
-     * @order 1114
+     * @order 654
      * @auth true
      *
      * @param  Request  $request
@@ -157,7 +157,7 @@ class Menu extends BaseController
      *
      * @title 菜单更新
      * @desc 菜单更新管理
-     * @order 1115
+     * @order 655
      * @auth true
      *
      * @param  String $id
@@ -204,7 +204,7 @@ class Menu extends BaseController
      *
      * @title 菜单删除
      * @desc 菜单删除管理
-     * @order 1116
+     * @order 656
      * @auth true
      *
      * @param  String $id
@@ -241,7 +241,7 @@ class Menu extends BaseController
      *
      * @title 菜单获取全部
      * @desc 菜单获取全部管理
-     * @order 1117
+     * @order 657
      * @auth true
      *
      * @param  Request  $request
@@ -261,7 +261,7 @@ class Menu extends BaseController
      *
      * @title 菜单保存全部
      * @desc 菜单保存全部管理
-     * @order 1118
+     * @order 658
      * @auth true
      *
      * @param  Request  $request

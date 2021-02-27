@@ -211,14 +211,14 @@ export default {
     },
     handleUpgrade(index, row) {
       const thiz = this
-      this.$confirm('确认要更新该扩展(' + row.name + ')吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('确认要更新该扩展(' + row.name + ')吗？', this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
         const loading = thiz.$loading({
           lock: true,
-          text: '扩展更新中...',
+          text: this.$t('扩展更新中...'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -227,7 +227,7 @@ export default {
           loading.close()
 
           this.$message({
-            message: '更新扩展成功',
+            message: this.$t('更新扩展成功'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {
