@@ -36,6 +36,10 @@ const i18n = new VueI18n({
   // set locale
   // options: en | zh
   locale: getLanguage(),
+  fallbackLocale: 'zh',
+  formatFallbackMessages: true,
+  silentTranslationWarn: false,
+  silentFallbackWarn: false,
   // set locale messages
   messages
 })

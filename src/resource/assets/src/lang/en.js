@@ -37,6 +37,7 @@ export default {
     password: 'Password',
     captcha: 'Captcha',
     refresh_captcha: 'Refresh Captcha',
+    refresh_captcha_tip: 'Go Refresh Captcha',
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',

@@ -10,13 +10,13 @@
         <el-col :span="18" :xs="24">
           <el-card>
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="信息" name="account">
+              <el-tab-pane :label="$t('信息')" name="account">
                 <account :user="user" />
               </el-tab-pane>
-              <el-tab-pane label="密码" name="password">
+              <el-tab-pane :label="$t('密码')" name="password">
                 <password />
               </el-tab-pane>
-              <el-tab-pane label="头像" name="avatar">
+              <el-tab-pane :label="$t('头像')" name="avatar">
                 <avatar :user="user" />
               </el-tab-pane>
             </el-tabs>

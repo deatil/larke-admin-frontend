@@ -1,9 +1,9 @@
 <template>
   <el-form ref="menuCreateform" :model="data" :rules="rules" label-width="100px">
-    <el-form-item label="父级权限" prop="pid">
+    <el-form-item :label="$t('父级权限')" prop="pid">
       <el-select
         v-model="data.pid"
-        placeholder="请选择"
+        :placeholder="$t('请选择')"
         clearable
         filterable
         :filter-method="parentFilter"
@@ -12,12 +12,12 @@
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>
 
-      <el-button :type="!rule.visible ? 'primary' : 'danger'" class="fast-select" @click="ruleFastSelect">{{ !rule.visible ? '快速选择' : '关闭选择' }}</el-button>
+      <el-button :type="!rule.visible ? 'primary' : 'danger'" class="fast-select" @click="ruleFastSelect">{{ !rule.visible ? $t('快速选择') : $t('关闭选择') }}</el-button>
     </el-form-item>
 
-    <el-form-item label="快速选择" v-if="rule.visible">
+    <el-form-item :label="$t('快速选择')" v-if="rule.visible">
       <el-select
-        placeholder="请选择权限信息"
+        :placeholder="$t('请选择权限信息')"
         clearable
         filterable
         :filter-method="ruleFilter"
@@ -28,17 +28,17 @@
       </el-select>      
     </el-form-item>    
 
-    <el-form-item label="名称" prop="title">
-      <el-input v-model.trim="data.title" placeholder="请填写菜单名称" />
+    <el-form-item :label="$t('名称')" prop="title">
+      <el-input v-model.trim="data.title" :placeholder="$t('请填写菜单名称')" />
     </el-form-item>
 
-    <el-form-item label="标识" prop="slug">
-      <el-input v-model.trim="data.slug" placeholder="请填写菜单标识" />
+    <el-form-item :label="$t('标识')" prop="slug">
+      <el-input v-model.trim="data.slug" :placeholder="$t('请填写菜单标识')" />
     </el-form-item>
 
-    <el-form-item label="链接" prop="url">
-      <el-tooltip effect="dark" content="链接默认不用加前缀" placement="top">
-        <el-input v-model.trim="data.url" placeholder="请填写菜单链接">
+    <el-form-item :label="$t('链接')" prop="url">
+      <el-tooltip effect="dark" :content="$t('链接默认不用加前缀')" placement="top">
+        <el-input v-model.trim="data.url" :placeholder="$t('请填写菜单链接')">
           <template slot="prepend">
             <i class="el-icon-link" />
           </template>
@@ -46,20 +46,20 @@
       </el-tooltip>
     </el-form-item>
 
-    <el-form-item label="请求方式" prop="method">
+    <el-form-item :label="$t('请求方式')" prop="method">
       <el-select v-model="data.method">
         <el-option v-for="item in methodOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
     </el-form-item>
 
-    <el-form-item label="排序" prop="sort">
-      <el-input v-model.trim="data.sort" placeholder="请填写排序" />
+    <el-form-item :label="$t('排序')" prop="sort">
+      <el-input v-model.trim="data.sort" :placeholder="$t('请填写排序')" />
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submit">提交</el-button>
+      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
 
-      <el-button type="warning" @click="reset">清空</el-button>
+      <el-button type="warning" @click="reset">{{ $t('清空') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -94,19 +94,19 @@ export default {
       },
       rules: {
         pid: [
-          { required: true, message: '父级菜单不能为空', trigger: 'change' }
+          { required: true, message: this.$t('父级菜单不能为空'), trigger: 'change' }
         ],
         title: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('名称不能为空'), trigger: 'blur' }
         ],
         slug: [
-          { required: true, message: '标识不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('标识不能为空'), trigger: 'blur' }
         ],
         url: [
-          { required: true, message: '链接不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('链接不能为空'), trigger: 'blur' }
         ],
         sort: [
-          { required: true, message: '排序不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('排序不能为空'), trigger: 'blur' }
         ]
       },
       methodOptions: [
@@ -119,7 +119,7 @@ export default {
         { key: 'OPTIONS', display_name: 'OPTIONS' }
       ],
       parentOptions: [
-        { key: '0', display_name: '顶级菜单' }
+        { key: '0', display_name: this.$t('顶级菜单') }
       ],
       parentFilterOptions: [],
       rule: {
@@ -258,7 +258,7 @@ export default {
 
         createMenu(this.data).then(response => {
           this.$message({
-            message: '添加菜单成功',
+            message: this.$t('添加菜单成功'),
             type: 'success',
             duration: 2 * 1000,
             onClose() {

@@ -2,21 +2,27 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>菜单管理</span>
+        <span>{{ $t('菜单管理') }}</span>
       </div>
 
       <el-alert
         type="warning"
-        title="菜单设置及新增需注意"
-        description="菜单权限对当前的前端模版只有标识和层级有使用"
+        :title="$t('菜单设置及新增需注意')"
+        :description="$t('菜单权限对当前的前端模版只有标识和层级有使用')"
         class="menu-tip"
         show-icon
         :closable="false"
       />
 
       <div class="filter-container">
-        <el-button v-waves :disabled="!checkPermission(['larke-admin-frontend.menu.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
-          添加菜单
+        <el-button 
+          v-waves 
+          :disabled="!checkPermission(['larke-admin-frontend.menu.create'])" 
+          class="filter-item" 
+          type="primary" 
+          icon="el-icon-edit" 
+          @click="handleCreate">
+          {{ $t('添加菜单') }}
         </el-button>
       </div>
 
@@ -40,13 +46,13 @@
           tree-key="id"
           :show-overflow-tooltip="true"
           :indent-size="25"
-          label="菜单"
+          :label="$t('菜单')"
           min-width="150"
           class-name="larke-admin-menu-tree"
           header-align="left"
         />
 
-        <el-table-column label="链接">
+        <el-table-column :label="$t('链接')">
           <template slot-scope="{row}">
             <div>
               <el-tag type="info" size="mini" style="margin-bottom:3px;">
@@ -64,39 +70,39 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="80px" align="center" label="排序">
+        <el-table-column width="80px" align="center" :label="$t('排序')">
           <template slot-scope="scope">
             <span>{{ scope.row.sort }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="280">
+        <el-table-column align="center" :label="$t('操作')" width="280">
           <template slot-scope="scope">
             <el-button :disabled="!checkPermission(['larke-admin-frontend.menu.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
-              编辑
+              {{ $t('编辑') }}
             </el-button>
 
             <el-button type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
-              详情
+              {{ $t('详情') }}
             </el-button>
 
             <el-button v-permission="['larke-admin-frontend.menu.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
-              删除
+              {{ $t('删除') }}
             </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <el-dialog title="添加菜单" :visible.sync="create.dialogVisible">
+    <el-dialog :title="$t('添加菜单')" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog title="编辑菜单" :visible.sync="edit.dialogVisible">
+    <el-dialog :title="$t('编辑菜单')" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>
 
-    <el-dialog title="菜单详情" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('菜单详情')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
   </div>
@@ -172,37 +178,37 @@ export default {
 
       this.detail.data = [
         {
-          name: 'ID',
+          name: this.$t('ID'),
           content: data.id,
           type: 'text'
         },
         {
-          name: '父级ID',
+          name: this.$t('父级ID'),
           content: data.pid,
           type: 'text'
         },
         {
-          name: '名称',
+          name: this.$t('名称'),
           content: data.title,
           type: 'text'
         },
         {
-          name: '权限标识',
+          name: this.$t('权限标识'),
           content: data.slug,
           type: 'text'
         },
         {
-          name: '权限链接',
+          name: this.$t('权限链接'),
           content: data.url,
           type: 'text'
         },
         {
-          name: '链接请求类型',
+          name: this.$t('链接请求类型'),
           content: data.method,
           type: 'text'
         },
         {
-          name: '排序',
+          name: this.$t('排序'),
           content: data.sort,
           type: 'text'
         }
@@ -220,14 +226,14 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm('确认要删除该菜单吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('确认要删除该菜单吗？'), this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
         deleteMenu(row.id).then(() => {
           this.$message({
-            message: '删除菜单成功',
+            message: this.$t('删除菜单成功'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {

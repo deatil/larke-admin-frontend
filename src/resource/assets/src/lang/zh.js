@@ -37,6 +37,7 @@ export default {
     password: '密码',
     captcha: '验证码',
     refresh_captcha: '刷新验证码',
+    refresh_captcha_tip: '点击刷新验证码',
   },
   tagsView: {
     refresh: '刷新',

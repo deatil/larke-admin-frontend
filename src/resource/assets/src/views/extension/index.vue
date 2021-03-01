@@ -126,7 +126,8 @@
 
               <div>
                 <el-tag v-if="item.email" type="info" size="mini" style="margin-right:10px;">
-                  <i class="el-icon-message" />&nbsp;
+                  <i class="el-icon-message" />
+                  &nbsp;
                   <span>{{ item.email }}</span>
                 </el-tag>
               </div>
@@ -313,12 +314,12 @@ export default {
         limit: 10
       },
       statusOptions: [
-        { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' }
+        { key: 'open', display_name: this.$t('启用') },
+        { key: 'close', display_name: this.$t('禁用') }
       ],
       sortOptions: [
-        { label: '正序', key: 'ASC' },
-        { label: '倒叙', key: 'DESC' }
+        { label: this.$t('正序'), key: 'ASC' },
+        { label: this.$t('倒叙'), key: 'DESC' }
       ],
       uploadLoading: false,
       uploadFile: null,
@@ -377,9 +378,9 @@ export default {
     },
     handleRefresh() {
       const thiz = this
-      this.confirmTip('确认要刷新本地扩展缓存吗？', function() {
+      this.confirmTip(this.$t('确认要刷新本地扩展缓存吗？'), function() {
         refreshLocal().then(response => {
-          thiz.successTip('刷新本地扩展缓存成功!', function() {
+          thiz.successTip(this.$t('刷新本地扩展缓存成功!'), function() {
             thiz.listQuery.page = 1
             thiz.getList()
           });
@@ -392,7 +393,7 @@ export default {
       const isZip = (file.raw.type === 'application/x-zip-compressed');
 
       if (!isZip) {
-        this.$message.error('上传扩展只能是zip格式!');
+        this.$message.error(this.$t('上传扩展只能是zip格式!'));
         return false;
       }
 
@@ -403,7 +404,7 @@ export default {
       
       const thiz = this
       upload(formData).then(response => {
-        thiz.successTip('扩展上传成功')
+        thiz.successTip(thiz.$t('扩展上传成功'))
 
         thiz.uploadLoading = false
         thiz.uploadFile = null
@@ -411,7 +412,7 @@ export default {
         thiz.uploadLoading = false
 
         if (err.code == 411) {
-          thiz.confirmTip('扩展已经存在，是否上传覆盖？', function() {
+          thiz.confirmTip(thiz.$t('扩展已经存在，是否上传覆盖？'), function() {
             thiz.reUpload()
           })
         }
@@ -423,7 +424,7 @@ export default {
       formData.append('force', 1) 
 
       upload(formData).then(response => {
-        this.successTip('扩展上传成功')
+        this.successTip(this.$t('扩展上传成功'))
 
         this.uploadFile = null
       })
@@ -458,7 +459,7 @@ export default {
 
       updateSort(data.name, data.listorder).then(() => {
         this.$message({
-          message: '扩展排序更新成功',
+          message: this.$t('扩展排序更新成功'),
           type: 'success',
           duration: 2 * 1000
         })
@@ -470,77 +471,77 @@ export default {
 
       this.detail.data = [
         {
-          name: '扩展包名',
+          name: this.$t('扩展包名'),
           content: data.name,
           type: 'text'
         },
         {
-          name: '扩展名称',
+          name: this.$t('扩展名称'),
           content: data.title,
           type: 'text'
         },
         {
-          name: '当前版本',
+          name: this.$t('当前版本'),
           content: data.version,
           type: 'text'
         },
         {
-          name: '适配系统版本',
+          name: this.$t('适配系统版本'),
           content: data.adaptation,
           type: 'text'
         },
         {
-          name: '描述',
+          name: this.$t('描述'),
           content: data.description,
           type: 'text'
         },
         {
-          name: '关键字',
+          name: this.$t('关键字'),
           content: data.keywordlist,
           type: 'json',
           depth: 2
         },    
         {
-          name: '项目主页',
+          name: this.$t('项目主页'),
           content: data.homepage,
           type: 'text'
         },              
         {
-          name: '作者',
+          name: this.$t('作者'),
           content: data.authorlist,
           type: 'json',
           depth: 3
         },      
         {
-          name: '依赖扩展',
+          name: this.$t('依赖扩展'),
           content: data.requires,
           type: 'json',
           depth: 3
         },
         {
-          name: '扩展绑定类',
+          name: this.$t('扩展绑定类'),
           content: data.class_name,
           type: 'text'
         },
 
         {
-          name: '安装时间',
+          name: this.$t('安装时间'),
           content: data.installtime,
           type: 'time'
         },
         {
-          name: '最后更新',
+          name: this.$t('最后更新'),
           content: data.upgradetime,
           type: 'time'
         },
 
         {
-          name: '排序',
+          name: this.$t('排序'),
           content: data.listorder,
           type: 'text'
         },
         {
-          name: '激活状态',
+          name: this.$t('激活状态'),
           content: data.status,
           type: 'boolen'
         }
@@ -550,7 +551,7 @@ export default {
       if (data.status == 1) {
         enable(data.name).then(() => {
           this.$message({
-            message: '扩展启用成功',
+            message: this.$t('扩展启用成功'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -558,7 +559,7 @@ export default {
       } else {
         disable(data.name).then(() => {
           this.$message({
-            message: '扩展禁用成功',
+            message: this.$t('扩展禁用成功'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -567,14 +568,14 @@ export default {
     },
     handleUninstall(index, row) {
       const thiz = this
-      this.$confirm('确认要卸载该扩展吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('确认要卸载该扩展吗？'), this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
         const loading = thiz.$loading({
           lock: true,
-          text: '扩展卸载中...',
+          text: this.$t('扩展卸载中...'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -585,7 +586,7 @@ export default {
           thiz.list.splice(index, 1)
 
           this.$message({
-            message: '卸载扩展成功',
+            message: this.$t('卸载扩展成功'),
             type: 'success',
             duration: 2 * 1000
           })

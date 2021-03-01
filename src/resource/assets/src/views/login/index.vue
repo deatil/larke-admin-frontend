@@ -63,7 +63,7 @@
           class="captcha-input"
         />
 
-        <el-tooltip effect="light" content="点击刷新验证码" placement="top">
+        <el-tooltip effect="light" :content="$t('login.refresh_captcha_tip')" placement="top">
           <span class="captcha-img" @click="refreshCaptcha">
             <img :src="captchaImg" :title="$t('login.refresh_captcha')">
           </span>        
