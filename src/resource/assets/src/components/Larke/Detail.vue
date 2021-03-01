@@ -7,7 +7,10 @@
     </el-table-column>
     <el-table-column align="left" label="内容" min-width="270">
       <template slot-scope="{row}" v-if="row.content">
-        <span v-if="row.type == 'text'">
+        <span v-if="row.type == 'html'" v-html="row.content">
+        </span>
+
+        <span v-else-if="row.type == 'text'">
           {{ row.content }}
         </span>
 
