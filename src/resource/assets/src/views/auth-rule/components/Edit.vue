@@ -1,9 +1,9 @@
 <template>
   <el-form ref="authRuleForm" :model="data" :rules="rules" label-width="100px">
-    <el-form-item label="父级权限" prop="parentid">
+    <el-form-item :label="$t('父级权限')" prop="parentid">
       <el-select
         v-model="data.parentid"
-        placeholder="请选择"
+        :placeholder="$t('请选择')"
         clearable
         filterable
         :filter-method="parentFilter"
@@ -12,46 +12,46 @@
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>
     </el-form-item>
-    <el-form-item label="名称" prop="title">
-      <el-input v-model.trim="data.title" placeholder="请填写权限名称" />
+    <el-form-item :label="$t('名称')" prop="title">
+      <el-input v-model.trim="data.title" :placeholder="$t('请填写权限名称')" />
     </el-form-item>
-    <el-form-item label="请求链接" prop="url">
-      <el-tooltip effect="dark" content="请求链接默认不用加前缀" placement="top">
-        <el-input v-model.trim="data.url" placeholder="请填写请求链接">
+    <el-form-item :label="$t('请求链接')" prop="url">
+      <el-tooltip effect="dark" :content="$t('请求链接默认不用加前缀')" placement="top">
+        <el-input v-model.trim="data.url" :placeholder="$t('请填写请求链接')">
           <template slot="prepend">
             <i class="el-icon-link" />
           </template>
         </el-input>
       </el-tooltip>
     </el-form-item>
-    <el-form-item label="请求方式" prop="method">
+    <el-form-item :label="$t('请求方式')" prop="method">
       <el-select v-model="data.method">
         <el-option v-for="item in methodOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
     </el-form-item>
-    <el-form-item label="标识" prop="slug">
-      <el-input v-model.trim="data.slug" placeholder="请填写标识" />
+    <el-form-item :label="$t('标识')" prop="slug">
+      <el-input v-model.trim="data.slug" :placeholder="$t('请填写标识')" />
     </el-form-item>
-    <el-form-item label="权限描述" prop="description">
-      <el-input v-model.trim="data.description" type="textarea" rows="6" placeholder="请填写权限描述" />
+    <el-form-item :label="$t('权限描述')" prop="description">
+      <el-input v-model.trim="data.description" type="textarea" rows="6" :placeholder="$t('请填写权限描述')" />
     </el-form-item>
-    <el-form-item label="排序" prop="listorder">
-      <el-input v-model.trim="data.listorder" placeholder="请填写排序" />
+    <el-form-item :label="$t('排序')" prop="listorder">
+      <el-input v-model.trim="data.listorder" :placeholder="$t('请填写排序')" />
     </el-form-item>
-    <el-form-item label="鉴定权限" prop="is_need_auth">
+    <el-form-item :label="$t('鉴定权限')" prop="is_need_auth">
       <el-radio-group v-model="data.is_need_auth">
-        <el-radio :label="1">启用</el-radio>
-        <el-radio :label="0">禁用</el-radio>
+        <el-radio :label="1">{{ $t('启用') }}</el-radio>
+        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="状态" prop="status">
+    <el-form-item :label="$t('状态')" prop="status">
       <el-radio-group v-model="data.status">
-        <el-radio :label="1">启用</el-radio>
-        <el-radio :label="0">禁用</el-radio>
+        <el-radio :label="1">{{ $t('启用') }}</el-radio>
+        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">提交</el-button>
+      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -93,23 +93,23 @@ export default {
       },
       rules: {
         parentid: [
-          { required: true, message: '父级不能为空', trigger: 'change' }
+          { required: true, message: this.$t('父级不能为空'), trigger: 'change' }
         ],
         title: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('名称不能为空'), trigger: 'blur' }
         ],
         url: [
-          { required: true, message: '请求链接不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('请求链接不能为空'), trigger: 'blur' }
         ],
         slug: [
-          { required: true, message: '标识不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('标识不能为空'), trigger: 'blur' }
         ],
         listorder: [
-          { required: true, message: '排序不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('排序不能为空'), trigger: 'blur' }
         ]
       },
       parentOptions: [
-        { key: '0', display_name: '顶级权限' }
+        { key: '0', display_name: this.$t('顶级权限') }
       ],
       parentFilterOptions: [],
       methodOptions: [
@@ -168,7 +168,7 @@ export default {
       const children = this.children
 
       this.parentOptions = [
-        { key: '0', display_name: '顶级权限' }
+        { key: '0', display_name: this.$t('顶级权限') }
       ]
       this.parentFilterOptions = []
 
@@ -231,7 +231,7 @@ export default {
           is_need_auth: this.data.is_need_auth,
           status: this.data.status
         }).then(response => {
-          this.successTip('更新权限信息成功', function() {
+          this.successTip(this.$t('更新权限信息成功'), function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.id = ''
                 thiz.$refs.authRuleForm.resetFields()

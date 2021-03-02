@@ -2,7 +2,11 @@
   <div class="dashboard-container">
 
     <el-card class="admin-tip">
-      {{ nickname }} {{ nowTimeCall }}好，当前的时间为：{{ nowTime }}
+      {{ $t('{nickname} {nowTimeCall}好，当前的时间为：{nowTime}', {
+        nickname: nickname,
+        nowTimeCall: nowTimeCall,
+        nowTime: nowTime
+      }) }}
     </el-card>
 
     <panel-group />
@@ -53,7 +57,7 @@ export default {
       nickname: '',
 
       nowTime: '',
-      nowTimeCall: '晚上',
+      nowTimeCall: this.$t('晚上'),
 
       timer: '',
 
@@ -88,14 +92,33 @@ export default {
       var month = dateObj.getMonth() + 1
       var date = dateObj.getDate()
       var day = dateObj.getDay()
-      var weeks = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+      var weeks = [
+          this.$t('星期日'), 
+          this.$t('星期一'), 
+          this.$t('星期二'), 
+          this.$t('星期三'), 
+          this.$t('星期四'), 
+          this.$t('星期五'), 
+          this.$t('星期六')
+        ]
       var week = weeks[day]
       var hour = dateObj.getHours()
       var minute = dateObj.getMinutes()
       var second = dateObj.getSeconds()
-      var timeValue = '' + ((hour >= 12) ? ((hour >= 18) ? '晚上' : '下午') : ((hour >= 8) ? '上午' : '凌晨'))
-      var newDate = this.dateFilter(year) + '年' + this.dateFilter(month) + '月' + this.dateFilter(date) + '日 ' + ' ' + this.dateFilter(hour) + ':' + this.dateFilter(minute) + ':' + this.dateFilter(second)
-      var nowTime = newDate + ' ' + week
+      var timeValue = '' + (
+        (hour >= 12) 
+        ? ((hour >= 18) ? this.$t('晚上') : this.$t('下午')) 
+        : ((hour >= 8) ? this.$t('上午') : this.$t('凌晨'))
+      )
+      var nowTime = this.$t('{year}年{month}月{day}日 {hour}:{minute}:{second} {week}', {
+          year: this.dateFilter(year),
+          month: this.dateFilter(month),
+          day: this.dateFilter(day),
+          hour: this.dateFilter(hour),
+          minute: this.dateFilter(minute),
+          second: this.dateFilter(second),
+          week: week
+        })
       return [nowTime, timeValue]
     },
     setNowTime() {

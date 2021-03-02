@@ -2,17 +2,17 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>配置管理</span>
+        <span>{{ $t('配置管理') }}</span>
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" placeholder="请输入关键字" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" :placeholder="$t('请输入关键字')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
 
-        <el-select v-model="listQuery.group" placeholder="分组" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
+        <el-select v-model="listQuery.group" :placeholder="$t('分组')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="group in groupOptions" :key="group.key" :label="group.display_name" :value="group.key" />
         </el-select>
 
-        <el-select v-model="listQuery.status" placeholder="状态" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
+        <el-select v-model="listQuery.status" :placeholder="$t('状态')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
 
@@ -39,31 +39,31 @@
         style="width: 100%"
       >
 
-        <el-table-column width="130px" label="名称">
+        <el-table-column width="130px" :label="$t('名称')">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column min-width="150px" label="标题">
+        <el-table-column min-width="150px" :label="$t('标题')">
           <template slot-scope="{row}">
             <span>{{ row.title }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column align="center" width="100px" label="类型">
+        <el-table-column align="center" width="100px" :label="$t('类型')">
           <template slot-scope="scope">
             <span>{{ scope.row.type }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column align="center" width="80px" label="分组">
+        <el-table-column align="center" width="80px" :label="$t('分组')">
           <template slot-scope="scope">
             <span>{{ scope.row.group }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column width="75px" align="center" label="排序">
+        <el-table-column width="75px" align="center" :label="$t('排序')">
           <template slot-scope="{row, $index}">
             <div @click.stop="{{editableChangeBtn($index, 'editListorderInput')}}">
               <el-input
@@ -79,13 +79,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" label="添加时间">
+        <el-table-column width="160px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
             <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column class-name="status-col" label="状态" width="80">
+        <el-table-column class-name="status-col" :label="$t('状态')" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -99,18 +99,18 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="280">
+        <el-table-column align="center" :label="$t('操作')" width="280">
           <template slot-scope="scope">
             <el-button :disabled="!checkPermission(['larke-admin.config.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
-              编辑
+              {{ $t('编辑') }}
             </el-button>
 
             <el-button :disabled="!checkPermission(['larke-admin.config.detail'])" type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
-              详情
+              {{ $t('详情') }}
             </el-button>
 
             <el-button v-permission="['larke-admin.config.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
-              删除
+              {{ $t('删除') }}
             </el-button>
           </template>
         </el-table-column>
@@ -119,15 +119,15 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog title="配置详情" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('配置详情')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-dialog title="添加配置" :visible.sync="create.dialogVisible">
+    <el-dialog :title="$t('添加配置')" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog title="编辑配置" :visible.sync="edit.dialogVisible">
+    <el-dialog :title="$t('编辑配置')" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>
 
@@ -175,15 +175,15 @@ export default {
         limit: 10
       },
       groupOptions: [
-        { key: 'other', display_name: '未分组' }
+        { key: 'other', display_name: this.$t('未分组') }
       ],
       statusOptions: [
-        { key: 'open', display_name: '启用' },
-        { key: 'close', display_name: '禁用' }
+        { key: 'open', display_name: this.$t('启用') },
+        { key: 'close', display_name: this.$t('禁用') }
       ],
       sortOptions: [
-        { key: 'ASC', label: '正序' },
-        { key: 'DESC', label: '倒叙' }
+        { key: 'ASC', label: this.$t('正序') },
+        { key: 'DESC', label: this.$t('倒叙') }
       ],
       create: {
         dialogVisible: false
@@ -221,7 +221,7 @@ export default {
           })
           this.groupOptions.push({
             key: 'other',
-            display_name: '未分组'
+            display_name: this.$t('未分组')
           })
 
           resolve(this.groupOptions)
@@ -282,7 +282,7 @@ export default {
 
       updateSort(data.id, data.listorder).then(() => {
         this.$message({
-          message: '配置排序成功',
+          message: this.$t('配置排序成功'),
           type: 'success',
           duration: 2 * 1000
         })
@@ -295,70 +295,70 @@ export default {
 
         this.detail.data = [
           {
-            name: 'ID',
+            name: this.$t('ID'),
             content: data.id,
             type: 'text'
           },
           {
-            name: '分组',
+            name: this.$t('分组'),
             content: data.group,
             type: 'text'
           },
           {
-            name: '类型',
+            name: this.$t('类型'),
             content: data.type,
             type: 'text'
           },
           {
-            name: '标题',
+            name: this.$t('标题'),
             content: data.title,
             type: 'text'
           },
           {
-            name: '名称',
+            name: this.$t('名称'),
             content: data.name,
             type: 'text'
           },
 
           {
-            name: '配置项',
+            name: this.$t('配置项'),
             content: data.options,
             type: 'text'
           },
           {
-            name: '配置值',
+            name: this.$t('配置值'),
             content: data.value,
             type: 'text'
           },
           {
-            name: '描述',
+            name: this.$t('描述'),
             content: data.description,
             type: 'text'
           },
 
           {
-            name: '排序',
+            name: this.$t('排序'),
             content: data.listorder,
             type: 'text'
           },
           {
-            name: '显示',
+            name: this.$t('显示'),
             content: data.is_show,
             type: 'status'
           },
           {
-            name: '激活状态',
+            name: this.$t('激活状态'),
             content: data.status,
             type: 'boolen'
           },
 
           {
-            name: '最后更新',
+            name: this.$t('最后更新'),
             content: data.update_time,
             type: 'time'
           },
           {
-            name: '添加时间',
+            name: this.$t('添加时间'),
             content: data.create_time,
             type: 'time'
           }
@@ -370,7 +370,7 @@ export default {
       if (data.status == 1) {
         enable(data.id).then(() => {
           this.$message({
-            message: '配置启用成功',
+            message: this.$t('配置启用成功'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -378,7 +378,7 @@ export default {
       } else {
         disable(data.id).then(() => {
           this.$message({
-            message: '配置禁用成功',
+            message: this.$t('配置禁用成功'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -387,14 +387,14 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm('确认要删除该配置吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('确认要删除该配置吗？'), this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
         deleteConfig(row.id).then(() => {
           this.$message({
-            message: '删除配置成功',
+            message: this.$t('删除配置成功'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {

@@ -63,9 +63,9 @@
           class="captcha-input"
         />
 
-        <el-tooltip effect="light" :content="$t('login.refresh_captcha_tip')" placement="top">
+        <el-tooltip effect="light" :content="$t('login.refreshCaptchaTip')" placement="top">
           <span class="captcha-img" @click="refreshCaptcha">
-            <img :src="captchaImg" :title="$t('login.refresh_captcha')">
+            <img :src="captchaImg" :title="$t('login.refreshCaptcha')">
           </span>        
         </el-tooltip>
       </el-form-item>

@@ -7,7 +7,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            管理员
+            {{ $t('管理员') }}
           </div>
           <count-to
             :start-val="0"
@@ -26,7 +26,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            附件
+            {{ $t('附件') }}
           </div>
           <count-to
             :start-val="0"
@@ -45,7 +45,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            启用扩展
+            {{ $t('启用扩展') }}
           </div>
           <count-to 
             :start-val="0" 
@@ -63,7 +63,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            分组
+            {{ $t('分组') }}
           </div>
           <count-to 
             :start-val="0" 

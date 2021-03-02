@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>网站设置</span>
+        <span>{{ $t('网站设置') }}</span>
       </div>
 
       <el-tabs
@@ -25,7 +25,9 @@
           >
             <template slot>
               <el-form-item>
-                <el-button type="primary" @click="submit">提交</el-button>
+                <el-button type="primary" @click="submit">
+                  {{ $t('提交') }}
+                </el-button>
               </el-form-item>
             </template>
           </dynamic-form>
@@ -59,7 +61,7 @@ export default {
       activeName: '',
       list: null,
       groups: [
-        { key: 'loading..', label: '加载中..', items: [] }
+        { key: 'loading..', label: this.$t('加载中..'), items: [] }
       ],
       form: {
         items: [],
@@ -156,7 +158,7 @@ export default {
         fields: this.inputs
       }).then(() => {
         this.$message({
-          message: '提交更新成功',
+          message: this.$t('提交更新成功'),
           type: 'success',
           duration: 3 * 1000
         })

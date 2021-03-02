@@ -1,10 +1,10 @@
 <template>
   <el-form ref="form" :model="data" label-width="100px">
-    <el-form-item label="分组名称" prop="title">
+    <el-form-item :label="$t('分组名称')" prop="title">
       <el-input v-model.trim="title" readonly />
     </el-form-item>
 
-    <el-form-item label="权限路由" prop="access">
+    <el-form-item :label="$t('权限路由')" prop="access">
       <el-tree
         ref="tree"
         class="admin-access"
@@ -26,7 +26,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submit">提交</el-button>
+      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -118,7 +118,7 @@ export default {
         access: this.checkedids
       }).then(response => {
         this.$message({
-          message: '分组授权成功',
+          message: this.$t('分组授权成功'),
           type: 'success',
           duration: 2 * 1000,
           onClose() {

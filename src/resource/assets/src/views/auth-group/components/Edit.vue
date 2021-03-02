@@ -1,9 +1,9 @@
 <template>
   <el-form ref="authGroupForm" :model="data" :rules="rules" label-width="100px">
-    <el-form-item label="父级" prop="parentid">
+    <el-form-item :label="$t('父级')" prop="parentid">
       <el-select
         v-model="data.parentid"
-        placeholder="请选择"
+        :placeholder="$t('请选择')"
         clearable
         filterable
         :filter-method="parentFilter"
@@ -16,27 +16,27 @@
           :value="item.key" />
       </el-select>
     </el-form-item>
-    <el-form-item label="名称" prop="title">
-      <el-input v-model.trim="data.title" placeholder="请填写分组名称" />
+    <el-form-item :label="$t('名称')" prop="title">
+      <el-input v-model.trim="data.title" :placeholder="$t('请填写分组名称')" />
     </el-form-item>
-    <el-form-item label="描述" prop="description">
+    <el-form-item :label="$t('描述')" prop="description">
       <el-input 
         v-model.trim="data.description" 
         type="textarea" 
         rows="6" 
-        placeholder="请填写分组描述" />
+        :placeholder="$t('请填写分组描述')" />
     </el-form-item>
-    <el-form-item label="排序" prop="listorder">
-      <el-input v-model.trim="data.listorder" placeholder="请填写排序" />
+    <el-form-item :label="$t('排序')" prop="listorder">
+      <el-input v-model.trim="data.listorder" :placeholder="$t('请填写排序')" />
     </el-form-item>
-    <el-form-item label="状态" prop="status">
+    <el-form-item :label="$t('状态')" prop="status">
       <el-radio-group v-model="data.status">
-        <el-radio :label="1">启用</el-radio>
-        <el-radio :label="0">禁用</el-radio>
+        <el-radio :label="1">{{ $t('启用') }}</el-radio>
+        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">提交</el-button>
+      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -74,17 +74,17 @@ export default {
       },
       rules: {
         parentid: [
-          { required: true, message: '父级分组不能为空', trigger: 'change' }
+          { required: true, message: this.$t('父级分组不能为空'), trigger: 'change' }
         ],
         title: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('名称不能为空'), trigger: 'blur' }
         ],
         listorder: [
-          { required: true, message: '排序不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('排序不能为空'), trigger: 'blur' }
         ]
       },
       parentOptions: [
-        { key: '0', display_name: '顶级分组' }
+        { key: '0', display_name: this.$t('顶级分组') }
       ],
       parentFilterOptions: []
     }
@@ -131,7 +131,7 @@ export default {
     },
     fetchParents() {
       this.parentOptions = [
-        { key: '0', display_name: '顶级分组' }
+        { key: '0', display_name: this.$t('顶级分组') }
       ]
       this.parentFilterOptions = []
 
@@ -191,7 +191,7 @@ export default {
           status: this.data.status
         }).then(response => {
           this.$message({
-            message: '更新分组信息成功',
+            message: this.$t('更新分组信息成功'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {
