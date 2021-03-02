@@ -32,7 +32,7 @@
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item @click.native="clearCache">
-            清空缓存
+            {{ $t('清空缓存') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">{{ $t('navbar.logOut') }}</span>

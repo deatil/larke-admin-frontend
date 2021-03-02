@@ -39,7 +39,7 @@ export default {
       getInfo().then(response => {
         const data = response.data
 
-        const list = [
+        this.list = [
           {
             name: this.$t('当前版本'),
             content: data.admin.name + ' v' + data.admin.version
@@ -73,8 +73,6 @@ export default {
             content: data.system.time
           }
         ]
-
-        this.list = list
       })
     }
   }

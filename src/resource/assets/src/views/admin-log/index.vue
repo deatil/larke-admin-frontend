@@ -102,7 +102,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column min-width="150px" :label="$t('URL')">
+        <el-table-column min-width="150px" :label="$t('请求URL')">
           <template slot-scope="{row}">
             <span>{{ row.url }}</span>
           </template>
