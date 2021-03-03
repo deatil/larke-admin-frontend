@@ -349,7 +349,7 @@ class Menu
             return [];
         }
         
-        $slugs = app('larke-admin.admin')->getRuleSlugs();
+        $slugs = app('larke-admin.auth.admin')->getRuleSlugs();
         
         $list = collect($menus)
             ->filter(function($data) use($slugs) {

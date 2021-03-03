@@ -13,7 +13,7 @@ routeFiles.keys().map(item => {
 /** 
  * 加载扩展语言包 
  */
-const extensionLangs = require.context('@/extension/', true, /lang\/\w+\.js$/)
+const extensionLangs = require.context('@/extension/', true, /lang\/[\w\/]+\.js$/)
 extensionLangs.keys().map(item => {
   const langName = getFileName(item)
   const langMessage = extensionLangs(item).default
