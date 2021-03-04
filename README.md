@@ -77,7 +77,9 @@ composer require lake/larke-admin-frontend
 
 ```php
 php artisan vendor:publish --tag=larke-admin-frontend-config
+```
 
+```php
 php artisan vendor:publish --tag=larke-admin-frontend-assets
 ```
 

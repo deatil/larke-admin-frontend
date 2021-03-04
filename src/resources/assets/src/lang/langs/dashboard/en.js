@@ -15,7 +15,7 @@ export default {
   '管理员': 'Admins',
   '附件': 'Attachments',
   '启用扩展': 'Extensions',
-  '分组': 'Groups',
+  '管理分组': 'Groups',
   '系统信息': 'System Info',
   '当前版本': 'Version',
   '服务器域名/IP': 'Server domain/ip',

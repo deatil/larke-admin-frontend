@@ -26,7 +26,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ $t('分组') }}
+            {{ $t('管理分组') }}
           </div>
           <count-to 
             :start-val="0" 
@@ -114,6 +114,16 @@ export default {
         })
       }
 
+      if (checkPermission(['larke-admin.auth-group.index'])) {
+        // 管理分组
+        await getGroupList({
+          start: 1,
+          limit: 0
+        }).then(response => {
+          thiz.groups = response.data.total
+        })
+      }
+
       if (checkPermission(['larke-admin.attachment.index'])) {
         // 附件
         await getAttachmentList({
@@ -132,16 +142,6 @@ export default {
           limit: 0
         }).then(response => {
           thiz.extensions = response.data.total
-        })
-      }
-
-      if (checkPermission(['larke-admin.auth-group.index'])) {
-        // 分组
-        await getGroupList({
-          start: 1,
-          limit: 0
-        }).then(response => {
-          thiz.groups = response.data.total
         })
       }
     }
