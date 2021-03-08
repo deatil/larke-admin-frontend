@@ -54,6 +54,7 @@ export default {
   },
 
   '清空缓存': 'Clear Cache',
+  '清空网站缓存成功': 'Clear Cache Success',
   '提示': 'Tips',
   '确定': 'Ok',
   '取消': 'Canle',

@@ -18,6 +18,13 @@ export function getLang(group, locale = '') {
   })
 }
 
+export function setLang(locale) {
+  return request({
+    url: `/system/lang/${locale}`,
+    method: 'patch'
+  })
+}
+
 export function postCache() {
   return request({
     url: '/system/cache',

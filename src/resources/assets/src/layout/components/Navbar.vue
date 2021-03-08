@@ -76,10 +76,11 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     clearCache() {
+      const thiz = this
       clearCache().then((res) => {
         if (res.code == 0) {
           this.$message({
-            message: '清空网站缓存成功',
+            message: thiz.$t('清空网站缓存成功'),
             type: 'success',
             duration: 3 * 1000
           })

@@ -28,7 +28,7 @@ service.interceptors.request.use(
     const language = store.getters.language
     const langMap = store.getters.langMap
     if (language in langMap) {
-      config.headers['Locale-language'] = langMap[language]
+      config.headers['Locale-Language'] = langMap[language]
     }
 
     return config
