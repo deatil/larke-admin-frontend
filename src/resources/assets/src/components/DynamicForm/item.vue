@@ -80,6 +80,7 @@
       :disabled="item.disable||false"
       :placeholder="item.placeholder"
       :texts="item.options"
+      style="position: absolute;top: 10px;"
       v-bind="$attrs"
       v-on="$listeners"
     />
