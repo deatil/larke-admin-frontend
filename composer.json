@@ -2,6 +2,7 @@
     "name": "lake/larke-admin-frontend",
     "description": "A frontend for larke-admin with vue2 and element-ui.",
     "keywords": [
+        "laravel",
         "larke",
         "admin",
         "vue",
@@ -23,14 +24,13 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "lake/larke-admin":"1.1.*"
     },
     "autoload": {
         "psr-4": {
             "Larke\\Admin\\Frontend\\": "src/frontend"
-        },
-        "files": []
+        }
     },
     "extra" : {
         "laravel" : {
