@@ -99,16 +99,16 @@
             </div>
 
             <div style="margin-top:3px;">
-              <el-tooltip effect="dark" :content="$t('当前扩展版本')" placement="top">
-                <el-tag type="primary" size="mini" style="margin-right:10px;">
-                  v{{ scope.row.version }}
-                </el-tag>
-              </el-tooltip>
-
               <el-tooltip effect="dark" :content="$t('当前扩展适配系统版本')" placement="top">
                 <el-tag type="info" size="mini" style="margin-right:10px;">
                   <i class="el-icon-goblet-square-full" />&nbsp;
                   <span>{{ scope.row.adaptation }}</span>
+                </el-tag>
+              </el-tooltip>
+
+              <el-tooltip effect="dark" :content="$t('当前扩展版本')" placement="top">
+                <el-tag type="primary" size="mini" style="margin-right:10px;">
+                  v{{ scope.row.version }}
                 </el-tag>
               </el-tooltip>
             </div>
@@ -120,7 +120,15 @@
             <div v-for="item in scope.row.authorlist.slice(0, 1)" :key="item.name" class="extension-author">
               <div>
                 <span style="margin-right:10px;">
-                  <span>{{ item.name }}</span>
+                  <span v-if="item.homepage && item.homepage != ''">
+                    <a :href="item.homepage" target="_blank" :title="item.name">
+                      {{ item.name }}
+                    </a>
+                  </span>
+
+                  <span v-else>
+                    {{ item.name }}
+                  </span>
                 </span>
               </div>
 

@@ -38,6 +38,13 @@
           </div>
 
           <div>
+            <el-tooltip effect="dark" :content="$t('当前扩展适配系统版本')" placement="top">
+              <el-tag type="info" size="mini" style="margin-right:10px;">
+                <i class="el-icon-goblet-square-full" />&nbsp;
+                <span>{{ scope.row.adaptation }}</span>
+              </el-tag>
+            </el-tooltip>
+
             <template v-if="scope.row.upgrade == 1">
               <el-tooltip effect="dark" :content="$t('当前扩展版本')" placement="top">
                 <el-tag type="primary" size="mini" style="margin-right:10px;">
@@ -59,14 +66,6 @@
                 </el-tag>
               </el-tooltip>
             </template>
-
-            <el-tooltip effect="dark" :content="$t('当前扩展适配系统版本')" placement="top">
-              <el-tag type="info" size="mini" style="margin-right:10px;">
-                <i class="el-icon-goblet-square-full" />&nbsp;
-                <span>{{ scope.row.adaptation }}</span>
-              </el-tag>
-            </el-tooltip>
-
           </div>
         </template>
       </el-table-column>
@@ -75,7 +74,15 @@
         <template slot-scope="scope">
           <div v-for="item in scope.row.authors.slice(0, 1)" :key="item.name" class="extension-author">
             <div class="author-name">
-              <span>{{ item.name }}</span>
+              <span v-if="item.homepage && item.homepage != ''">
+                <a :href="item.homepage" target="_blank" :title="item.name">
+                  {{ item.name }}
+                </a>
+              </span>
+
+              <span v-else>
+                {{ item.name }}
+              </span>
             </div>          
 
             <div class="author-email">
