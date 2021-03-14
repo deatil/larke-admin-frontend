@@ -12,12 +12,12 @@
     <el-form-item :label="$t('简介')" prop="name">
       <el-input v-model.trim="data.introduce" type="textarea" rows="6" :placeholder="$t('请填写简介')" />
     </el-form-item>
-    <el-form-item label="$t('头像')">
+    <el-form-item :label="$t('头像')">
       <div style="width: 100%;">
         <avatar :data="data" />
       </div>
     </el-form-item>
-    <el-form-item label="$t('状态')" prop="status">
+    <el-form-item :label="$t('状态')" prop="status">
       <el-radio-group v-model="data.status">
         <el-radio :label="1">{{ $t('启用') }}</el-radio>
         <el-radio :label="0">{{ $t('禁用') }}</el-radio>

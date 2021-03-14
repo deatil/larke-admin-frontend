@@ -10,7 +10,12 @@
       <el-input v-model="data.newpassword_confirm" type="password" :placeholder="$t('请再次填写新密码')" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button 
+        :loading="loading" 
+        type="primary" 
+        @click="submit">
+        {{ $t('提交') }}
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -37,21 +42,26 @@ export default {
         oldpassword: '',
         newpassword: '',
         newpassword_confirm: ''
-      }
+      },
+      loading: false,
     }
   },
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
-        if (!valid) {
+        if (! valid) {
           return false
         }
+
+        this.loading = true
 
         changePassword({
           oldpassword: md5(this.data.oldpassword),
           newpassword: md5(this.data.newpassword),
           newpassword_confirm: md5(this.data.newpassword_confirm)
         }).then(response => {
+          this.loading = false
+
           this.$message({
             message: this.$t('密码更新成功'),
             type: 'success',

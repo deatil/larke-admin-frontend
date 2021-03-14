@@ -10,7 +10,12 @@
       <el-input v-model.trim="user.introduce" type="textarea" rows="6" :placeholder="$t('请填写简介')" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button 
+        :loading="loading" 
+        type="primary" 
+        @click="submit">
+        {{ $t('提交') }}
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -40,21 +45,26 @@ export default {
         email: [
           { required: true, message: this.$t('邮箱不能为空'), trigger: 'blur' }
         ]
-      }
+      },
+      loading: false,
     }
   },
   methods: {
     submit() {
       this.$refs.form.validate(valid => {
-        if (!valid) {
+        if (! valid) {
           return false
         }
+
+        this.loading = true
 
         updateInfo({
           nickname: this.user.name,
           email: this.user.email,
           introduce: this.user.introduce
         }).then(response => {
+          this.loading = false
+          
           this.$message({
             message: this.$t('信息更新成功'),
             type: 'success',

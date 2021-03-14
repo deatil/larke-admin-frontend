@@ -120,7 +120,11 @@
           <el-input v-model="password.newpassword" type="password" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="changePassword">{{ $t('确认') }}</el-button>
+          <el-button 
+            type="primary" 
+            @click="changePassword">
+            {{ $t('确认') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
