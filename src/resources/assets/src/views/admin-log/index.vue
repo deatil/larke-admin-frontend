@@ -130,11 +130,25 @@
 
         <el-table-column align="center" :label="$t('操作')" width="200">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.log.detail'])" type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
+            <el-button 
+              :loading="scope.row.id == loading.detail"
+              :disabled="!checkPermission(['larke-admin.log.detail'])" 
+              type="info" 
+              size="mini" 
+              icon="el-icon-info" 
+              @click="handleDetail(scope.$index, scope.row)"
+            >
               {{ $t('详情') }}
             </el-button>
 
-            <el-button v-permission="['larke-admin.log.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
+            <el-button 
+              :loading="scope.row.id == loading.delete"
+              v-permission="['larke-admin.log.delete']" 
+              type="danger" 
+              size="mini" 
+              icon="el-icon-delete" 
+              @click="handleDelete(scope.$index, scope.row)"
+            >
               {{ $t('删除') }}
             </el-button>
           </template>
@@ -221,7 +235,11 @@ export default {
         data: []
       },
       selectedData: [],
-      showDeletebtn: false
+      showDeletebtn: false,
+      loading: {
+        detail: '',
+        delete: '',
+      },
     }
   },
   created() {
@@ -263,9 +281,13 @@ export default {
       }
     },
     handleDetail(index, row) {
+      this.loading.detail = row.id
+
       getDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
         const data = res.data
+
+        this.loading.detail = ''
 
         this.detail.data = [
           {
@@ -320,6 +342,8 @@ export default {
             type: 'boolen'
           }
         ]
+      }).catch((err) => {
+        this.loading.detail = ''
       })
     },
     handleDelete(index, row) {
@@ -329,15 +353,19 @@ export default {
         cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
+        thiz.loading.delete = row.id
+
         deleteLog(row.id).then(res => {
+          thiz.loading.delete = ''
+          thiz.list.splice(index, 1)
+
           this.$message({
             message: res.message,
             type: 'success',
-            duration: 3 * 1000,
-            onClose() {
-              thiz.list.splice(index, 1)
-            }
+            duration: 3 * 1000
           })
+        }).catch(() => {
+          thiz.loading.delete = ''
         })
       }).catch(() => {})
     },

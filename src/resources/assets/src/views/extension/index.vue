@@ -83,7 +83,15 @@
         <el-table-column width="130px" :label="$t('扩展')">
           <template slot-scope="scope">
             <div class="extension-title">
-              <span>{{ scope.row.title }}</span>
+              <span v-if="scope.row.homepage && scope.row.homepage != ''">
+                <a :href="scope.row.homepage" target="_blank" :title="scope.row.title">
+                  {{ scope.row.title }}
+                </a>
+              </span>
+
+              <span v-else>
+                {{ scope.row.title }}
+              </span>
             </div>
 
             <div class="extension-name">
@@ -193,7 +201,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
-              :disabled="!checkPermission(['larke-admin.extension.enable', 'larke-admin.extension.disable'])"
+              :disabled="!checkPermission(['larke-admin.extension.enable']) || !checkPermission(['larke-admin.extension.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -632,6 +640,9 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.extension-title a:hover {
+  color: #1b4fb7;
 }
 .extension-name {
   color: #909399;

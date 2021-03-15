@@ -53,7 +53,7 @@
         <el-table-column width="100px" align="center" :label="$t('授权')">
           <template slot-scope="scope">
             <el-button type="warning" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" @click="handleAccess(scope.$index, scope.row)">
-              授权{{ $t('提交') }}
+              {{ $t('授权') }}
             </el-button>
           </template>
         </el-table-column>
@@ -72,7 +72,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
-              :disabled="!checkPermission(['larke-admin.admin.enable', 'larke-admin.admin.disable'])"
+              :disabled="!checkPermission(['larke-admin.admin.enable']) || !checkPermission(['larke-admin.admin.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>

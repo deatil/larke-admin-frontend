@@ -93,7 +93,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
-              :disabled="!checkPermission(['larke-admin.config.enable', 'larke-admin.config.disable'])"
+              :disabled="!checkPermission(['larke-admin.config.enable']) || !checkPermission(['larke-admin.config.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>

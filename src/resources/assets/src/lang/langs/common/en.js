@@ -58,4 +58,6 @@ export default {
   '提示': 'Tips',
   '确定': 'Ok',
   '取消': 'Canle',
+
+  '提交': 'Save',
 }

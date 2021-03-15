@@ -65,9 +65,13 @@ export default {
     }
   },
   created() {
+    const thiz = this
+
     this.nickname = this.$store.getters.nickname
-    if (!this.nickname) {
-      setTimeout(this.getNickname, 3000)
+    if (! this.nickname) {
+      setTimeout(function () {
+        thiz.getNickname()
+      }, 5000)
     }
 
     this.timer = setInterval(this.setNowTime, 1000)

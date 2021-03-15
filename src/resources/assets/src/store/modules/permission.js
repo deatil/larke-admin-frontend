@@ -27,7 +27,9 @@ function mergeExtension(routes, extensionRoutes) {
   return res  
 }
 
-/** 菜单排序 */
+/** 
+ * 菜单排序 
+ */
 function routesSort(route) {
   const newRoutes = { ...routes }
 

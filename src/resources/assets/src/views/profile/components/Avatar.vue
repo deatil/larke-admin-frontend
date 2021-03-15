@@ -3,7 +3,7 @@
 
     <el-alert
       type="info"
-      :title="$t('注意')"
+      :title="$t('修改头像注意')"
       :description="$t('选择头像提交后将会自动提交修改头像为选择头像')"
       class="profile-avatar-tip"
       show-icon

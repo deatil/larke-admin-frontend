@@ -123,7 +123,7 @@
               inactive-color="#ff4949"
               :active-value="1"
               :inactive-value="0"
-              :disabled="!checkPermission(['larke-admin.auth-rule.enable', 'larke-admin.auth-rule.disable'])"
+              :disabled="!checkPermission(['larke-admin.auth-rule.enable']) || !checkPermission(['larke-admin.auth-rule.disable'])"
               @change="changeStatus($event, scope.row, scope.$index)"
             />
           </template>
@@ -131,15 +131,36 @@
 
         <el-table-column align="center" :label="$t('操作')" width="280">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.auth-rule.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
+            <el-button 
+              :loading="scope.row.id == loading.update"
+              :disabled="!checkPermission(['larke-admin.auth-rule.update'])" 
+              type="primary" 
+              size="mini" 
+              icon="el-icon-edit" 
+              @click="handleEdit(scope.$index, scope.row)"
+            >
               {{ $t('编辑') }}
             </el-button>
 
-            <el-button :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
+            <el-button 
+              :loading="scope.row.id == loading.detail"
+              :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" 
+              type="info" 
+              size="mini" 
+              icon="el-icon-info" 
+              @click="handleDetail(scope.$index, scope.row)"
+            >
               {{ $t('详情') }}
             </el-button>
 
-            <el-button v-permission="['larke-admin.auth-rule.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
+            <el-button 
+              :loading="scope.row.id == loading.delete"
+              v-permission="['larke-admin.auth-rule.delete']" 
+              type="danger" 
+              size="mini" 
+              icon="el-icon-delete" 
+              @click="handleDelete(scope.$index, scope.row)"
+            >
               {{ $t('删除') }}
             </el-button>
           </template>
@@ -251,7 +272,12 @@ export default {
       editableItem: {},
       editableOldSort: 0,
       selectedData: [],
-      showDeletebtn: false
+      showDeletebtn: false,
+      loading: {
+        update: '',
+        detail: '',
+        delete: '',
+      },
     }
   },
   created() {
@@ -297,8 +323,12 @@ export default {
       this.create.dialogVisible = true
     },
     handleEdit(index, row) {
+      this.loading.update = row.id
+
       this.edit.dialogVisible = true
       this.edit.id = row.id
+
+      this.loading.update = ''
     },
     closeEdit() {
       this.edit.id = ''
@@ -336,9 +366,13 @@ export default {
       })
     },
     handleDetail(index, row) {
+      this.loading.detail = row.id
+
       getRuleDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
         const data = res.data
+
+        this.loading.detail = ''
 
         this.detail.data = [
           {
@@ -412,6 +446,8 @@ export default {
             type: 'text'
           }
         ]
+      }).catch(() => {
+        this.loading.detail = ''
       })
     },
     handleTree() {
@@ -443,18 +479,20 @@ export default {
         cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
+        this.loading.delete = row.id
+
         deleteRule(row.id).then(() => {
+          thiz.loading.delete = ''
+          thiz.list.splice(index, 1)
+
           this.$message({
             message: this.$t('删除权限成功'),
             type: 'success',
-            duration: 5 * 1000,
-            onClose() {
-              thiz.list.splice(index, 1)
-            }
+            duration: 3 * 1000
           })
+        }).catch(() => {
+          thiz.loading.delete = ''
         })
-      }).catch(() => {
-
       })
     },
     handleDeleteList() {

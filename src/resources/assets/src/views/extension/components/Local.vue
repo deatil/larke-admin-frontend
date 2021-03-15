@@ -21,7 +21,15 @@
         <template slot-scope="scope">
 
           <div class="extension-title">
-            <span>{{ scope.row.title }}</span>
+            <span v-if="scope.row.homepage && scope.row.homepage != ''">
+              <a :href="scope.row.homepage" target="_blank" :title="scope.row.title">
+                {{ scope.row.title }}
+              </a>
+            </span>
+
+            <span v-else>
+              {{ scope.row.title }}
+            </span>
           </div>
 
           <div class="extension-name">
@@ -274,6 +282,9 @@ export default {
 </script>
 
 <style scoped>
+.extension-title a:hover {
+  color: #1b4fb7;
+}
 .extension-name {
   color: #909399;
   font-size: 13px;
