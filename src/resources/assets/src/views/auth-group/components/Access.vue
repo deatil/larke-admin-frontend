@@ -23,6 +23,10 @@
           </span>
         </template>
       </el-tree>
+
+      <div class="text-grey">         
+        {{ $t('注意：非超级管理员请不要授权给 `权限` 和 `管理分组` 权限。') }}
+      </div>
     </el-form-item>
 
     <el-form-item>
