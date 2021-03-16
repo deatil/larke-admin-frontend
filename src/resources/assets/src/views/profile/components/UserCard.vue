@@ -18,6 +18,37 @@
     <div class="user-bio">
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header">
+          <i class="el-icon-s-operation" ></i>
+          <span>{{ $t('管理分组') }}</span>
+        </div>
+        <div class="user-bio-section-body">
+          <div class="text-muted">
+            <template v-if="user.groups && user.groups.length > 0">
+              <template v-for="item in user.groups">
+                <el-tag 
+                  :key="item.id" 
+                  type="success" 
+                  style="margin-right: 10px;padding-left: 10px;"
+                >
+                  {{ item.title }}
+                </el-tag>
+              </template>
+            </template>
+
+            <template v-else>
+              <el-tag 
+                type="success" 
+                style="margin-right: 10px;padding-left: 10px;"
+              >
+                无
+              </el-tag>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-education user-bio-section">
+        <div class="user-bio-section-header">
           <svg-icon icon-class="education" />
           <span>{{ $t('简介') }}</span>
         </div>
@@ -44,7 +75,8 @@ export default {
           name: '',
           email: '',
           avatar: '',
-          introduce: ''
+          introduce: '',
+          groups: []
         }
       }
     }

@@ -37,7 +37,12 @@ import { getInfo } from '@/api/user'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Account, Password, Avatar },
+  components: { 
+    UserCard, 
+    Account, 
+    Password, 
+    Avatar 
+  },
   data() {
     return {
       user: {
@@ -58,13 +63,14 @@ export default {
   methods: {
     getUser() {
       getInfo().then(response => {
-        const { nickname, email, avatar, introduce } = response.data
+        const { nickname, email, avatar, introduce, groups } = response.data
 
         this.user = {
           name: nickname,
           email: email,
           avatar: avatar,
-          introduce: introduce
+          introduce: introduce,
+          groups: groups,
         }
       })
     }
