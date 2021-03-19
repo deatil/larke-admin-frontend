@@ -13,8 +13,9 @@
         show-checkbox
         node-key="id"
         :highlight-current="true"
-        :default-expand-all="false"
+        :default-expand-all="true"
         :expand-on-click-node="false"
+        :check-strictly="true"
         @check-change="treeCheck"
       />
     </el-form-item>
@@ -91,9 +92,7 @@ export default {
         if (groups.length > 0) {
           groups.forEach(item => {
             const node = thiz.$refs.tree.getNode(item.id)
-            if (node['isLeaf']) {
-              thiz.$refs.tree.setChecked(node, true)
-            }
+            thiz.$refs.tree.setChecked(node, true)
           })
         }
       })
@@ -105,9 +104,8 @@ export default {
     },
     treeCheck() {
       const checkedKeys = this.$refs.tree.getCheckedKeys()
-      const HalfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
 
-      this.checkedids = checkedKeys.concat(HalfCheckedKeys).join(',')
+      this.checkedids = checkedKeys.join(',')
     },
     submit() {
       const thiz = this
