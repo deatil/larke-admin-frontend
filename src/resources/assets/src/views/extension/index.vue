@@ -597,8 +597,6 @@ export default {
         })
 
         uninstall(row.name).then(() => {
-          loading.close()
-
           thiz.list.splice(index, 1)
 
           this.$message({
@@ -607,6 +605,10 @@ export default {
             duration: 2 * 1000
           })
         })
+
+        setTimeout(function() {
+          loading.close()
+        }, 3000)
       }).catch(() => {
 
       })

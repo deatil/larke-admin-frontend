@@ -273,6 +273,10 @@ export default {
             thiz.confirmTip(err.message + "【" + require.join('，') + "】")
           }
         })
+
+        setTimeout(function() {
+          loading.close()
+        }, 3000)
       }).catch(() => {
 
       })
