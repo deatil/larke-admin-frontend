@@ -455,6 +455,17 @@ export function isJson(str) {console.log(str)
   return false
 }
 
+export function getPropertyCount(o) {
+  let n, count = 0;
+  for (n in o) {
+    if (o.hasOwnProperty(n)) {
+      count ++;
+    }
+  }
+
+  return count;
+}
+
 export function formatOpions(options) {
   const optionArr = options.split(/[(\s\n)\s\n]+/)
   var arr = []

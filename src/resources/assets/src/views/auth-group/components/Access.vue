@@ -5,6 +5,11 @@
     </el-form-item>
 
     <el-form-item :label="$t('权限路由')" prop="access">
+      <el-checkbox
+        v-model="checked"
+        @change="checkedAll"
+      >{{ $t('全选') }}</el-checkbox>
+
       <el-tree
         ref="tree"
         class="admin-access"
@@ -36,6 +41,7 @@
 </template>
 
 <script>
+import { getPropertyCount } from '@/utils/index'
 import { getGroupDetail, updateGroupAccess } from '@/api/authGroup'
 import { getRuleTreeList } from '@/api/authRule'
 
@@ -54,6 +60,7 @@ export default {
     return {
       id: '',
       title: '',
+      checked: false,
       data: {
         access: ''
       },
@@ -61,6 +68,7 @@ export default {
         label: 'title'
       },
       list: [],
+      listIds: [],
       checkedids: ''
     }
   },
@@ -115,6 +123,35 @@ export default {
       const HalfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
 
       this.checkedids = checkedKeys.concat(HalfCheckedKeys).join(',')
+
+      // 获取列表全部id
+      this.listIds = []
+      this.getListIds(this.list)
+
+      if (this.listIds.sort().toString() != this.checkedids.split(',').sort().toString()) {
+        this.checked = false
+      } else {
+        this.checked = true
+      }
+    },
+    checkedAll() {
+      if (this.checked) {
+        this.$refs.tree.setCheckedNodes(this.list)
+      } else {
+        this.$refs.tree.setCheckedNodes([])
+      }
+    },
+    getListIds(list) {
+      const thiz = this
+      if (getPropertyCount(list) > 0) {
+        list.forEach(function(item) {
+          thiz.listIds.push(item.id)
+
+          if (getPropertyCount(item.children) > 0) {
+            thiz.getListIds(item.children)
+          }
+        })
+      }
     },
     submit() {
       const thiz = this
