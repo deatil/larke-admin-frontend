@@ -52,6 +52,6 @@ module.exports = {
    */
   langMap: {
     'en': 'en',
-    'zh': 'zh-cn'
+    'zh': 'zh_CN'
   }
 }
