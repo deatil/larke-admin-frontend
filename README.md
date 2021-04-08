@@ -90,6 +90,10 @@ php artisan vendor:publish --tag=larke-admin-frontend-assets
 3. 你可能第一次安装需要运行以下命令更新前端适配菜单信息
 
 ```php
+php artisan larke-admin:import-route
+```
+
+```php
 php artisan larke-admin-frontend:import-menus --force
 ```
 
