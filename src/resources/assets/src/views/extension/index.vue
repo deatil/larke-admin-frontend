@@ -394,9 +394,9 @@ export default {
     },
     handleRefresh() {
       const thiz = this
-      this.confirmTip(this.$t('确认要刷新本地扩展缓存吗？'), function() {
+      this.confirmTip(thiz.$t('确认要刷新本地扩展缓存吗？'), function() {
         refreshLocal().then(response => {
-          thiz.successTip(this.$t('刷新本地扩展缓存成功!'), function() {
+          thiz.successTip(thiz.$t('刷新本地扩展缓存成功!'), function() {
             thiz.listQuery.page = 1
             thiz.getList()
           });
