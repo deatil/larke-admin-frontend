@@ -22,7 +22,7 @@
       :width="300"
       :height="300"
       field="file"
-      url="attachment"
+      url="upload/file"
       lang-type="zh"
       @close="close"
       @crop-upload-success="cropSuccess"

@@ -24,7 +24,7 @@ export function deleteAttachment(id) {
 
 export function uploadAttachment(data) {
   return request({
-    url: `/attachment`,
+    url: `/upload/file`,
     method: 'post',
     data
   })
