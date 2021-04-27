@@ -282,3 +282,8 @@ a.text-dark:hover, a.text-dark:focus {
     overflow-x: auto;
   }
 }
+
+.border-gray .el-table__body-wrapper {
+  border-left: 1px solid #dfe6ec;
+  border-right: 1px solid #dfe6ec;
+}

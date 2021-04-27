@@ -2,9 +2,9 @@
   <div class="extension-container">
     <el-table
       v-loading="listLoading"
+      class="border-gray"
       :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width: 100%"

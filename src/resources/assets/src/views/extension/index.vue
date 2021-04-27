@@ -64,10 +64,10 @@
       </div>
 
       <el-table
+        class="border-gray"
         v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
         :data="list"
-        border
         fit
         highlight-current-row
         style="width: 100%"
