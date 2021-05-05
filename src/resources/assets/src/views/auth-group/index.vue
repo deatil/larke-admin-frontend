@@ -33,7 +33,7 @@
         v-loading="listLoading"
         :header-cell-style="{background:'#eef1f6',color:'#606266'}"
         :data="list"
-        border
+        class="border-gray"
         fit
         highlight-current-row
         style="width: 100%"
