@@ -81,7 +81,7 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog title="$t('附件详情')" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('附件详情')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
   </div>
