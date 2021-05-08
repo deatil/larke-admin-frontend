@@ -207,6 +207,28 @@ a.text-dark:hover, a.text-dark:focus {
   background: #868e96;
 }
 
+.border-radius-1 {
+  border-radius: 1px;
+}
+.border-radius-2 {
+  border-radius: 2px;
+}
+.border-radius-3 {
+  border-radius: 3px;
+}
+.border-radius-4 {
+  border-radius: 4px;
+}
+.border-radius-5 {
+  border-radius: 5px;
+}
+.border-radius-6 {
+  border-radius: 6px;
+}
+.border-radius-10 {
+  border-radius: 10px;
+}
+
 @media print {
   *,
   *::before,
@@ -283,6 +305,13 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+.el-dialog__header {
+  border-bottom: 1px solid #f0f2f7;
+}
+
+.el-table {
+  border-radius: 4px;
+}
 .border-gray .el-table__body-wrapper {
   border-left: 1px solid #dfe6ec;
   border-right: 1px solid #dfe6ec;

@@ -104,7 +104,7 @@ export default {
         status: 1
       },
       parentOptions: [
-        { key: '0', display_name: his.$t('顶级权限') }
+        { key: '0', display_name: this.$t('顶级权限') }
       ],
       parentFilterOptions: [],
       methodOptions: [

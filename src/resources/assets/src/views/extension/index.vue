@@ -409,6 +409,7 @@ export default {
       const isZip = (file.raw.type === 'application/x-zip-compressed');
 
       if (!isZip) {
+        this.uploadLoading = false
         this.$message.error(this.$t('上传扩展只能是zip格式!'));
         return false;
       }

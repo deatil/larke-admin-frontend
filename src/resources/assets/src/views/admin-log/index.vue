@@ -110,13 +110,13 @@
 
         <el-table-column width="120px" :label="$t('请求IP')">
           <template slot-scope="{row}">
-            <span>{{ row.ip }}</span>
+            <span class="text-muted">{{ row.ip }}</span>
           </template>
         </el-table-column>
 
         <el-table-column width="160px" align="center" :label="$t('请求时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span class="text-muted">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
           </template>
         </el-table-column>
 

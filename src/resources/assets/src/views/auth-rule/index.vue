@@ -104,14 +104,14 @@
                 :disabled="!checkPermission(['larke-admin.auth-rule.listorder'])"
                 @blur="editableChange($event, row, $index)"
               />
-              <span v-else>{{ row.listorder }}</span>
+              <span v-else class="text-muted">{{ row.listorder }}</span>
             </div>
           </template>
         </el-table-column>
 
         <el-table-column width="160px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span class="text-muted">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
           </template>
         </el-table-column>
 

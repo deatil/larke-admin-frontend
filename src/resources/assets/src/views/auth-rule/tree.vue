@@ -70,13 +70,13 @@
 
         <el-table-column width="60px" align="center" :label="$t('排序')">
           <template slot-scope="scope">
-            <span>{{ scope.row.listorder }}</span>
+            <span class="text-muted">{{ scope.row.listorder }}</span>
           </template>
         </el-table-column>
 
         <el-table-column width="160px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span class="text-muted">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
           </template>
         </el-table-column>
 
