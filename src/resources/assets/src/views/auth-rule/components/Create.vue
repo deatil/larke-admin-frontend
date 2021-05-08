@@ -127,7 +127,7 @@ export default {
         id: 0,
         type: 'list'
       })
-
+      
       const list = all.data.list
 
       if (list.length > 0) {
@@ -169,7 +169,7 @@ export default {
         }
 
         createRule(this.data).then(response => {
-          this.successTip(his.$t('添加权限成功'), function() {
+          this.successTip(this.$t('添加权限成功'), function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.$refs.authRuleForm.resetFields()
               }
