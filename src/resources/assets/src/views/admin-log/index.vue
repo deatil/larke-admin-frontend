@@ -207,7 +207,7 @@ export default {
         searchword: '',
         start_time: '',
         end_time: '',
-        order: 'ASC',
+        order: 'DESC',
         status: '',
         method: '',
         page: 1,

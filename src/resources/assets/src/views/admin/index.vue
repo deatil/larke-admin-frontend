@@ -52,15 +52,15 @@
 
         <el-table-column width="100px" align="center" :label="$t('授权')">
           <template slot-scope="scope">
-            <el-button type="warning" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" @click="handleAccess(scope.$index, scope.row)">
-              {{ $t('授权') }}
+            <el-button type="primary" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" @click="handleAccess(scope.$index, scope.row)">
+              {{ $t('设置分组') }}
             </el-button>
           </template>
         </el-table-column>
 
         <el-table-column width="160px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
           </template>
         </el-table-column>
 

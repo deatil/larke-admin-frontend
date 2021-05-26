@@ -49,7 +49,7 @@
 
         <el-table-column width="100px" align="center" :label="$t('授权')">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.auth-group.access'])" type="warning" size="mini" @click="handleAccess(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-group.access'])" type="primary" size="mini" @click="handleAccess(scope.$index, scope.row)">
               {{ $t('授权') }}
             </el-button>
           </template>
