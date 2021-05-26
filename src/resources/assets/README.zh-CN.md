@@ -1,6 +1,6 @@
-<p align="center">
+<h3 align="center">
     larke-admin-frontend 前端编译文档
-</p>
+</h3>
 
 简体中文 | [English](./README.md) 
 

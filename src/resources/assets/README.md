@@ -1,6 +1,6 @@
-<p align="center">
+<h3 align="center">
     larke-admin-frontend build docs
-</p>
+</h3>
 
 English | [简体中文](./README.zh-CN.md)
 
