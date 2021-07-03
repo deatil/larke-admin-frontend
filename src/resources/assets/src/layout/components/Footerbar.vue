@@ -1,6 +1,6 @@
 <template>
   <div class="footerbar">
-    <span class="copyright">Copyright@{{ systemTitle }} v{{ systemVersion }}</span>
+    <span class="copyright">Copyright @ {{ systemTitle }} v{{ systemVersion }}</span>
   </div>
 </template>
 

@@ -435,7 +435,7 @@ export function isNumber(value) {
 }
 
 // json判断
-export function isJson(str) {console.log(str)
+export function isJson(str) {
   if (typeof str != 'string') {
     return false
   }

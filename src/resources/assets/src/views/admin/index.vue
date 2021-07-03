@@ -140,7 +140,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog :title="$t('账号授权')" :visible.sync="access.dialogVisible">
+    <el-dialog :title="$t('设置分组')" :visible.sync="access.dialogVisible">
       <access :item="access" />
     </el-dialog>
   </div>
