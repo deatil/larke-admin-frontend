@@ -83,6 +83,9 @@
 # 进入项目目录
 cd /public/admin
 
+# 更改后端请求接口
+编辑 `.env.development` 和 `.env.production` 环境变量里的 `VUE_APP_BASE_API` 的接口地址为后端 `api` 接口地址
+
 # 安装依赖
 npm install
 

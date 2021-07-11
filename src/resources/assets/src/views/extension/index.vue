@@ -83,13 +83,13 @@
         <el-table-column width="130px" :label="$t('扩展')">
           <template slot-scope="scope">
             <div class="extension-title">
-              <span v-if="scope.row.homepage && scope.row.homepage != ''">
+              <span class="extension-title-icon" v-if="scope.row.homepage && scope.row.homepage != ''">
                 <a :href="scope.row.homepage" target="_blank" :title="scope.row.title">
-                  {{ scope.row.title }}
+                  <i class="el-icon-paperclip" />
                 </a>
               </span>
 
-              <span v-else>
+              <span>
                 {{ scope.row.title }}
               </span>
             </div>

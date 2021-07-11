@@ -97,14 +97,14 @@ export default {
       var date = dateObj.getDate()
       var day = dateObj.getDay()
       var weeks = [
-          this.$t('星期日'), 
-          this.$t('星期一'), 
-          this.$t('星期二'), 
-          this.$t('星期三'), 
-          this.$t('星期四'), 
-          this.$t('星期五'), 
-          this.$t('星期六')
-        ]
+        this.$t('星期日'), 
+        this.$t('星期一'), 
+        this.$t('星期二'), 
+        this.$t('星期三'), 
+        this.$t('星期四'), 
+        this.$t('星期五'), 
+        this.$t('星期六')
+      ]
       var week = weeks[day]
       var hour = dateObj.getHours()
       var minute = dateObj.getMinutes()
@@ -115,14 +115,14 @@ export default {
         : ((hour >= 8) ? this.$t('上午') : this.$t('凌晨'))
       )
       var nowTime = this.$t('{year}年{month}月{day}日 {hour}:{minute}:{second} {week}', {
-          year: this.dateFilter(year),
-          month: this.dateFilter(month),
-          day: this.dateFilter(day),
-          hour: this.dateFilter(hour),
-          minute: this.dateFilter(minute),
-          second: this.dateFilter(second),
-          week: week
-        })
+        year: this.dateFilter(year),
+        month: this.dateFilter(month),
+        day: this.dateFilter(date),
+        hour: this.dateFilter(hour),
+        minute: this.dateFilter(minute),
+        second: this.dateFilter(second),
+        week: week
+      })
       return [nowTime, timeValue]
     },
     setNowTime() {
