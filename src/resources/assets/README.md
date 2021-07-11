@@ -84,7 +84,7 @@ The program is based on [vue-element-admin](https://github.com/PanJiaChen/vue-el
 cd /public/admin
 
 # vi env'VUE_APP_BASE_API
-vi `.env.development` and `.env.production` VUE_APP_BASE_API
+vi .env.development and .env.production VUE_APP_BASE_API
 
 # install dependency
 npm install
