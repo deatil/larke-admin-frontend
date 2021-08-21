@@ -192,8 +192,6 @@ export default {
           background: 'rgba(0, 0, 0, 0.7)'
         })
         install(row.name).then(() => {
-          loading.close()
-
           this.$message({
             message: this.$t('安装扩展成功'),
             type: 'success',
@@ -203,25 +201,12 @@ export default {
             }
           })
         }).catch((err) => {
-          loading.close()
 
-          if (err.code == 410) {
-            let require = []
-
-            const data = err.data.require
-            err.data.require.forEach(function(item, key) {
-              if (! item.match) {
-                let tmp = item.name + '：'
-                  + ' have(' + (item.install_version || '--') + ')'
-                  + ' need(' + item.version + ')'
-
-                require.push(tmp)
-              }
-            })
-
-            thiz.confirmTip(err.message + "【" + require.join('，') + "】")
-          }
         })
+
+        setTimeout(function() {
+          loading.close()
+        }, 3000)
       }).catch(() => {
 
       })
@@ -243,8 +228,6 @@ export default {
         })
 
         upgrade(row.name).then((res) => {
-          loading.close()
-
           this.$message({
             message: this.$t('更新扩展成功'),
             type: 'success',
@@ -254,24 +237,7 @@ export default {
             }
           })
         }).catch((err) => {
-          loading.close()
 
-          if (err.code == 410) {
-            let require = []
-
-            const data = err.data.require
-            err.data.require.forEach(function(item, key) {
-              if (! item.match) {
-                let tmp = item.name + '：'
-                  + ' have(' + (item.install_version || '--') + ')'
-                  + ' need(' + item.version + ')'
-
-                require.push(tmp)
-              }
-            })
-
-            thiz.confirmTip(err.message + "【" + require.join('，') + "】")
-          }
         })
 
         setTimeout(function() {

@@ -105,22 +105,14 @@ service.interceptors.response.use(
         return false;
       }
 
-      // 只拦截通用错误
-      else if (res.code === 1 
-        || res.code === 99997
-        || res.code === 99998
-        || res.code === 99999
-      ) {
-        Message({
-          message: res.message || 'Error',
-          type: 'error',
-          duration: 3 * 1000
-        })
-      }
+      // 通用错误
+      Message({
+        message: res.message || 'Error',
+        type: 'error',
+        duration: 3 * 1000
+      })
 
-      // return Promise.reject(new Error(res.message || 'Error'))
-      
-      return Promise.reject(res)
+      return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res
     }

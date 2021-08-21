@@ -605,6 +605,8 @@ export default {
             type: 'success',
             duration: 2 * 1000
           })
+        }).catch(() => {
+
         })
 
         setTimeout(function() {
