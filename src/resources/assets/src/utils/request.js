@@ -89,20 +89,11 @@ service.interceptors.response.use(
           store.dispatch('user/resetToken').then(() => {
             location.reload()
           })
+        }).catch(() => {
+          isRefreshing = true
         })
 
-        return false;
-      }
-
-      // AccessToken error;
-      else if (res.code === 103 || res.code === 105) {
-        Message({
-          message: res.message || 'Error',
-          type: 'error',
-          duration: 3 * 1000
-        })
-
-        return false;
+        return Promise.reject("登陆已过期")
       }
 
       // 通用错误
