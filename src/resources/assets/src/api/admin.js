@@ -22,6 +22,13 @@ export function getRules(id) {
   })
 }
 
+export function getGroups() {
+  return request({
+    url: '/admin/groups',
+    method: 'get'
+  })
+}
+
 export function createAdmin(data) {
   return request({
     url: '/admin',

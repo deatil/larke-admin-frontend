@@ -362,13 +362,13 @@ function getPathFileName(path) {
 }
 
 // 获取文件名
-export function getFileName (name) {
+export function getFileName(name) {
   const newName = getPathFileName(name)
   return newName.substring(0, newName.lastIndexOf("."))
 }
 
 // 获取 .后缀名
-export function getFileDotExtension (name) {
+export function getFileDotExtension(name) {
   const newName = getPathFileName(name)
   return namnewNamee.substring(newName.lastIndexOf("."))
 }
@@ -379,7 +379,7 @@ export function getFileExtension (name) {
   return newName.substring(newName.lastIndexOf(".")+1)
 }
 
-/** 多层级对象合并 */
+// 多层级对象合并
 export function assiginObj(target, sources) {
   let newobj = {};
   let keys1 = Object.keys(target);
