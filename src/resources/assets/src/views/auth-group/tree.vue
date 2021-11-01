@@ -10,7 +10,7 @@
           {{ $t('添加分组') }}
         </el-button>
 
-        <el-button class="filter-item" icon="tree" @click="handleIndex">
+        <el-button class="filter-item" icon="el-icon-s-grid" @click="handleIndex">
           {{ $t('全部分组') }}
         </el-button>
       </div>
@@ -49,15 +49,18 @@
 
         <el-table-column width="100px" align="center" :label="$t('授权')">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.auth-group.access'])" type="primary" size="mini" @click="handleAccess(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.auth-group.access'])" type="primary" size="mini" icon="el-icon-setting" @click="handleAccess(scope.$index, scope.row)">
               {{ $t('授权') }}
             </el-button>
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span>
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
           </template>
         </el-table-column>
 

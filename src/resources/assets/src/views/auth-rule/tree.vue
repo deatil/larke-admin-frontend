@@ -10,7 +10,7 @@
           {{ $t('添加权限') }}
         </el-button>
 
-        <el-button class="filter-item" icon="tree" @click="handleIndex">
+        <el-button class="filter-item" icon="el-icon-s-grid" @click="handleIndex">
           {{ $t('全部权限') }}
         </el-button>
       </div>
@@ -74,9 +74,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span class="text-muted">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span class="text-muted">
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
           </template>
         </el-table-column>
 

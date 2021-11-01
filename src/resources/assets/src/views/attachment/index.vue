@@ -47,9 +47,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="left" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span>
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
           </template>
         </el-table-column>
 
@@ -179,7 +182,7 @@ export default {
           },
           {
             name: this.$t('属于'),
-            content: data.belong_type + '：' + data.belong_id,
+            content: data.belong_type + ' [ ' + data.belong_id + ' ]',
             type: 'text'
           },
           {

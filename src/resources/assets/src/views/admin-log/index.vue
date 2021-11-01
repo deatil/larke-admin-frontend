@@ -94,7 +94,7 @@
           align="center"
         />
 
-        <el-table-column width="100px" align="center" :label="$t('请求方式')">
+        <el-table-column width="100px" align="left" :label="$t('请求方式')">
           <template slot-scope="{row}">
             <el-tag :type="row.method | methodFilter">
               {{ row.method }}
@@ -114,9 +114,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('请求时间')">
+        <el-table-column width="170px" align="left" :label="$t('请求时间')">
           <template slot-scope="scope">
-            <span class="text-muted">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span class="text-muted">
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
           </template>
         </el-table-column>
 

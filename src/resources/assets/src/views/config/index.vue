@@ -45,7 +45,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column min-width="150px" :label="$t('标题')">
+        <el-table-column min-width="120px" :label="$t('标题')">
           <template slot-scope="{row}">
             <span>{{ row.title }}</span>
           </template>
@@ -79,9 +79,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+            <span>
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}') }}
+            </span>
           </template>
         </el-table-column>
 

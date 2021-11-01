@@ -36,10 +36,10 @@
         </el-button>
 
         <el-button :disabled="!checkPermission(['larke-admin.auth-rule.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
-          {{ $t('添加') }}
+          {{ $t('添加权限') }}
         </el-button>
 
-        <el-button v-permission="['larke-admin.auth-rule.index-tree']" class="filter-item" icon="tree" @click="handleTree">
+        <el-button v-permission="['larke-admin.auth-rule.index-tree']" class="filter-item" icon="el-icon-menu" @click="handleTree">
           {{ $t('权限结构') }}
         </el-button>
       </div>
@@ -109,9 +109,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="center" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span class="text-muted">{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span class="text-muted">
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
           </template>
         </el-table-column>
 

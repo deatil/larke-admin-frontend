@@ -21,7 +21,7 @@
         </el-button>
 
         <el-button v-waves :disabled="!checkPermission(['larke-admin.admin.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
-          {{ $t('添加') }}
+          {{ $t('添加账号') }}
         </el-button>
 
         <el-button v-waves v-permission="['larke-admin.admin.delete']" class="filter-item" type="danger" icon="el-icon-switch-button" @click="handleLogout">
@@ -50,17 +50,20 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="100px" align="center" :label="$t('授权')">
+        <el-table-column width="120px" align="center" :label="$t('授权')">
           <template slot-scope="scope">
-            <el-button type="primary" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" @click="handleAccess(scope.$index, scope.row)">
+            <el-button type="primary" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" icon="el-icon-setting" @click="handleAccess(scope.$index, scope.row)">
               {{ $t('设置分组') }}
             </el-button>
           </template>
         </el-table-column>
 
-        <el-table-column width="160px" align="center" :label="$t('添加时间')">
+        <el-table-column width="180px" align="left" :label="$t('添加时间')">
           <template slot-scope="scope">
-            <span>{{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <span>
+              <i class="el-icon-time" />&nbsp;
+              {{ scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
           </template>
         </el-table-column>
 
@@ -78,7 +81,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" :label="$t('操作')" width="350">
+        <el-table-column align="center" :label="$t('操作')" width="380">
           <template slot-scope="scope">
             <el-button :disabled="!checkPermission(['larke-admin.admin.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
               {{ $t('编辑') }}
@@ -88,7 +91,7 @@
               {{ $t('详情') }}
             </el-button>
 
-            <el-button :disabled="!checkPermission(['larke-admin.admin.password'])" type="warning" size="mini" @click="handlePassword(scope.$index, scope.row)">
+            <el-button :disabled="!checkPermission(['larke-admin.admin.password'])" type="warning" size="mini" icon="el-icon-key" @click="handlePassword(scope.$index, scope.row)">
               {{ $t('改密') }}
             </el-button>
 

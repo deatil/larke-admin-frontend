@@ -526,6 +526,7 @@ export function formatExtensionOpions(options) {
   return arr
 }
 
+// 格式化
 export function formatExtensionFormItem(olelement) {
   const element = JSON.parse(JSON.stringify(olelement))
 
