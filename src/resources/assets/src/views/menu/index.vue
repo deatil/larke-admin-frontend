@@ -78,15 +78,37 @@
 
         <el-table-column align="center" :label="$t('操作')" width="280">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin-frontend.menu.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
-              {{ $t('编辑') }}
-            </el-button>
-
-            <el-button type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
+            <el-button 
+              v-waves
+              :loading="scope.row.id == loading.detail"
+              type="info" 
+              size="mini" 
+              icon="el-icon-info" 
+              @click="handleDetail(scope.$index, scope.row)"
+            >
               {{ $t('详情') }}
             </el-button>
 
-            <el-button v-permission="['larke-admin-frontend.menu.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
+            <el-button 
+              v-waves
+              :disabled="!checkPermission(['larke-admin-frontend.menu.update'])" 
+              type="primary" 
+              size="mini" 
+              icon="el-icon-edit" 
+              @click="handleEdit(scope.$index, scope.row)"
+            >
+              {{ $t('编辑') }}
+            </el-button>
+
+            <el-button 
+              v-waves
+              v-permission="['larke-admin-frontend.menu.delete']" 
+              :loading="scope.row.id == loading.delete"
+              type="danger" 
+              size="mini" 
+              icon="el-icon-delete" 
+              @click="handleDelete(scope.$index, scope.row)"
+            >
               {{ $t('删除') }}
             </el-button>
           </template>
@@ -156,7 +178,11 @@ export default {
         dialogVisible: false,
         id: '',
         data: []
-      }
+      },
+      loading: {
+        detail: '',
+        delete: '',
+      },
     }
   },
   created() {
@@ -173,8 +199,12 @@ export default {
       })
     },
     handleDetail(index, row) {
+      this.loading.detail = row.id
+
       this.detail.dialogVisible = true
       const data = row
+
+      this.loading.detail = ''
 
       this.detail.data = [
         {
@@ -231,7 +261,11 @@ export default {
         cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
+        thiz.loading.delete = row.id
+
         deleteMenu(row.id).then(() => {
+          thiz.loading.delete = ''
+
           this.$message({
             message: this.$t('删除菜单成功'),
             type: 'success',
@@ -240,6 +274,8 @@ export default {
               thiz.list.splice(index, 1)
             }
           })
+        }).catch(() => {
+          thiz.loading.delete = ''
         })
       }).catch(() => {
 

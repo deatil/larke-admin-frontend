@@ -47,15 +47,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="100px" align="center" :label="$t('授权')">
-          <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.auth-group.access'])" type="primary" size="mini" icon="el-icon-setting" @click="handleAccess(scope.$index, scope.row)">
-              {{ $t('授权') }}
-            </el-button>
-          </template>
-        </el-table-column>
-
-        <el-table-column width="170px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="left" :label="$t('添加时间')">
           <template slot-scope="scope">
             <span>
               <i class="el-icon-time" />&nbsp;
@@ -78,19 +70,58 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" :label="$t('操作')" width="280">
+        <el-table-column align="left" :label="$t('操作')" width="220">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.auth-group.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
-              {{ $t('编辑') }}
-            </el-button>
+            <div>
+              <el-button 
+                v-waves
+                :disabled="!checkPermission(['larke-admin.auth-group.access'])" 
+                type="primary" 
+                size="mini" 
+                icon="el-icon-setting" 
+                @click="handleAccess(scope.$index, scope.row)"
+              >
+                {{ $t('授权') }}
+              </el-button>
+              
+              <el-button 
+                v-waves
+                :loading="scope.row.id == loading.detail"
+                :disabled="!checkPermission(['larke-admin.auth-group.detail'])" 
+                type="info" 
+                size="mini" 
+                icon="el-icon-info" 
+                @click="handleDetail(scope.$index, scope.row)"
+              >
+                {{ $t('详情') }}
+              </el-button>
+            </div>
 
-            <el-button :disabled="!checkPermission(['larke-admin.auth-group.detail'])" type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
-              {{ $t('详情') }}
-            </el-button>
+            <div style="margin-top:5px;">
+              <el-button 
+                v-waves
+                :disabled="!checkPermission(['larke-admin.auth-group.update'])" 
+                type="primary" 
+                size="mini" 
+                icon="el-icon-edit" 
+                @click="handleEdit(scope.$index, scope.row)"
+              >
+                {{ $t('编辑') }}
+              </el-button>
 
-            <el-button v-permission="['larke-admin.auth-group.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
-              {{ $t('删除') }}
-            </el-button>
+              <el-button 
+                v-waves
+                :loading="scope.row.id == loading.delete"
+                v-permission="['larke-admin.auth-group.delete']" 
+                type="danger" 
+                size="mini" 
+                icon="el-icon-delete" 
+                @click="handleDelete(scope.$index, scope.row)"
+              >
+                {{ $t('删除') }}
+              </el-button>
+            </div>
+
           </template>
         </el-table-column>
       </el-table>
@@ -158,7 +189,11 @@ export default {
       access: {
         dialogVisible: false,
         id: ''
-      }
+      },
+      loading: {
+        detail: '',
+        delete: '',
+      },
     }
   },
   created() {
@@ -179,9 +214,13 @@ export default {
       this.access.dialogVisible = true
     },
     handleDetail(index, row) {
+      this.loading.detail = row.id
+
       getGroupDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
         const data = res.data
+
+        this.loading.detail = ''
 
         this.detail.data = [
           {
@@ -235,6 +274,8 @@ export default {
             type: 'text'
           }
         ]
+      }).catch((err) => {
+        this.loading.detail = ''
       })
     },
     handleCreate() {
@@ -273,7 +314,11 @@ export default {
         cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
+        thiz.loading.delete = row.id
+
         deleteGroup(row.id).then(() => {
+          thiz.loading.delete = row.id
+
           this.$message({
             message: this.$t('删除分组成功'),
             type: 'success',
@@ -282,6 +327,8 @@ export default {
               thiz.list.splice(index, 1)
             }
           })
+        }).catch(() => {
+          thiz.loading.delete = ''
         })
       }).catch(() => {
 

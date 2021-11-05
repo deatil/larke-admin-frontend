@@ -134,6 +134,7 @@
         <el-table-column align="center" :label="$t('操作')" width="200">
           <template slot-scope="scope">
             <el-button 
+              v-waves
               :loading="scope.row.id == loading.detail"
               :disabled="!checkPermission(['larke-admin.log.detail'])" 
               type="info" 
@@ -145,6 +146,7 @@
             </el-button>
 
             <el-button 
+              v-waves
               :loading="scope.row.id == loading.delete"
               v-permission="['larke-admin.log.delete']" 
               type="danger" 
@@ -158,7 +160,13 @@
         </el-table-column>
       </el-table>
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+      <pagination 
+        v-show="total>0" 
+        :total="total" 
+        :page.sync="listQuery.page" 
+        :limit.sync="listQuery.limit" 
+        @pagination="getList" 
+      />
     </el-card>
 
     <el-dialog :title="$t('日志详情')" :visible.sync="detail.dialogVisible">

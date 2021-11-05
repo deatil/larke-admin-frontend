@@ -210,21 +210,50 @@
         <el-table-column align="left" :label="$t('操作')" width="200">
           <template slot-scope="scope">
             <div>
-              <el-button v-waves type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">  
+              <el-button 
+                v-waves 
+                :loading="scope.row.id == loading.detail"
+                type="info" 
+                size="mini" 
+                icon="el-icon-info" 
+                @click="handleDetail(scope.$index, scope.row)"
+              >  
                 {{ $t('详情') }}
               </el-button>
 
-              <el-button v-waves v-permission="['larke-admin.extension.uninstall']" type="danger" size="mini" icon="el-icon-delete" @click="handleUninstall(scope.$index, scope.row)">                
+              <el-button 
+                v-waves 
+                v-permission="['larke-admin.extension.uninstall']" 
+                type="danger" 
+                size="mini" 
+                icon="el-icon-delete" 
+                @click="handleUninstall(scope.$index, scope.row)"
+              >                
                 {{ $t('卸载') }}
               </el-button>
             </div>
 
             <div style="margin-top:5px;">
-              <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.config'])" v-if="scope.row.config != '[]'" type="primary" size="mini" icon="el-icon-edit" @click="handleConfig(scope.$index, scope.row)">
+              <el-button 
+                v-waves 
+                :disabled="!checkPermission(['larke-admin.extension.config'])" 
+                v-if="scope.row.config != '[]'" 
+                type="primary" 
+                size="mini" 
+                icon="el-icon-edit" 
+                @click="handleConfig(scope.$index, scope.row)"
+              >
                 {{ $t('配置') }}
               </el-button>
 
-              <el-button v-waves v-permission="['larke-admin.extension.command']" type="warning" size="mini" icon="el-icon-cpu" @click="handleCommand(scope.$index, scope.row)">
+              <el-button 
+                v-waves 
+                v-permission="['larke-admin.extension.command']" 
+                type="warning" 
+                size="mini" 
+                icon="el-icon-cpu" 
+                @click="handleCommand(scope.$index, scope.row)"
+              >
                 {{ $t('脚本') }}
               </el-button>
             </div>
@@ -366,7 +395,10 @@ export default {
         dialogVisible: false,
         name: '',
         title: ''
-      }
+      },
+      loading: {
+        detail: '',
+      },
     }
   },
   created() {
@@ -483,6 +515,8 @@ export default {
       })
     },    
     handleDetail(index, row) {
+      this.loading.detail = row.id
+
       this.detail.dialogVisible = true
       const data = row
 
@@ -563,6 +597,8 @@ export default {
           type: 'boolen'
         }
       ]
+
+      this.loading.detail = ''
     },
     changeStatus(e, data, index) {
       if (data.status == 1) {

@@ -135,6 +135,7 @@
         <el-table-column align="center" :label="$t('操作')" width="280">
           <template slot-scope="scope">
             <el-button 
+              v-waves
               :loading="scope.row.id == loading.update"
               :disabled="!checkPermission(['larke-admin.auth-rule.update'])" 
               type="primary" 
@@ -146,6 +147,7 @@
             </el-button>
 
             <el-button 
+              v-waves
               :loading="scope.row.id == loading.detail"
               :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" 
               type="info" 
@@ -157,6 +159,7 @@
             </el-button>
 
             <el-button 
+              v-waves
               :loading="scope.row.id == loading.delete"
               v-permission="['larke-admin.auth-rule.delete']" 
               type="danger" 

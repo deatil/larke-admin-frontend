@@ -50,14 +50,6 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="120px" align="center" :label="$t('授权')">
-          <template slot-scope="scope">
-            <el-button type="primary" :disabled="!checkPermission(['larke-admin.admin.access'])" size="mini" icon="el-icon-setting" @click="handleAccess(scope.$index, scope.row)">
-              {{ $t('设置分组') }}
-            </el-button>
-          </template>
-        </el-table-column>
-
         <el-table-column width="180px" align="left" :label="$t('添加时间')">
           <template slot-scope="scope">
             <span>
@@ -81,23 +73,68 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" :label="$t('操作')" width="380">
+        <el-table-column align="left" :label="$t('操作')" width="320">
           <template slot-scope="scope">
-            <el-button :disabled="!checkPermission(['larke-admin.admin.update'])" type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">
-              {{ $t('编辑') }}
-            </el-button>
+            <div>
+              <el-button 
+                v-waves
+                type="primary" 
+                :disabled="!checkPermission(['larke-admin.admin.access'])" 
+                size="mini" 
+                icon="el-icon-setting" 
+                @click="handleAccess(scope.$index, scope.row)"
+              >
+                {{ $t('设置分组') }}
+              </el-button>
 
-            <el-button :disabled="!checkPermission(['larke-admin.admin.detail'])" type="info" size="mini" icon="el-icon-info" @click="handleDetail(scope.$index, scope.row)">
-              {{ $t('详情') }}
-            </el-button>
+              <el-button 
+                v-waves
+                :disabled="!checkPermission(['larke-admin.admin.password'])" 
+                type="warning" 
+                size="mini" 
+                icon="el-icon-key" 
+                @click="handlePassword(scope.$index, scope.row)"
+              >
+                {{ $t('改密') }}
+              </el-button>
 
-            <el-button :disabled="!checkPermission(['larke-admin.admin.password'])" type="warning" size="mini" icon="el-icon-key" @click="handlePassword(scope.$index, scope.row)">
-              {{ $t('改密') }}
-            </el-button>
+              <el-button 
+                v-waves
+                :loading="scope.row.id == loading.detail"
+                :disabled="!checkPermission(['larke-admin.admin.detail'])" 
+                type="info" 
+                size="mini" 
+                icon="el-icon-info" 
+                @click="handleDetail(scope.$index, scope.row)"
+              >
+                {{ $t('详情') }}
+              </el-button>
+            </div>
 
-            <el-button v-permission="['larke-admin.admin.delete']" type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)">
-              {{ $t('删除') }}
-            </el-button>
+            <div style="margin-top:5px;">
+              <el-button 
+                v-waves
+                :disabled="!checkPermission(['larke-admin.admin.update'])" 
+                type="primary" 
+                size="mini" 
+                icon="el-icon-edit" 
+                @click="handleEdit(scope.$index, scope.row)"
+              >
+                {{ $t('编辑') }}
+              </el-button>
+
+              <el-button 
+                v-waves
+                :loading="scope.row.id == loading.delete"
+                v-permission="['larke-admin.admin.delete']" 
+                type="danger" 
+                size="mini" 
+                icon="el-icon-delete" 
+                @click="handleDelete(scope.$index, scope.row)"
+              >
+                {{ $t('删除') }}
+              </el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -221,6 +258,10 @@ export default {
       logout: {
         dialogVisible: false,
         refreshToken: ''
+      },
+      loading: {
+        detail: '',
+        delete: '',
       }
     }
   },
@@ -260,9 +301,13 @@ export default {
       this.access.dialogVisible = true
     },
     handleDetail(index, row) {
+      this.loading.detail = row.id
+
       getDetail(row.id).then((res) => {
         this.detail.dialogVisible = true
         const data = res.data
+
+        this.loading.detail = ''
 
         this.detail.data = [
           {
@@ -322,6 +367,8 @@ export default {
             type: 'boolen'
           }
         ]
+      }).catch((err) => {
+        this.loading.detail = ''
       })
     },
     changeStatus(e, data, index) {
@@ -350,7 +397,11 @@ export default {
         cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
+        thiz.loading.delete = row.id
+
         deleteAdmin(row.id).then(() => {
+          thiz.loading.delete = ''
+
           this.$message({
             message: this.$t('删除管理员成功'),
             type: 'success',
@@ -359,6 +410,8 @@ export default {
               thiz.list.splice(index, 1)
             }
           })
+        }).catch(() => {
+          thiz.loading.delete = ''
         })
       }).catch(() => {
 
