@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { themeData } from './theme.js'
+
 const version = require('element-ui/package.json').version // element-ui version from node_modules
 const ORIGINAL_THEME = '#409EFF' // default color
 
@@ -61,8 +63,11 @@ export default {
       }
 
       if (!this.chalk) {
+        /*
         const url = `https://unpkg.com/element-ui@${version}/lib/theme-chalk/index.css`
         await this.getCSSString(url, 'chalk')
+        */
+        await this.getThemeCssData('chalk')
       }
 
       const chalkHandler = getHandler('chalk', 'chalk-style')
@@ -93,6 +98,16 @@ export default {
         newStyle = newStyle.replace(new RegExp(color, 'ig'), newCluster[index])
       })
       return newStyle
+    },
+
+    // 获取主题 css
+    getThemeCssData(variable) {
+      let themeCssData = themeData()
+
+      // require('@/assets/theme/element-icons.woff')
+      // require('@/assets/theme/element-icons.ttf')
+
+      this[variable] = themeCssData.replace(/@font-face{[^}]+}/, '')
     },
 
     getCSSString(url, variable) {
