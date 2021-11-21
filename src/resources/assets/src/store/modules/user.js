@@ -72,12 +72,15 @@ const actions = {
         const token = data.access_token.trim()
         const expires_in = parseInt(data.expires_in) + (Date.parse(new Date())/1000)
         const refresh_token = data.refresh_token
+
         commit('SET_TOKEN', token)
         commit('SET_EXPIRED_IN', expires_in)
         commit('SET_REFRESH_TOKEN', refresh_token)
+
         setToken(token)
         setTokenExpiresIn(expires_in)
         setRefreshToken(refresh_token)
+        
         resolve(data)
       }).catch(error => {
         reject(error)
