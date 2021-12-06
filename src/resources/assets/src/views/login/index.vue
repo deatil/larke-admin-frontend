@@ -114,11 +114,13 @@ export default {
     }
     return {
       captchaImg: require('@/assets/larke/captcha.png'),
+      pubkey: "",
       loginForm: {
         username: '',
         password: '',
         captcha: '',
-        captchaKey: ''
+        captchaKey: '',
+        pubkey: '',
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -147,6 +149,8 @@ export default {
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
+    this.getPubkey()
+
     this.refreshCaptcha()
   },
   mounted() {
@@ -187,6 +191,17 @@ export default {
 
           this.loginForm.captchaKey = captchaKey
           this.captchaImg = captchaImg
+        })
+        .catch(err => {
+          return false
+        })
+    },
+    getPubkey() {
+      this.$store.dispatch('user/pubkey')
+        .then(response => {
+          const res = response.data
+
+          this.loginForm.pubkey = res.data.key
         })
         .catch(err => {
           return false

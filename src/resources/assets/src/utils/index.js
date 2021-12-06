@@ -356,7 +356,7 @@ export function removeClass(ele, cls) {
   }
 }
 
-function getPathFileName(path) {
+export function getPathFileName(path) {
   var pos = path.lastIndexOf('/');
   return path.substring(pos + 1);
 }

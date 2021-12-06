@@ -8,6 +8,13 @@ export function captcha() {
   })
 }
 
+export function pubkey() {
+  return axios({
+    url: '/passport/pubkey',
+    method: 'get'
+  })
+}
+
 export function login(data, header) {
   return request({
     url: '/passport/login',

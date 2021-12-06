@@ -1,5 +1,12 @@
 import md5 from 'js-md5'
-import { captcha, login, refreshToken, logout } from '@/api/passport'
+import JSEncrypt from 'jsencrypt'
+import { 
+  captcha, 
+  pubkey, 
+  login, 
+  refreshToken, 
+  logout 
+} from '@/api/passport'
 import { getInfo, getRoles } from '@/api/user'
 import {
   getToken, setToken, removeToken,
@@ -57,13 +64,29 @@ const actions = {
     })
   },
 
+  pubkey({ commit }) {
+    return new Promise((resolve, reject) => {
+      pubkey().then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
   // user login
   login({ commit }, userInfo) {
-    const { username, password, captcha, captchaKey } = userInfo
+    const { username, password, captcha, captchaKey, pubkey } = userInfo
+
+    // 密码加密
+    var encrypt = new JSEncrypt();
+    encrypt.setPublicKey(pubkey);
+    var encryptedPwd = encrypt.encrypt(md5(password));
+
     return new Promise((resolve, reject) => {
       login({
         name: username.trim(),
-        password: md5(password),
+        password: encryptedPwd,
         captcha: captcha
       }, {
         'Larke-Admin-Captcha-Id': captchaKey
