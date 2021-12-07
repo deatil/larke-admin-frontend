@@ -8,9 +8,9 @@ export function captcha() {
   })
 }
 
-export function pubkey() {
+export function passkey() {
   return axios({
-    url: '/passport/pubkey',
+    url: '/passport/passkey',
     method: 'get'
   })
 }

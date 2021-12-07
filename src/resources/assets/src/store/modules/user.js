@@ -2,7 +2,7 @@ import md5 from 'js-md5'
 import JSEncrypt from 'jsencrypt'
 import { 
   captcha, 
-  pubkey, 
+  passkey, 
   login, 
   refreshToken, 
   logout 
@@ -64,9 +64,9 @@ const actions = {
     })
   },
 
-  pubkey({ commit }) {
+  passkey({ commit }) {
     return new Promise((resolve, reject) => {
-      pubkey().then(response => {
+      passkey().then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -76,11 +76,11 @@ const actions = {
 
   // user login
   login({ commit }, userInfo) {
-    const { username, password, captcha, captchaKey, pubkey } = userInfo
+    const { username, password, captcha, captchaKey, passkey } = userInfo
 
     // 密码加密
     var encrypt = new JSEncrypt();
-    encrypt.setPublicKey(pubkey);
+    encrypt.setPublicKey(passkey);
     var encryptedPwd = encrypt.encrypt(md5(password));
 
     return new Promise((resolve, reject) => {

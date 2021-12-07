@@ -120,7 +120,7 @@ export default {
         password: '',
         captcha: '',
         captchaKey: '',
-        pubkey: '',
+        passkey: '',
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -149,7 +149,8 @@ export default {
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
-    this.getPubkey()
+
+    this.getPasskey()
 
     this.refreshCaptcha()
   },
@@ -180,6 +181,17 @@ export default {
         this.$refs.password.focus()
       })
     },
+    getPasskey() {
+      this.$store.dispatch('user/passkey')
+        .then(response => {
+          const res = response.data
+
+          this.loginForm.passkey = res.data.key
+        })
+        .catch(err => {
+          return false
+        })
+    },
     refreshCaptcha() {
       this.$store.dispatch('user/captcha')
         .then(response => {
@@ -191,17 +203,6 @@ export default {
 
           this.loginForm.captchaKey = captchaKey
           this.captchaImg = captchaImg
-        })
-        .catch(err => {
-          return false
-        })
-    },
-    getPubkey() {
-      this.$store.dispatch('user/pubkey')
-        .then(response => {
-          const res = response.data
-
-          this.loginForm.pubkey = res.data.key
         })
         .catch(err => {
           return false
