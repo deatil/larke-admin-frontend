@@ -120,6 +120,8 @@ export default {
         password: '',
         captcha: '',
         captchaKey: '',
+
+        passkeyId: '',
         passkey: '',
       },
       loginRules: {
@@ -184,8 +186,10 @@ export default {
     getPasskey() {
       this.$store.dispatch('user/passkey')
         .then(response => {
+          const headers = response.headers
           const res = response.data
 
+          this.loginForm.passkeyId = headers['larke-admin-passkey-id']
           this.loginForm.passkey = res.data.key
         })
         .catch(err => {

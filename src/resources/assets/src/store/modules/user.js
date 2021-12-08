@@ -76,7 +76,11 @@ const actions = {
 
   // user login
   login({ commit }, userInfo) {
-    const { username, password, captcha, captchaKey, passkey } = userInfo
+    const { 
+      username, password, 
+      captcha, captchaKey, 
+      passkeyId, passkey 
+    } = userInfo
 
     // 密码加密
     var encrypt = new JSEncrypt();
@@ -86,7 +90,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({
         name: username.trim(),
-        password: encryptedPwd,
+        password: passkeyId + encryptedPwd,
         captcha: captcha
       }, {
         'Larke-Admin-Captcha-Id': captchaKey
