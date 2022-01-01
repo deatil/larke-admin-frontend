@@ -593,7 +593,7 @@ export default {
         },
         {
           name: this.$t('激活状态'),
-          content: data.status,
+          content: data.status + "",
           type: 'boolen'
         }
       ]

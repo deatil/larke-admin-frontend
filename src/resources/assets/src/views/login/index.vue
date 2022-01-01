@@ -222,12 +222,6 @@ export default {
               this.loading = false
             })
             .catch(err => {
-              this.$message({
-                message: err.message || 'Error',
-                type: 'error',
-                duration: 2 * 1000
-              })
-
               this.refreshCaptcha()
 
               this.loading = false

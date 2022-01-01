@@ -340,7 +340,7 @@ export default {
           },
           {
             name: this.$t('状态'),
-            content: data.status,
+            content: data.status + "",
             type: 'boolen'
           },
           {

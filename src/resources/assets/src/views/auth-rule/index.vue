@@ -423,12 +423,12 @@ export default {
           },
           {
             name: this.$t('验证权限'),
-            content: data.is_need_auth,
+            content: data.is_need_auth + "",
             type: 'status'
           },
           {
             name: this.$t('状态'),
-            content: data.status,
+            content: data.status + "",
             type: 'boolen'
           },
           {

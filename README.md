@@ -1,14 +1,14 @@
-## larke-admin 前端页面
+# larke-admin 前端页面
 
 
-### 项目介绍
+## 项目介绍
 
 *  `larke-admin` 的前端页面及菜单api接口
 *  框架为 `vue2` 和 `element-ui`
 *  本项目为 `后台前端页面`，`后台api服务` 可查看 [Larke Admin](https://github.com/deatil/larke-admin) 项目
 
 
-### 截图预览
+## 截图预览
 
 <table>
     <tr>
@@ -65,7 +65,7 @@
 [Larke Admin 后台截图](https://github.com/deatil/larke-admin/issues/1)
 
 
-### 安装步骤
+## 安装步骤
 
 1. 开始执行以下命令安装前端扩展包
 
@@ -112,7 +112,7 @@ php artisan larke-admin-frontend:import-menus --force
  - npm 6.14.8
 
 
-### 扩展推荐
+## 扩展推荐
 
 | 名称 | 描述 |
 | --- | --- |
@@ -123,7 +123,7 @@ php artisan larke-admin-frontend:import-menus --force
 注：扩展目录默认为 `/extension` 目录
 
 
-### 特别鸣谢
+## 特别鸣谢
 
 感谢以下的项目,排名不分先后
 
@@ -134,11 +134,11 @@ php artisan larke-admin-frontend:import-menus --force
  - vue-element-admin
 
 
-### 开源协议
+## 开源协议
 
 *  `larke-admin` 遵循 `Apache2` 开源协议发布，在保留本系统版权的情况下提供个人及商业免费使用。  
 
 
-### 版权
+## 版权
 
 *  该系统所属版权归 deatil(https://github.com/deatil) 所有。

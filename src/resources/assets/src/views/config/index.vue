@@ -377,12 +377,12 @@ export default {
           },
           {
             name: this.$t('显示'),
-            content: data.is_show,
+            content: data.is_show + "",
             type: 'status'
           },
           {
             name: this.$t('激活状态'),
-            content: data.status,
+            content: data.status + "",
             type: 'boolen'
           },
 
