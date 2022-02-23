@@ -18,7 +18,6 @@ export default {
     authGroupTree: '分组结构',
     authRule: '权限路由',
     authRuleTree: '权限结构',
-    adminLog: '操作日志',
 
     localExtension: '本地扩展',
     extension: '扩展管理'

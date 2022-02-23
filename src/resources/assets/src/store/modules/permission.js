@@ -50,7 +50,10 @@ function routesSort(route) {
         route[key]['sort'] = sort
       }
     } else {
-      route[key]['sort'] = 100
+      const sort = route[key]['sort']
+      if (sort == undefined || sort == '') {
+        route[key]['sort'] = 100
+      }
     }
 
     if (item.children) {

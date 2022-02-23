@@ -3,7 +3,7 @@
 export default {
 
   /** 这些为系统菜单 */
-  System: 100000,
-  Permission: 100010,
-  LocalExtension: 100050,
+  System: 110000,
+  Permission: 110010,
+  LocalExtension: 110050,
 }

@@ -85,20 +85,6 @@ const route =  {
       hidden: true
     },
 
-    // 日志
-    {
-      path: '/adminlog/index',
-      component: () => import('@/views/admin-log/index'),
-      name: 'AdminLog',
-      meta: {
-        title: 'adminLog',
-        icon: 'el-icon-document-add',
-        roles: [
-          'larke-admin.log.index'
-        ]
-      }
-    }
-
   ]
 }
 
