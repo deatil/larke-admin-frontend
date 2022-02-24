@@ -461,7 +461,9 @@ export default {
         thiz.uploadLoading = false
 
         if (err.code == 411) {
-          thiz.confirmTip(thiz.$t('扩展已经存在，是否上传覆盖？'), function() {
+          thiz.confirmTip(thiz.$t('扩展已经存在，是否上传覆盖？', {
+            "message": err.message,
+          }), function() {
             thiz.reUpload()
           })
         }

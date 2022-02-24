@@ -96,6 +96,12 @@ service.interceptors.response.use(
         return Promise.reject("登陆已过期")
       }
 
+      // catch 返回数据
+      let defaultConfig = response.config
+      if (defaultConfig["catchReturnData"] != undefined && defaultConfig["catchReturnData"]) {
+        return Promise.reject(res)
+      }
+
       // 通用错误
       Message({
         message: res.message || 'Error',

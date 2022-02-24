@@ -34,6 +34,7 @@ export function upload(data) {
   return request({
     url: `/extension/upload`,
     method: 'post',
+    catchReturnData: true,
     data
   })
 }
