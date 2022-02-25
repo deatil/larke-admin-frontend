@@ -105,11 +105,23 @@
 
       <el-table-column align="center" :label="$t('操作')" width="100">
         <template slot-scope="scope">
-          <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.install'])" v-if="scope.row.install.length == 0" type="primary" size="mini" @click="handleInstall(scope.$index, scope.row)">
+          <el-button v-waves 
+            :disabled="!checkPermission(['larke-admin.extension.install'])" 
+            v-if="scope.row.install.length == 0" 
+            type="primary" 
+            size="mini" 
+            @click="handleInstall(scope.$index, scope.row)"
+          >
             {{ $t('安装') }}
           </el-button>
 
-          <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.upgrade'])" v-if="scope.row.upgrade == 1" type="warning" size="mini" @click="handleUpgrade(scope.$index, scope.row)">
+          <el-button v-waves 
+            :disabled="!checkPermission(['larke-admin.extension.upgrade'])" 
+            v-if="scope.row.upgrade == 1" 
+            type="warning" 
+            size="mini" 
+            @click="handleUpgrade(scope.$index, scope.row)"
+          >
             {{ $t('更新') }}
           </el-button>
         </template>
