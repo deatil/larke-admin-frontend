@@ -95,7 +95,7 @@
                 icon="el-icon-key" 
                 @click="handlePassword(scope.$index, scope.row)"
               >
-                {{ $t('改密') }}
+                {{ $t('密码') }}
               </el-button>
 
               <el-button 
@@ -221,7 +221,7 @@ export default {
       listLoading: true,
       listQuery: {
         searchword: '',
-        order: 'ASC',
+        order: 'create_time__ASC',
         status: '',
         page: 1,
         limit: 10
@@ -231,8 +231,8 @@ export default {
         { key: 'close', display_name: this.$t('禁用') }
       ],
       sortOptions: [
-        { key: 'ASC', label: this.$t('正序'),  },
-        { key: 'DESC', label: this.$t('倒叙'),  }
+        { key: 'create_time__ASC', label: this.$t('正序'),  },
+        { key: 'create_time__DESC', label: this.$t('倒叙'),  }
       ],
       create: {
         dialogVisible: false
