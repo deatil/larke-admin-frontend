@@ -5,10 +5,13 @@
 <script>
 // deps for editor
 import 'codemirror/lib/codemirror.css' // codemirror
-import 'tui-editor/dist/tui-editor.css' // editor ui
-import 'tui-editor/dist/tui-editor-contents.css' // editor content
+import '@toast-ui/editor/dist/toastui-editor.css' // editor ui
+import '@toast-ui/editor/dist/toastui-editor-viewer.css' // editor viewer
 
-import Editor from 'tui-editor'
+// 语言包
+import '@toast-ui/editor/dist/i18n/zh-cn';
+
+import Editor from '@toast-ui/editor'
 import defaultOptions from './default-options'
 
 export default {
@@ -43,7 +46,7 @@ export default {
     language: {
       type: String,
       required: false,
-      default: 'en_US' // https://github.com/nhnent/tui.editor/tree/master/src/js/langs
+      default: 'zh-CN' // https://github.com/nhn/tui.editor/tree/master/apps/editor/src/i18n
     }
   },
   data() {
@@ -54,16 +57,18 @@ export default {
   computed: {
     editorOptions() {
       const options = Object.assign({}, defaultOptions, this.options)
+      
       options.initialEditType = this.mode
       options.height = this.height
       options.language = this.language
+
       return options
     }
   },
   watch: {
     value(newValue, preValue) {
-      if (newValue !== preValue && newValue !== this.editor.getValue()) {
-        this.editor.setValue(newValue)
+      if (newValue !== preValue && newValue !== this.editor.getMarkdown()) {
+        this.editor.setMarkdown(newValue)
       }
     },
     language(val) {
@@ -90,10 +95,10 @@ export default {
         ...this.editorOptions
       })
       if (this.value) {
-        this.editor.setValue(this.value)
+        this.editor.setMarkdown(this.value)
       }
       this.editor.on('change', () => {
-        this.$emit('input', this.editor.getValue())
+        this.$emit('input', this.editor.getMarkdown())
       })
     },
     destroyEditor() {
@@ -102,10 +107,10 @@ export default {
       this.editor.remove()
     },
     setValue(value) {
-      this.editor.setValue(value)
+      this.editor.setMarkdown(value)
     },
     getValue() {
-      return this.editor.getValue()
+      return this.editor.getMarkdown()
     },
     setHtml(value) {
       this.editor.setHtml(value)
