@@ -107,9 +107,9 @@ php artisan larke-admin-frontend:import-menus --force
 
 6. 当前编译环境
 
- - node v9.9.0
+ - (node v9.9.0 / npm 6.14.8)
  
- - npm 6.14.8
+ - (node v16.6.2 / npm 6.14.8)
 
 
 ## 扩展推荐

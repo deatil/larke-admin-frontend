@@ -50,7 +50,7 @@
 
       <el-form-item prop="captcha">
         <span class="svg-container">
-          <i class="el-icon-question" />
+          <i class="el-icon-picture-outline" />
         </span>
         <el-input
           ref="captcha"
