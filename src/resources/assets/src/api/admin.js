@@ -82,6 +82,13 @@ export function updateAccess(id, data) {
   })
 }
 
+export function resetPermission() {
+  return request({
+    url: `/admin/reset-permission`,
+    method: 'put'
+  })
+}
+
 export function logoutAdmin(refreshToken) {
   return request({
     url: `/admin/logout/${refreshToken}`,

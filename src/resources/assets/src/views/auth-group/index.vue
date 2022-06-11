@@ -20,6 +20,10 @@
           {{ $t('搜索') }}
         </el-button>
 
+        <el-button v-waves v-permission="['larke-admin.admin.reset-permission']" class="filter-item" type="primary" icon="el-icon-refresh" @click="handleResetPermission">
+          {{ $t('更新权限缓存') }}
+        </el-button>
+
         <el-button :disabled="!checkPermission(['larke-admin.auth-group.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('添加分组') }}
         </el-button>
@@ -181,6 +185,9 @@ import {
   enableGroup,
   disableGroup
 } from '@/api/authGroup'
+import {
+  resetPermission
+} from '@/api/admin'
 
 export default {
   name: 'AuthGroupIndex',
@@ -416,8 +423,23 @@ export default {
       }).catch(() => {
 
       })
-    }
-
+    },
+    handleResetPermission() {
+      const thiz = this
+      this.$confirm(this.$t('确认要更新权限缓存吗？'), this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
+        type: 'warning'
+      }).then(() => {
+        resetPermission().then(() => {
+          this.$message({
+            message: this.$t('更新权限缓存成功'),
+            type: 'success',
+            duration: 5 * 1000,
+          })
+        }).catch(() => {})
+      }).catch(() => {})
+    },
   }
 }
 </script>

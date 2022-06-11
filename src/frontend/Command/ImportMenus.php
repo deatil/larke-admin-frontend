@@ -10,7 +10,7 @@ use Larke\Admin\Frontend\Model\Menu as MenuModel;
 /**
  * 导入菜单数据
  *
- * php artisan larke-admin-frontend:import-menus --force
+ * > php artisan larke-admin-frontend:import-menus --force
  */
 class ImportMenus extends Command
 {
