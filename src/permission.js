@@ -36,14 +36,6 @@ router.beforeEach(async(to, from, next) => {
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getRoles')
 
-          if (roles.length <= 0) {
-            await store.dispatch('user/resetToken')
-            Message.error('请设置适配菜单后登陆系统')
-            next(`/login?redirect=${to.path}`)
-            NProgress.done()
-            return ;
-          }         
-
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
