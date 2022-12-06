@@ -23,6 +23,9 @@
           </template>
         </el-input>
       </el-tooltip>
+      <div class="text-grey">         
+        {{ $t('请求链接默认前缀为: admin-api/ 。可以在配置文件更改') }}
+      </div>
     </el-form-item>
     <el-form-item :label="$t('请求方式')" prop="method">
       <el-select v-model="data.method">
