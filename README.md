@@ -3,7 +3,7 @@
 
 ## 项目介绍
 
-*  `larke-admin` 的前端页面及菜单api接口
+*  `larke-admin` 的前端页面
 *  框架为 `vue2` 和 `element-ui`
 *  本项目为 `后台前端页面`，`后台api服务` 可查看 [Larke Admin](https://github.com/deatil/larke-admin) 项目
 
