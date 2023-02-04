@@ -161,6 +161,10 @@
     <el-dialog :title="$t('分组授权')" :visible.sync="access.dialogVisible">
       <access :item="access" />
     </el-dialog>
+
+    <el-tooltip placement="top" :content="$t('回到顶部')">
+      <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
+    </el-tooltip>
   </div>
 </template>
 
@@ -171,6 +175,8 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
+import BackToTop from '@/components/BackToTop'
+
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
@@ -191,12 +197,21 @@ import {
 
 export default {
   name: 'AuthGroupIndex',
-  components: { Pagination, Detail, Edit, Create, Access },
+  components: { BackToTop, Pagination, Detail, Edit, Create, Access },
   directives: { waves, permission },
-  filters: {
-  },
+  filters: {},
   data() {
     return {
+      backToTopStyle: {
+        right: '50px',
+        bottom: '50px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '4px',
+        'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
+        background: '#e7eaf1'// 按钮的背景颜色 The background color of the button
+      },
+
       list: null,
       total: 0,
       listLoading: true,

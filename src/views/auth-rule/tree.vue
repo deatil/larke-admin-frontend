@@ -149,6 +149,10 @@
     <el-dialog :title="$t('权限详情')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
+
+    <el-tooltip placement="top" :content="$t('回到顶部')">
+      <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
+    </el-tooltip>
   </div>
 </template>
 
@@ -159,6 +163,8 @@ import clipboard from '@/utils/clipboard'
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 import { parseTime } from '@/utils'
+import BackToTop from '@/components/BackToTop'
+
 import Detail from '@/components/Larke/Detail'
 import Edit from './components/Edit'
 import Create from './components/Create'
@@ -173,7 +179,7 @@ import {
 
 export default {
   name: 'AuthRuleTree',
-  components: { Detail, Edit, Create },
+  components: { BackToTop, Detail, Edit, Create },
   directives: { waves, permission },
   filters: {
     methodFilter(method) {
@@ -191,6 +197,16 @@ export default {
   },
   data() {
     return {
+      backToTopStyle: {
+        right: '50px',
+        bottom: '50px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '4px',
+        'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
+        background: '#e7eaf1'// 按钮的背景颜色 The background color of the button
+      },
+
       list: null,
       listLoading: true,
       detail: {

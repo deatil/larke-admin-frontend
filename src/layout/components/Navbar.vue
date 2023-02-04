@@ -77,19 +77,45 @@ export default {
     },
     clearCache() {
       const thiz = this
-      clearCache().then((res) => {
-        if (res.code == 0) {
-          this.$message({
-            message: thiz.$t('清空网站缓存成功'),
-            type: 'success',
-            duration: 3 * 1000
-          })
-        }
-      })
+
+      this.$confirm(this.$t('确认要清空网站缓存吗？'), this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
+        type: 'warning'
+      }).then(async () => {
+        const loading = thiz.$loading({
+          lock: true,
+          text: this.$t('清空网站缓存中...'),
+          spanner: '',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+
+        await clearCache().then((res) => {
+          if (res.code == 0) {
+            loading.close()
+
+            this.$message({
+              message: thiz.$t('清空网站缓存成功'),
+              type: 'success',
+              duration: 3 * 1000
+            })
+          }
+        }).catch(() => {
+          loading.close()
+        })
+      });
     },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    logout() {
+      const thiz = this
+
+      this.$confirm(this.$t('确认要退出登录吗？'), this.$t('提示'), {
+        confirmButtonText: this.$t('确定'),
+        cancelButtonText: this.$t('取消'),
+        type: 'warning'
+      }).then(async () => {
+        await thiz.$store.dispatch('user/logout')
+        thiz.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      });
     }
   }
 }
