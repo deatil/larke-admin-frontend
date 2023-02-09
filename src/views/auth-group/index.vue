@@ -414,6 +414,7 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
+
       this.$confirm(this.$t('确认要删除该权限吗？'), this.$t('提示'), {
         confirmButtonText: this.$t('确定'),
         cancelButtonText: this.$t('取消'),
@@ -441,18 +442,30 @@ export default {
     },
     handleResetPermission() {
       const thiz = this
+
       this.$confirm(this.$t('确认要更新权限缓存吗？'), this.$t('提示'), {
         confirmButtonText: this.$t('确定'),
         cancelButtonText: this.$t('取消'),
         type: 'warning'
       }).then(() => {
+        const loading = thiz.$loading({
+          lock: true,
+          text: this.$t('更新权限缓存中...'),
+          spanner: '',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+
         resetPermission().then(() => {
+          loading.close()
+
           this.$message({
             message: this.$t('更新权限缓存成功'),
             type: 'success',
-            duration: 5 * 1000,
+            duration: 3 * 1000,
           })
-        }).catch(() => {})
+        }).catch(() => {
+          loading.close()
+        })
       }).catch(() => {})
     },
   }

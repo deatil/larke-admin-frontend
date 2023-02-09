@@ -203,7 +203,10 @@ export default {
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
+
         install(row.name).then(() => {
+          loading.close()
+
           this.$message({
             message: this.$t('安装扩展成功'),
             type: 'success',
@@ -213,15 +216,9 @@ export default {
             }
           })
         }).catch((err) => {
-
-        })
-
-        setTimeout(function() {
           loading.close()
-        }, 3000)
-      }).catch(() => {
-
-      })
+        })
+      }).catch(() => {})
     },
     handleUpgrade(index, row) {
       const thiz = this
@@ -240,21 +237,19 @@ export default {
         })
 
         upgrade(row.name).then((res) => {
+          loading.close()
+
           this.$message({
             message: this.$t('更新扩展成功'),
             type: 'success',
-            duration: 5 * 1000,
+            duration: 3 * 1000,
             onClose() {
               thiz.item.dialogVisible = false
             }
           })
         }).catch((err) => {
-
-        })
-
-        setTimeout(function() {
           loading.close()
-        }, 3000)
+        })
       }).catch(() => {
 
       })

@@ -654,18 +654,16 @@ export default {
         uninstall(row.name).then(() => {
           thiz.list.splice(index, 1)
 
+          loading.close()
+
           this.$message({
             message: this.$t('卸载扩展成功'),
             type: 'success',
             duration: 2 * 1000
           })
         }).catch(() => {
-
-        })
-
-        setTimeout(function() {
           loading.close()
-        }, 3000)
+        })
       }).catch(() => {
 
       })
