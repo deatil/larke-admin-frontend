@@ -54,7 +54,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -78,6 +78,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       rules: {
         parentid: [
           { required: true, message: this.$t('父级不能为空'), trigger: 'change' }
@@ -166,18 +167,26 @@ export default {
     submit() {
       const thiz = this
 
+      this.loading = true
+
       this.$refs.authRuleForm.validate(valid => {
         if (!valid) {
+          this.loading = false
+
           return false
         }
 
         createRule(this.data).then(response => {
+          thiz.loading = false
+
           this.successTip(this.$t('添加权限成功'), function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.$refs.authRuleForm.resetFields()
               }
               thiz.item.dialogVisible = false
             })
+        }).catch(err => {
+          thiz.loading = false
         })
       })
     }

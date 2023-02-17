@@ -25,7 +25,7 @@
           >
             <template slot>
               <el-form-item>
-                <el-button type="primary" @click="submit">
+                <el-button type="primary" :loading="loading" @click="submit">
                   {{ $t('提交') }}
                 </el-button>
               </el-form-item>
@@ -81,6 +81,7 @@ export default {
         value: {},
         columnMinWidth: '100px'
       },
+      loading: false,
       inputs: {}
     }
   },
@@ -167,14 +168,22 @@ export default {
       }
     },
     submit() {
+      const thiz = this
+      
+      this.loading = true
+
       setting({
         fields: this.inputs
       }).then(() => {
+        thiz.loading = false
+
         this.$message({
           message: this.$t('提交更新成功'),
           type: 'success',
           duration: 3 * 1000
         })
+      }).catch(err => {
+        thiz.loading = false
       })
     }
   }

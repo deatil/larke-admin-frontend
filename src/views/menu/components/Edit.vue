@@ -57,7 +57,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -82,6 +82,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       all: [],
       chilren: [],
       id: '',
@@ -323,8 +324,12 @@ export default {
     submit() {
       const thiz = this
 
+      this.loading = true
+
       this.$refs.menuEditForm.validate(valid => {
         if (!valid) {
+          this.loading = false
+
           return false
         }
 
@@ -336,6 +341,8 @@ export default {
           method: this.data.method,
           sort: this.data.sort
         }).then(response => {
+          thiz.loading = false
+
           this.$message({
             message: this.$t('更新菜单信息成功'),
             type: 'success',
@@ -348,6 +355,8 @@ export default {
               thiz.item.dialogVisible = false
             }
           })
+        }).catch(err => {
+          thiz.loading = false
         })
       })
     }

@@ -54,7 +54,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -79,6 +79,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       all: [],
       chilren: [],
       id: '',
@@ -218,8 +219,12 @@ export default {
     submit() {
       const thiz = this
 
+      this.loading = true
+
       this.$refs.authRuleForm.validate(valid => {
         if (!valid) {
+          this.loading = false
+
           return false
         }
 
@@ -234,6 +239,8 @@ export default {
           is_need_auth: this.data.is_need_auth,
           status: this.data.status
         }).then(response => {
+          thiz.loading = false
+
           this.successTip(this.$t('更新权限信息成功'), function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.id = ''
@@ -241,6 +248,8 @@ export default {
               }
               thiz.item.dialogVisible = false
             })
+        }).catch(err => {
+          thiz.loading = false
         })
       })
     }

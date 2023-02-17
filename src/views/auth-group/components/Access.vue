@@ -35,7 +35,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       id: '',
       title: '',
       checked: false,
@@ -155,9 +156,14 @@ export default {
     },
     submit() {
       const thiz = this
+
+      this.loading = true
+
       updateGroupAccess(this.id, {
         access: this.checkedids
       }).then(response => {
+        thiz.loading = false
+
         this.$message({
           message: this.$t('分组授权成功'),
           type: 'success',
@@ -169,6 +175,8 @@ export default {
             thiz.item.dialogVisible = false
           }
         })
+      }).catch(err => {
+        thiz.loading = false
       })
     }
   }

@@ -48,7 +48,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -70,6 +70,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       rules: {
         type: [
           { required: true, message: this.$t('类型不能为空'), trigger: 'blur' }
@@ -143,12 +144,18 @@ export default {
     submit() {
       const thiz = this
 
+      this.loading = true
+
       this.$refs.form.validate(valid => {
         if (!valid) {
+          this.loading = false
+
           return false
         }
 
         create(this.data).then(response => {
+          thiz.loading = false
+
           this.$message({
             message: this.$t('添加配置成功'),
             type: 'success',
@@ -160,6 +167,8 @@ export default {
               thiz.item.dialogVisible = false
             }
           })
+        }).catch(err => {
+          thiz.loading = false
         })
       })
     }

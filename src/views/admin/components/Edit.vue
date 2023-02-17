@@ -24,7 +24,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       id: '',
       rules: {
         name: [
@@ -101,8 +102,12 @@ export default {
     submit() {
       const thiz = this
 
+      this.loading = true
+
       this.$refs.form.validate(valid => {
         if (!valid) {
+          this.loading = false
+
           return false
         }
 
@@ -114,6 +119,8 @@ export default {
           introduce: this.data.introduce,
           status: this.data.status
         }).then(response => {
+          thiz.loading = false
+
           this.$message({
             message: this.$t('编辑管理员信息成功'),
             type: 'success',
@@ -126,6 +133,8 @@ export default {
               thiz.item.dialogVisible = false
             }
           })
+        }).catch(err => {
+          thiz.loading = false
         })
       })
     }

@@ -136,18 +136,6 @@
           <template slot-scope="scope">
             <el-button 
               v-waves
-              :loading="scope.row.id == loading.update"
-              :disabled="!checkPermission(['larke-admin.auth-rule.update'])" 
-              type="primary" 
-              size="mini" 
-              icon="el-icon-edit" 
-              @click="handleEdit(scope.$index, scope.row)"
-            >
-              {{ $t('编辑') }}
-            </el-button>
-
-            <el-button 
-              v-waves
               :loading="scope.row.id == loading.detail"
               :disabled="!checkPermission(['larke-admin.auth-rule.detail'])" 
               type="info" 
@@ -156,6 +144,18 @@
               @click="handleDetail(scope.$index, scope.row)"
             >
               {{ $t('详情') }}
+            </el-button>
+
+            <el-button 
+              v-waves
+              :loading="scope.row.id == loading.update"
+              :disabled="!checkPermission(['larke-admin.auth-rule.update'])" 
+              type="primary" 
+              size="mini" 
+              icon="el-icon-edit" 
+              @click="handleEdit(scope.$index, scope.row)"
+            >
+              {{ $t('编辑') }}
             </el-button>
 
             <el-button 

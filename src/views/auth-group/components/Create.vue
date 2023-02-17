@@ -31,7 +31,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -55,6 +55,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       rules: {
         parentid: [
           { required: true, message: this.$t('父级权限不能为空'), trigger: 'change' }
@@ -130,12 +131,18 @@ export default {
     submit() {
       const thiz = this
 
+      this.loading = true
+
       this.$refs.authGroupForm.validate(valid => {
         if (!valid) {
+          this.loading = false
+
           return false
         }
 
         createGroup(this.data).then(response => {
+          thiz.loading = false
+
           this.$message({
             message: this.$t('添加权限成功'),
             type: 'success',
@@ -147,6 +154,8 @@ export default {
               thiz.item.dialogVisible = false
             }
           })
+        }).catch(err => {
+          thiz.loading = false
         })
       })
     }
