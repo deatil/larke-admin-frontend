@@ -10,15 +10,15 @@ body:
     attributes:
       label: larke-admin-frontend 版本
       description: 请输入您当前使用的项目版本?
-      placeholder: 1.0.1
+      placeholder: v1.3.8
     validations:
       required: true
   - type: input
-    id: golang
+    id: laravel
     attributes:
-      label: Golang 版本
-      description: 请输入您当前使用的 Golang 版本?
-      placeholder: go 1.16
+      label: Laravel 版本
+      description: 请输入您当前使用的 Laravel 版本?
+      placeholder: Laravel 10
     validations:
       required: true
   - type: dropdown
