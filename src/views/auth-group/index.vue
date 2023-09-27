@@ -20,12 +20,12 @@
           {{ $t('搜索') }}
         </el-button>
 
-        <el-button v-waves v-permission="['larke-admin.admin.reset-permission']" class="filter-item" type="primary" icon="el-icon-refresh" @click="handleResetPermission">
-          {{ $t('更新权限缓存') }}
-        </el-button>
-
         <el-button :disabled="!checkPermission(['larke-admin.auth-group.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('添加分组') }}
+        </el-button>
+
+        <el-button v-waves v-permission="['larke-admin.admin.reset-permission']" class="filter-item" type="success" icon="el-icon-refresh" @click="handleResetPermission">
+          {{ $t('更新权限缓存') }}
         </el-button>
 
         <el-button v-permission="['larke-admin.auth-group.index-tree']" class="filter-item" icon="el-icon-menu" @click="handleTree">
