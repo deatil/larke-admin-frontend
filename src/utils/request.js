@@ -81,7 +81,7 @@ service.interceptors.response.use(
       // Token expires;
       else if (res.code === 104 || res.code === 107) {
         // to re-login
-        MessageBox.confirm('登陆已过期，是否重新登陆？', '登陆提示', {
+        MessageBox.confirm('登陆已过期，是否重新登陆？', '系统提示', {
           confirmButtonText: '重登',
           cancelButtonText: '取消',
           type: 'warning'
