@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="data" :rules="rules" label-width="100px">
+  <el-form v-loading="detailLoading" ref="form" :model="data" :rules="rules" label-width="100px">
     <el-form-item :label="$t('分组')" prop="group">
       <el-select v-model="data.group" :placeholder="$t('选择分组')" clearable>
         <el-option v-for="item in groupOptions" :key="item.key" :label="item.display_name" :value="item.key" />
@@ -70,6 +70,7 @@ export default {
   },
   data() {
     return {
+      detailLoading: false,
       loading: false,
       id: '',
       rules: {
@@ -142,6 +143,8 @@ export default {
   },
   methods: {
     fetchData(id) {
+      this.detailLoading = true
+
       getDetail(id).then(response => {
         this.data = {
           group: response.data.group,
@@ -155,6 +158,8 @@ export default {
           is_show: response.data.is_show,
           status: response.data.status
         }
+
+        this.detailLoading = false
       }).catch(err => {
         console.log(err)
       })

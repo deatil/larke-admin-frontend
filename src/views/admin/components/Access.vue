@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="data" label-width="100px">
+  <el-form v-loading="detailLoading" ref="form" :model="data" label-width="100px">
     <el-form-item :label="$t('管理员账号')" prop="name">
       <el-input v-model.trim="name" readonly />
     </el-form-item>
@@ -46,6 +46,7 @@ export default {
   },
   data() {
     return {
+      detailLoading: false,
       loading: false,
       id: '',
       name: '',
@@ -87,6 +88,8 @@ export default {
     fetchAdminDetail() {
       const thiz = this
 
+      this.detailLoading = true
+
       return getAdminDetail(this.id).then(response => {
         const groups = response.data.groups
 
@@ -96,6 +99,8 @@ export default {
             thiz.$refs.tree.setChecked(node, true)
           })
         }
+
+        this.detailLoading = false
       })
     },
     fetchGroups() {

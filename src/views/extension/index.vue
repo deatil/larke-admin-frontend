@@ -58,7 +58,13 @@
           {{ $t('安装/更新') }}
         </el-button>
 
-        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.refresh'])" class="filter-item" type="danger" icon="el-icon-refresh" @click="handleRefresh">
+        <el-button v-waves 
+          :disabled="!checkPermission(['larke-admin.extension.refresh'])" 
+          :loading="loading.refresh"
+          class="filter-item" 
+          type="danger" 
+          icon="el-icon-refresh" 
+          @click="handleRefresh">
           {{ $t('刷新') }}
         </el-button> 
       </div>
@@ -414,6 +420,7 @@ export default {
       },
       loading: {
         detail: '',
+        refresh: false,
       },
     }
   },
@@ -443,10 +450,14 @@ export default {
     handleRefresh() {
       const thiz = this
       this.confirmTip(thiz.$t('确认要刷新本地扩展缓存吗？'), function() {
+        thiz.loading.refresh = true
+
         refreshLocal().then(response => {
           thiz.successTip(thiz.$t('刷新本地扩展缓存成功!'), function() {
             thiz.listQuery.page = 1
             thiz.getList()
+
+            thiz.loading.refresh = false
           });
         })
       })

@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="authGroupForm" :model="data" :rules="rules" label-width="100px">
+  <el-form v-loading="detailLoading" ref="authGroupForm" :model="data" :rules="rules" label-width="100px">
     <el-form-item :label="$t('父级')" prop="parentid">
       <el-select
         v-model="data.parentid"
@@ -61,6 +61,7 @@ export default {
   },
   data() {
     return {
+      detailLoading: false,
       loading: false,
       all: [],
       chilren: [],
@@ -109,6 +110,8 @@ export default {
   },
   methods: {
     async initData() {
+      this.detailLoading = true
+      
       const all = await this.getAll()
       const children = await this.getChildren()
 
@@ -152,6 +155,8 @@ export default {
       getGroupDetail(id).then(response => {
         this.parentid = response.data.parentid
         this.data = response.data
+
+        this.detailLoading = false
       }).catch(err => {
         console.log(err)
       })

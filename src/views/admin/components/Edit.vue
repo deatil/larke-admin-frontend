@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="data" :rules="rules" label-width="100px">
+  <el-form v-loading="detailLoading" ref="form" :model="data" :rules="rules" label-width="100px">
     <el-form-item :label="$t('账号')" prop="name">
       <el-input v-model.trim="data.name" :placeholder="$t('请填写账号')" />
     </el-form-item>
@@ -24,7 +24,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submit">{{ $t('提交') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -46,7 +46,8 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      detailLoading: false,
+      submitLoading: false,
       id: '',
       rules: {
         name: [
@@ -92,9 +93,13 @@ export default {
     fetchData(id) {
       const defaultAvatar = require('@/assets/larke/avatar-default.jpg')
 
+      this.detailLoading = true
+
       getDetail(id).then(response => {
         this.data = response.data
         this.data.avatar = this.data.avatar || defaultAvatar
+
+        this.detailLoading = false
       }).catch(err => {
         console.log(err)
       })
@@ -102,11 +107,11 @@ export default {
     submit() {
       const thiz = this
 
-      this.loading = true
+      this.submitLoading = true
 
       this.$refs.form.validate(valid => {
         if (!valid) {
-          this.loading = false
+          this.submitLoading = false
 
           return false
         }
@@ -119,7 +124,7 @@ export default {
           introduce: this.data.introduce,
           status: this.data.status
         }).then(response => {
-          thiz.loading = false
+          thiz.submitLoading = false
 
           this.$message({
             message: this.$t('编辑管理员信息成功'),
@@ -134,7 +139,7 @@ export default {
             }
           })
         }).catch(err => {
-          thiz.loading = false
+          thiz.submitLoading = false
         })
       })
     }

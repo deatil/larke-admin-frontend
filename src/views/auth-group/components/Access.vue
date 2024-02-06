@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="data" label-width="100px">
+  <el-form v-loading="detailLoading" ref="form" :model="data" label-width="100px">
     <el-form-item :label="$t('分组名称')" prop="title">
       <el-input v-model.trim="title" readonly />
     </el-form-item>
@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      detailLoading: false,
       loading: false,
       id: '',
       title: '',
@@ -93,8 +94,9 @@ export default {
   },
   methods: {
     async featchData() {
-      await this.fetchRules()
+      this.detailLoading = true
 
+      await this.fetchRules()
       await this.fetchGroupDetail()
     },
     fetchGroupDetail() {
@@ -103,6 +105,8 @@ export default {
       return getGroupDetail(this.id).then(response => {
         const rule_accesses = response.data.rule_accesses
         this.data.access = rule_accesses.join(',')
+
+        this.detailLoading = false
 
         if (rule_accesses.length > 0) {
           rule_accesses.forEach((i, n) => {

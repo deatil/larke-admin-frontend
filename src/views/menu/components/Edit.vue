@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="menuEditForm" :model="data" :rules="rules" label-width="100px">
+  <el-form v-loading="detailLoading" ref="menuEditForm" :model="data" :rules="rules" label-width="100px">
     <el-form-item :label="$t('父级权限')" prop="pid">
       <el-select
         v-model="data.pid"
@@ -82,6 +82,7 @@ export default {
   },
   data() {
     return {
+      detailLoading: false,
       loading: false,
       all: [],
       chilren: [],
@@ -140,11 +141,15 @@ export default {
         if (this.item.dialogVisible == true &&
           this.id != val.id
         ) {
+          this.detailLoading = true
+
           this.id = val.id
           this.rule.id = ''
           this.fetchParents().then(() => {
             this.fetchData()
             this.getRules()
+
+            this.detailLoading = false
           })
         }
       },
@@ -154,9 +159,14 @@ export default {
   created() {
     const id = String(this.item.id)
     this.id = id
+
+    this.detailLoading = true
+
     this.initData().then(() => {
       this.fetchData()
       this.getRules()
+
+      this.detailLoading = false
     })
   },
   methods: {
@@ -175,7 +185,7 @@ export default {
             resolve()
           })
           .catch(() => {
-
+            this.detailLoading = false
           })
       })
     },
