@@ -101,7 +101,7 @@ export default {
 
         this.detailLoading = false
       }).catch(err => {
-        console.log(err)
+        this.detailLoading = false
       })
     },
     submit() {

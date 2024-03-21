@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" label-width="100px">
+  <el-form v-loading="detailLoading" ref="form" label-width="100px">
     <el-alert
         type="warning"
         :title="$t('特别注意')"
@@ -74,6 +74,7 @@ export default {
   },
   data() {
     return {
+      detailLoading: false,
       data: {
         name: '',
         title: '',
@@ -105,10 +106,16 @@ export default {
   methods: {
     checkPermission,
     featchData() {
+      this.detailLoading = true
+
       getCommand(this.data.name).then(response => {
         this.data.require = response.data.command.require
         this.data.remove = response.data.command.remove
         this.data.has_repository = response.data.command.has_repository
+
+        this.detailLoading = false
+      }).catch(err => {
+        this.detailLoading = false
       })
     },
     handleRepository(type) {

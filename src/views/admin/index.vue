@@ -166,6 +166,7 @@
         <el-form-item>
           <el-button 
             type="primary" 
+            :loading="loading.password"
             @click="changePassword">
             {{ $t('确认') }}
           </el-button>
@@ -182,7 +183,12 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onLogout">{{ $t('确认退出') }}</el-button>
+          <el-button 
+            type="primary" 
+            :loading="loading.logout"
+            @click="onLogout">
+              {{ $t('确认退出') }}
+            </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -286,6 +292,8 @@ export default {
       loading: {
         detail: '',
         delete: '',
+        password: false,
+        logout: false,
       }
     }
   },
@@ -446,12 +454,16 @@ export default {
       this.password.id = row.id
     },
     changePassword() {
+      this.loading.password = true
+
       if (this.password.newpassword == '') {
         this.$message({
           message: this.$t('密码不能为空'),
           type: 'error',
           duration: 5 * 1000
         })
+
+        this.loading.password = false
 
         return false
       }
@@ -460,6 +472,9 @@ export default {
         password: md5(this.password.newpassword)
       }).then(() => {
         const thiz = this
+
+        this.loading.password = false
+
         this.$message({
           message: this.$t('管理员密码修改成功'),
           type: 'success',
@@ -469,6 +484,8 @@ export default {
             thiz.password.dialogVisible = false
           }
         })
+      }).catch(() => {
+        this.loading.password = false
       })
     },
     handleResetPermission() {
@@ -503,6 +520,8 @@ export default {
       this.logout.dialogVisible = true
     },
     onLogout() {
+      this.loading.logout = true
+
       if (this.logout.refreshToken == '') {
         this.$message({
           message: this.$t('refreshToken 不能为空'),
@@ -510,11 +529,16 @@ export default {
           duration: 5 * 1000
         })
 
+        this.loading.logout = false
+
         return false
       }
 
       logoutAdmin(this.logout.refreshToken).then(() => {
         const thiz = this
+
+        this.loading.logout = false
+
         this.$message({
           message: this.$t('管理员退出成功'),
           type: 'success',
@@ -524,6 +548,8 @@ export default {
             thiz.logout.dialogVisible = false
           }
         })
+      }).catch(() => {
+        this.loading.logout = false
       })
     }
   }
