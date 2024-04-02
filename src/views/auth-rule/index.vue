@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>{{ $t('权限路由') }}</span>
+        <span>{{ $t('auth_rule.search_title') }}</span>
       </div>
 
       <div class="filter-container">
@@ -14,16 +14,16 @@
           :disabled="!checkPermission(['larke-admin.auth-rule.clear'])"
           @click="handleDeleteList"
         >
-          {{ $t('删除选中') }}
+          {{ $t('auth_rule.search_delete_selected') }}
         </el-button>
 
-        <el-input v-model="listQuery.searchword" :placeholder="$t('请输入关键字')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" :placeholder="$t('auth_rule.search_searchword')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
 
-        <el-select v-model="listQuery.method" :placeholder="$t('请求方式')" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
+        <el-select v-model="listQuery.method" :placeholder="$t('auth_rule.search_method')" clearable style="width: 120px;margin-right: 10px;" class="filter-item">
           <el-option v-for="item in methodOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
 
-        <el-select v-model="listQuery.status" :placeholder="$t('状态')" clearable class="filter-item" style="width: 80px;margin-right: 10px;">
+        <el-select v-model="listQuery.status" :placeholder="$t('auth_rule.search_status')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
 
@@ -32,15 +32,15 @@
         </el-select>
 
         <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-          {{ $t('搜索') }}
+          {{ $t('auth_rule.search_btn') }}
         </el-button>
 
         <el-button :disabled="!checkPermission(['larke-admin.auth-rule.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
-          {{ $t('添加权限') }}
+          {{ $t('auth_rule.search_create_rule') }}
         </el-button>
 
         <el-button v-permission="['larke-admin.auth-rule.index-tree']" class="filter-item" icon="el-icon-menu" @click="handleTree">
-          {{ $t('权限结构') }}
+          {{ $t('auth_rule.search_rule_tree') }}
         </el-button>
       </div>
 
@@ -60,19 +60,19 @@
           align="center"
         />
 
-        <el-table-column width="150px" :label="$t('名称')">
+        <el-table-column width="150px" :label="$t('auth_rule.table_title')">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column min-width="100px" :label="$t('链接')">
+        <el-table-column min-width="100px" :label="$t('auth_rule.table_url')">
           <template slot-scope="{row}">
             <div>
               <el-tag type="info" size="mini" style="margin-bottom:3px;" @click="handleClipboard(row.slug, $event)">
                 <el-tooltip placement="top">
                   <div slot="content">
-                    {{ $t('点击复制 {slug}', {
+                    {{ $t('auth_rule.table_copy_slug', {
                       slug: row.slug
                     }) }}
                   </div>
@@ -93,7 +93,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="75px" align="center" :label="$t('排序')">
+        <el-table-column width="75px" align="center" :label="$t('auth_rule.table_listorder')">
           <template slot-scope="{row, $index}">
             <div @click.stop="{{editableChangeBtn($index, 'editListorderInput')}}">
               <el-input
@@ -109,7 +109,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="170px" align="center" :label="$t('添加时间')">
+        <el-table-column width="170px" align="center" :label="$t('auth_rule.table_create_time')">
           <template slot-scope="scope">
             <span class="text-muted">
               <i class="el-icon-time" />&nbsp;
@@ -118,7 +118,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column class-name="status-col" :label="$t('状态')" width="80">
+        <el-table-column class-name="status-col" :label="$t('auth_rule.table_status')" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -132,7 +132,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" :label="$t('操作')" width="280">
+        <el-table-column align="center" :label="$t('auth_rule.table_actions')" width="280">
           <template slot-scope="scope">
             <el-button 
               v-waves
@@ -143,7 +143,7 @@
               icon="el-icon-info" 
               @click="handleDetail(scope.$index, scope.row)"
             >
-              {{ $t('详情') }}
+              {{ $t('auth_rule.table_detail') }}
             </el-button>
 
             <el-button 
@@ -155,7 +155,7 @@
               icon="el-icon-edit" 
               @click="handleEdit(scope.$index, scope.row)"
             >
-              {{ $t('编辑') }}
+              {{ $t('auth_rule.table_update') }}
             </el-button>
 
             <el-button 
@@ -167,7 +167,7 @@
               icon="el-icon-delete" 
               @click="handleDelete(scope.$index, scope.row)"
             >
-              {{ $t('删除') }}
+              {{ $t('auth_rule.table_delete') }}
             </el-button>
           </template>
         </el-table-column>
@@ -176,19 +176,19 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog :title="$t('添加权限')" :visible.sync="create.dialogVisible">
+    <el-dialog :title="$t('auth_rule.dialog_create')" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog :title="$t('编辑权限')" :visible.sync="edit.dialogVisible" @close="closeEdit">
+    <el-dialog :title="$t('auth_rule.dialog_update')" :visible.sync="edit.dialogVisible" @close="closeEdit">
       <edit :item="edit" />
     </el-dialog>
 
-    <el-dialog :title="$t('权限详情')" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('auth_rule.dialog_detail')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-tooltip placement="top" :content="$t('回到顶部')">
+    <el-tooltip placement="top" :content="$t('common.goto_top')">
       <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
     </el-tooltip>
   </div>
@@ -263,21 +263,21 @@ export default {
         limit: 10
       },
       methodOptions: [
-        { label: this.$t('GET'), key: 'GET' },
-        { label: this.$t('HEAD'), key: 'HEAD' },
-        { label: this.$t('POST'), key: 'POST' },
-        { label: this.$t('PUT'), key: 'PUT' },
-        { label: this.$t('DELETE'), key: 'DELETE' },
-        { label: this.$t('PATCH'), key: 'PATCH' },
-        { label: this.$t('OPTIONS'), key: 'OPTIONS' }
+        { label: this.$t('auth_rule.search_method_get'), key: 'GET' },
+        { label: this.$t('auth_rule.search_method_head'), key: 'HEAD' },
+        { label: this.$t('auth_rule.search_method_post'), key: 'POST' },
+        { label: this.$t('auth_rule.search_method_put'), key: 'PUT' },
+        { label: this.$t('auth_rule.search_method_delete'), key: 'DELETE' },
+        { label: this.$t('auth_rule.search_method_patch'), key: 'PATCH' },
+        { label: this.$t('auth_rule.search_method_options'), key: 'OPTIONS' }
       ],
       statusOptions: [
-        { key: 'open', display_name: this.$t('启用') },
-        { key: 'close', display_name: this.$t('禁用') }
+        { key: 'open', display_name: this.$t('auth_rule.search_status_enable') },
+        { key: 'close', display_name: this.$t('auth_rule.search_status_disable') }
       ],
       sortOptions: [
-        { key: 'create_time__ASC', label: this.$t('正序') },
-        { key: 'create_time__DESC', label: this.$t('倒叙') }
+        { key: 'create_time__ASC', label: this.$t('auth_rule.search_sort_asc') },
+        { key: 'create_time__DESC', label: this.$t('auth_rule.search_sort_desc') }
       ],
       detail: {
         dialogVisible: false,
@@ -381,7 +381,7 @@ export default {
 
       updateRuleSort(data.id, data.listorder).then(() => {
         this.$message({
-          message: this.$t('权限排序成功'),
+          message: this.$t('auth_rule.table_listorder_success'),
           type: 'success',
           duration: 2 * 1000
         })
@@ -398,72 +398,72 @@ export default {
 
         this.detail.data = [
           {
-            name: this.$t('ID'),
+            name: this.$t('auth_rule.detail_id'),
             content: data.id,
             type: 'text'
           },
           {
-            name: this.$t('父级ID'),
+            name: this.$t('auth_rule.detail_parentid'),
             content: data.parentid,
             type: 'text'
           },
           {
-            name: this.$t('名称'),
+            name: this.$t('auth_rule.detail_title'),
             content: data.title,
             type: 'text'
           },
           {
-            name: this.$t('权限链接'),
+            name: this.$t('auth_rule.detail_url'),
             content: data.url,
             type: 'text'
           },
           {
-            name: this.$t('请求类型'),
+            name: this.$t('auth_rule.detail_method'),
             content: data.method,
             type: 'text'
           },
           {
-            name: this.$t('地址标识'),
+            name: this.$t('auth_rule.detail_slug'),
             content: data.slug,
             type: 'text'
           },
           {
-            name: this.$t('描述'),
+            name: this.$t('auth_rule.detail_description'),
             content: data.description,
             type: 'text'
           },
           {
-            name: this.$t('排序'),
+            name: this.$t('auth_rule.detail_listorder'),
             content: data.listorder,
             type: 'text'
           },
           {
-            name: this.$t('验证权限'),
+            name: this.$t('auth_rule.detail_need_auth'),
             content: data.is_need_auth + "",
             type: 'status'
           },
           {
-            name: this.$t('状态'),
+            name: this.$t('auth_rule.detail_status'),
             content: data.status + "",
             type: 'boolen'
           },
           {
-            name: this.$t('更新时间'),
+            name: this.$t('auth_rule.detail_update_time'),
             content: data.update_time,
             type: 'time'
           },
           {
-            name: this.$t('更新IP'),
+            name: this.$t('auth_rule.detail_update_ip'),
             content: data.update_ip,
             type: 'text'
           },
           {
-            name: this.$t('添加时间'),
+            name: this.$t('auth_rule.detail_create_time'),
             content: data.create_time,
             type: 'time'
           },
           {
-            name: this.$t('添加IP'),
+            name: this.$t('auth_rule.detail_create_ip'),
             content: data.create_ip,
             type: 'text'
           }
@@ -479,7 +479,7 @@ export default {
       if (data.status == 1) {
         enableRule(data.id).then(() => {
           this.$message({
-            message: this.$t('权限启用成功'),
+            message: this.$t('auth_rule.enable_success'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -487,7 +487,7 @@ export default {
       } else {
         disableRule(data.id).then(() => {
           this.$message({
-            message: this.$t('权限禁用成功'),
+            message: this.$t('auth_rule.disable_success'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -496,9 +496,9 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要删除该权限吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('auth_rule.confirm_delete'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         this.loading.delete = row.id
@@ -508,7 +508,7 @@ export default {
           thiz.list.splice(index, 1)
 
           this.$message({
-            message: this.$t('删除权限成功'),
+            message: this.$t('auth_rule.confirm_delete_success'),
             type: 'success',
             duration: 3 * 1000
           })
@@ -518,14 +518,14 @@ export default {
       })
     },
     handleDeleteList() {
-      this.$confirm(this.$t('确认要删除选中的权限吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('auth_rule.confirm_delete_selected'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         if (this.selectedData.length < 1) {
           this.$message({
-            message: this.$t('请选择要删除的权限'),
+            message: this.$t('auth_rule.select_delete_rules'),
             type: 'error',
             duration: 3 * 1000
           })

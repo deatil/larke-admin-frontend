@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>{{ $t('菜单管理') }}</span>
+        <span>{{ $t('menu.search_title') }}</span>
       </div>
 
       <el-alert
         type="warning"
-        :title="$t('菜单设置及新增需注意')"
-        :description="$t('菜单权限对当前的前端模版只有标识和层级有使用')"
+        :title="$t('menu.search_alert_title')"
+        :description="$t('menu.search_alert_description')"
         class="menu-tip"
         show-icon
         :closable="false"
@@ -22,7 +22,7 @@
           type="primary" 
           icon="el-icon-edit" 
           @click="handleCreate">
-          {{ $t('添加菜单') }}
+          {{ $t('menu.search_create') }}
         </el-button>
       </div>
 
@@ -46,13 +46,13 @@
           tree-key="id"
           :show-overflow-tooltip="true"
           :indent-size="25"
-          :label="$t('菜单')"
+          :label="$t('menu.table_title')"
           min-width="150"
           class-name="larke-admin-menu-tree"
           header-align="left"
         />
 
-        <el-table-column :label="$t('链接')">
+        <el-table-column :label="$t('menu.table_url')">
           <template slot-scope="{row}">
             <div>
               <el-tag type="info" size="mini" style="margin-bottom:3px;">
@@ -70,13 +70,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="80px" align="center" :label="$t('排序')">
+        <el-table-column width="80px" align="center" :label="$t('menu.table_sort')">
           <template slot-scope="scope">
             <span>{{ scope.row.sort }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column align="center" :label="$t('操作')" width="280">
+        <el-table-column align="center" :label="$t('menu.table_actions')" width="280">
           <template slot-scope="scope">
             <el-button 
               v-waves
@@ -86,7 +86,7 @@
               icon="el-icon-info" 
               @click="handleDetail(scope.$index, scope.row)"
             >
-              {{ $t('详情') }}
+              {{ $t('menu.table_detail') }}
             </el-button>
 
             <el-button 
@@ -97,7 +97,7 @@
               icon="el-icon-edit" 
               @click="handleEdit(scope.$index, scope.row)"
             >
-              {{ $t('编辑') }}
+              {{ $t('menu.table_update') }}
             </el-button>
 
             <el-button 
@@ -109,26 +109,26 @@
               icon="el-icon-delete" 
               @click="handleDelete(scope.$index, scope.row)"
             >
-              {{ $t('删除') }}
+              {{ $t('menu.table_delete') }}
             </el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <el-dialog :title="$t('添加菜单')" :visible.sync="create.dialogVisible">
+    <el-dialog :title="$t('menu.dialog_create')" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog :title="$t('编辑菜单')" :visible.sync="edit.dialogVisible">
+    <el-dialog :title="$t('menu.dialog_update')" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>
 
-    <el-dialog :title="$t('菜单详情')" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('menu.dialog_detail')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-tooltip placement="top" :content="$t('回到顶部')">
+    <el-tooltip placement="top" :content="$t('common.goto_top')">
       <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
     </el-tooltip>
 
@@ -225,37 +225,37 @@ export default {
 
       this.detail.data = [
         {
-          name: this.$t('ID'),
+          name: this.$t('menu.detail_id'),
           content: data.id,
           type: 'text'
         },
         {
-          name: this.$t('父级ID'),
+          name: this.$t('menu.detail_parentid'),
           content: data.pid,
           type: 'text'
         },
         {
-          name: this.$t('名称'),
+          name: this.$t('menu.detail_title'),
           content: data.title,
           type: 'text'
         },
         {
-          name: this.$t('权限标识'),
+          name: this.$t('menu.detail_slug'),
           content: data.slug,
           type: 'text'
         },
         {
-          name: this.$t('权限链接'),
+          name: this.$t('menu.detail_url'),
           content: data.url,
           type: 'text'
         },
         {
-          name: this.$t('链接请求类型'),
+          name: this.$t('menu.detail_method'),
           content: data.method,
           type: 'text'
         },
         {
-          name: this.$t('排序'),
+          name: this.$t('menu.detail_sort'),
           content: data.sort,
           type: 'text'
         }
@@ -273,9 +273,9 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要删除该菜单吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('menu.confirm_delete'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         thiz.loading.delete = row.id
@@ -284,7 +284,7 @@ export default {
           thiz.loading.delete = ''
 
           this.$message({
-            message: this.$t('删除菜单成功'),
+            message: this.$t('menu.confirm_delete_success'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {

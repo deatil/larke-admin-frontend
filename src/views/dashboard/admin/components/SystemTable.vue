@@ -4,7 +4,7 @@
     :header-cell-style="{background:'#eef1f6',color:'#606266'}"
     class="system-table"
   >
-    <el-table-column :label="$t('系统信息')" width="200">
+    <el-table-column :label="$t('dashboard.system_info')" width="200">
       <template slot-scope="scope">
         {{ scope.row.name }}
       </template>
@@ -41,35 +41,35 @@ export default {
 
         this.list = [
           {
-            name: this.$t('当前版本'),
+            name: this.$t('dashboard.version'),
             content: data.admin.name + ' v' + data.admin.version
           },
           {
-            name: this.$t('服务器域名/IP'),
+            name: this.$t('dashboard.domain_ip'),
             content: data.system.domain + ' / ' + data.system.ip
           },
           {
-            name: this.$t('服务器信息'),
+            name: this.$t('dashboard.server_info'),
             content: data.system.php_uname
           },
           {
-            name: this.$t('服务器环境'),
+            name: this.$t('dashboard.server_env'),
             content: data.system.web_server
           },
           {
-            name: this.$t('PHP 版本'),
+            name: this.$t('dashboard.php_version'),
             content: data.system.php_version
           },
           {
-            name: this.$t('MySQL 版本'),
+            name: this.$t('dashboard.mysql_version'),
             content: data.system.mysql_version
           },
           {
-            name: this.$t('最大上传限制'),
+            name: this.$t('dashboard.max_upload'),
             content: data.system.file_upload
           },
           {
-            name: this.$t('服务器时间'),
+            name: this.$t('dashboard.server_time'),
             content: data.system.time
           }
         ]

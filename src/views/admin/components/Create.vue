@@ -1,42 +1,42 @@
 <template>
   <el-form ref="form" :model="data" :rules="rules" label-width="100px">
-    <el-form-item :label="$t('账号')" prop="name">
-      <el-input v-model.trim="data.name" :placeholder="$t('请填写账号')" />
+    <el-form-item :label="$t('admin.form_passport')" prop="name">
+      <el-input v-model.trim="data.name" :placeholder="$t('admin.form_enter_passport')" />
     </el-form-item>
 
-    <el-form-item :label="$t('昵称')" prop="nickname">
-      <el-input v-model.trim="data.nickname" :placeholder="$t('请填写昵称')" />
+    <el-form-item :label="$t('admin.form_nickname')" prop="nickname">
+      <el-input v-model.trim="data.nickname" :placeholder="$t('admin.form_enter_nickname')" />
     </el-form-item>
 
-    <el-form-item :label="$t('邮箱')" prop="email">
-      <el-input v-model.trim="data.email" :placeholder="$t('请填写邮箱')" />
+    <el-form-item :label="$t('admin.form_email')" prop="email">
+      <el-input v-model.trim="data.email" :placeholder="$t('admin.form_enter_email')" />
     </el-form-item>
 
-    <el-form-item :label="$t('分组')" prop="group_id">
-      <el-select v-model="data.group_id" clearable :placeholder="$t('请选择至少一个分组')">
+    <el-form-item :label="$t('admin.form_group')" prop="group_id">
+      <el-select v-model="data.group_id" clearable :placeholder="$t('admin.form_need_one_group')">
         <el-option v-for="item in groups" :key="item.id" :label="item.title" v-html="(item.spacer ? item.spacer : '') + item.title" :value="item.id" />
       </el-select>
     </el-form-item>
 
-    <el-form-item :label="$t('简介')" prop="introduce">
-      <el-input v-model.trim="data.introduce" type="textarea" rows="6" :placeholder="$t('请填写简介')" />
+    <el-form-item :label="$t('admin.form_introduce')" prop="introduce">
+      <el-input v-model.trim="data.introduce" type="textarea" rows="6" :placeholder="$t('admin.form_enter_introduce')" />
     </el-form-item>
 
-    <el-form-item :label="$t('头像')">
+    <el-form-item :label="$t('admin.form_avatar')">
       <div style="width: 100%;">
         <avatar :data="data" />
       </div>
     </el-form-item>
 
-    <el-form-item :label="$t('状态')" prop="status">
+    <el-form-item :label="$t('admin.form_status')" prop="status">
       <el-radio-group v-model="data.status">
-        <el-radio :label="1">{{ $t('启用') }}</el-radio>
-        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
+        <el-radio :label="1">{{ $t('admin.form_status_enable') }}</el-radio>
+        <el-radio :label="0">{{ $t('admin.form_status_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('common.save') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -64,19 +64,19 @@ export default {
       loading: false,
       rules: {
         name: [
-          { required: true, message: this.$t('账号不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_name_required'), trigger: 'blur' }
         ],
         nickname: [
-          { required: true, message: this.$t('昵称不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_nickname_required'), trigger: 'blur' }
         ],
         email: [
-          { required: true, message: this.$t('邮箱不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_email_required'), trigger: 'blur' }
         ],
         group_id: [
-          { required: true, message: this.$t('所属分组不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_group_id_required'), trigger: 'blur' }
         ],
         introduce: [
-          { required: true, message: this.$t('简介不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_introduce_required'), trigger: 'blur' }
         ]
       },
       data: {
@@ -138,7 +138,7 @@ export default {
           thiz.loading = false
 
           this.$message({
-            message: this.$t('添加管理员成功'),
+            message: this.$t('admin.create_success'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {

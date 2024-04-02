@@ -1,14 +1,14 @@
 <template>
   <el-form v-loading="detailLoading" ref="form" :model="data" label-width="100px">
-    <el-form-item :label="$t('分组名称')" prop="title">
+    <el-form-item :label="$t('auth_group.access_title')" prop="title">
       <el-input v-model.trim="title" readonly />
     </el-form-item>
 
-    <el-form-item :label="$t('权限路由')" prop="access">
+    <el-form-item :label="$t('auth_group.access_rules')" prop="access">
       <el-checkbox
         v-model="checked"
         @change="checkedAll"
-      >{{ $t('全选') }}</el-checkbox>
+      >{{ $t('auth_group.access_select_all') }}</el-checkbox>
 
       <el-tree
         ref="tree"
@@ -30,12 +30,12 @@
       </el-tree>
 
       <div class="text-grey">         
-        {{ $t('注意：非超级管理员请不要授权给 `权限` 和 `管理分组` 权限。') }}
+        {{ $t('auth_group.access_tips') }}
       </div>
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('auth_group.access_save') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -88,7 +88,6 @@ export default {
   created() {
     const id = this.item.id
     this.id = id
-    this.title = this.item.title
 
     this.featchData()
   },
@@ -105,6 +104,7 @@ export default {
       return getGroupDetail(this.id).then(response => {
         const rule_accesses = response.data.rule_accesses
         this.data.access = rule_accesses.join(',')
+        this.title = response.data.title
 
         this.detailLoading = false
 
@@ -169,7 +169,7 @@ export default {
         thiz.loading = false
 
         this.$message({
-          message: this.$t('分组授权成功'),
+          message: this.$t('auth_group.access_save_success'),
           type: 'success',
           duration: 2 * 1000,
           onClose() {

@@ -1,9 +1,9 @@
 <template>
   <el-form ref="authRuleForm" :model="data" :rules="rules" label-width="100px">
-    <el-form-item :label="$t('父级权限')" prop="parentid">
+    <el-form-item :label="$t('auth_rule.form_parentid')" prop="parentid">
       <el-select
         v-model="data.parentid"
-        :placeholder="$t('请选择')"
+        :placeholder="$t('auth_rule.form_select')"
         clearable
         filterable
         :filter-method="parentFilter"
@@ -12,49 +12,49 @@
         <el-option v-for="item in parentOptions" :key="item.key" :label="item.display_name | entityToString" :value="item.key" />
       </el-select>
     </el-form-item>
-    <el-form-item :label="$t('名称')" prop="title">
-      <el-input v-model.trim="data.title" :placeholder="$t('请填写权限名称')" />
+    <el-form-item :label="$t('auth_rule.form_title')" prop="title">
+      <el-input v-model.trim="data.title" :placeholder="$t('auth_rule.form_enter_title')" />
     </el-form-item>
-    <el-form-item :label="$t('请求链接')" prop="url">
-      <el-tooltip effect="dark" :content="$t('请求链接默认不用加前缀')" placement="top">
-        <el-input v-model.trim="data.url" :placeholder="$t('请填写请求链接')">
+    <el-form-item :label="$t('auth_rule.form_url')" prop="url">
+      <el-tooltip effect="dark" :content="$t('auth_rule.form_url_tooltip')" placement="top">
+        <el-input v-model.trim="data.url" :placeholder="$t('auth_rule.form_enter_url')">
           <template slot="prepend">
             <i class="el-icon-link" />
           </template>
         </el-input>
       </el-tooltip>
       <div class="text-grey">         
-        {{ $t('请求链接默认前缀为: admin-api/ 。可以在配置文件更改') }}
+        {{ $t('auth_rule.form_url_tip') }}
       </div>
     </el-form-item>
-    <el-form-item :label="$t('请求方式')" prop="method">
+    <el-form-item :label="$t('auth_rule.form_method')" prop="method">
       <el-select v-model="data.method">
         <el-option v-for="item in methodOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
     </el-form-item>
-    <el-form-item :label="$t('标识')" prop="slug">
-      <el-input v-model.trim="data.slug" :placeholder="$t('请填写标识')" />
+    <el-form-item :label="$t('auth_rule.form_slug')" prop="slug">
+      <el-input v-model.trim="data.slug" :placeholder="$t('auth_rule.form_enter_slug')" />
     </el-form-item>
-    <el-form-item :label="$t('权限描述')" prop="description">
-      <el-input v-model.trim="data.description" type="textarea" rows="6" :placeholder="$t('请填写权限描述')" />
+    <el-form-item :label="$t('auth_rule.form_description')" prop="description">
+      <el-input v-model.trim="data.description" type="textarea" rows="6" :placeholder="$t('auth_rule.form_enter_description')" />
     </el-form-item>
-    <el-form-item :label="$t('排序')" prop="listorder">
-      <el-input v-model.trim="data.listorder" :placeholder="$t('请填写排序')" />
+    <el-form-item :label="$t('auth_rule.form_listorder')" prop="listorder">
+      <el-input v-model.trim="data.listorder" :placeholder="$t('auth_rule.form_enter_listorder')" />
     </el-form-item>
-    <el-form-item :label="$t('鉴定权限')" prop="is_need_auth">
+    <el-form-item :label="$t('auth_rule.form_need_auth')" prop="is_need_auth">
       <el-radio-group v-model="data.is_need_auth">
-        <el-radio :label="1">{{ $t('启用') }}</el-radio>
-        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
+        <el-radio :label="1">{{ $t('auth_rule.form_need_auth_enable') }}</el-radio>
+        <el-radio :label="0">{{ $t('auth_rule.form_need_auth_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item :label="$t('状态')" prop="status">
+    <el-form-item :label="$t('auth_rule.form_status')" prop="status">
       <el-radio-group v-model="data.status">
-        <el-radio :label="1">{{ $t('启用') }}</el-radio>
-        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
+        <el-radio :label="1">{{ $t('auth_rule.form_status_enable') }}</el-radio>
+        <el-radio :label="0">{{ $t('auth_rule.form_status_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('auth_rule.form_save') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -81,19 +81,19 @@ export default {
       loading: false,
       rules: {
         parentid: [
-          { required: true, message: this.$t('父级不能为空'), trigger: 'change' }
+          { required: true, message: this.$t('auth_rule.rules_parentid_required'), trigger: 'change' }
         ],
         title: [
-          { required: true, message: this.$t('名称不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('auth_rule.rules_title_required'), trigger: 'blur' }
         ],
         url: [
-          { required: true, message: this.$t('请求链接不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('auth_rule.rules_url_required'), trigger: 'blur' }
         ],
         slug: [
-          { required: true, message: this.$t('标识不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('auth_rule.rules_slug_required'), trigger: 'blur' }
         ],
         listorder: [
-          { required: true, message: this.$t('排序不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('auth_rule.rules_listorder_required'), trigger: 'blur' }
         ]
       },
       data: {
@@ -108,7 +108,7 @@ export default {
         status: 1
       },
       parentOptions: [
-        { key: '0', display_name: this.$t('顶级权限') }
+        { key: '0', display_name: this.$t('auth_rule.form_top_rule') }
       ],
       parentFilterOptions: [],
       methodOptions: [
@@ -179,7 +179,7 @@ export default {
         createRule(this.data).then(response => {
           thiz.loading = false
 
-          this.successTip(this.$t('添加权限成功'), function() {
+          this.successTip(this.$t('auth_rule.form_create_success'), function() {
               if (thiz.$refs.authRuleForm !== undefined) {
                 thiz.$refs.authRuleForm.resetFields()
               }

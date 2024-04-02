@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>{{ $t('网站设置') }}</span>
+        <span>{{ $t('config.setting_title') }}</span>
       </div>
 
       <el-tabs
@@ -26,7 +26,7 @@
             <template slot>
               <el-form-item>
                 <el-button type="primary" :loading="loading" @click="submit">
-                  {{ $t('提交') }}
+                  {{ $t('config.setting_save') }}
                 </el-button>
               </el-form-item>
             </template>
@@ -36,7 +36,7 @@
 
     </el-card>
 
-    <el-tooltip placement="top" :content="$t('回到顶部')">
+    <el-tooltip placement="top" :content="$t('common.goto_top')">
       <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
     </el-tooltip>
 
@@ -74,7 +74,7 @@ export default {
       activeName: '',
       list: null,
       groups: [
-        { key: 'loading..', label: this.$t('加载中..'), items: [] }
+        { key: 'loading..', label: this.$t('config.setting_loading'), items: [] }
       ],
       form: {
         items: [],
@@ -178,7 +178,7 @@ export default {
         thiz.loading = false
 
         this.$message({
-          message: this.$t('提交更新成功'),
+          message: this.$t('config.setting_save_success'),
           type: 'success',
           duration: 3 * 1000
         })

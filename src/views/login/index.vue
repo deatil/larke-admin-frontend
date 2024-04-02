@@ -93,21 +93,21 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error(this.$t('请输入你的用户名')))
+        callback(new Error(this.$t('login.rules_username_required')))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error(this.$t('密码不能少于6位')))
+        callback(new Error(this.$t('login.rules_password_required')))
       } else {
         callback()
       }
     }
     const validateCaptcha = (rule, value, callback) => {
       if (value.length != 4) {
-        callback(new Error(this.$t('请输入四位数验证码')))
+        callback(new Error(this.$t('login.rules_captcha_required')))
       } else {
         callback()
       }

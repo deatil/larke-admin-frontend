@@ -2,19 +2,19 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>{{ $t('附件管理') }}</span>
+        <span>{{ $t('attachment.title') }}</span>
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" :placeholder="$t('请输入关键字')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
-        <el-select v-model="listQuery.status" :placeholder="$t('状态')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
+        <el-input v-model="listQuery.searchword" :placeholder="$t('attachment.search_keywords')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-select v-model="listQuery.status" :placeholder="$t('attachment.search_status')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
         <el-select v-model="listQuery.order" style="width: 140px;margin-right: 10px;" class="filter-item" @change="handleFilter">
           <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
         </el-select>
         <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-          {{ $t('搜索') }}
+          {{ $t('attachment.search_btn') }}
         </el-button>
       </div>
 
@@ -29,25 +29,25 @@
         style="width: 100%"
       >
 
-        <el-table-column min-width="150px" :label="$t('文件名')">
+        <el-table-column min-width="150px" :label="$t('attachment.name')">
           <template slot-scope="{row}">
             <span>{{ row.name }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column width="110px" :label="$t('文件大小')">
+        <el-table-column width="110px" :label="$t('attachment.size')">
           <template slot-scope="{row}">
             <span>{{ row.size | renderSize }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column width="90px" :label="$t('文件类型')">
+        <el-table-column width="90px" :label="$t('attachment.type')">
           <template slot-scope="{row}">
             <span>{{ row.extension }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column width="170px" align="left" :label="$t('添加时间')">
+        <el-table-column width="170px" align="left" :label="$t('attachment.create_time')">
           <template slot-scope="scope">
             <span>
               <i class="el-icon-time" />&nbsp;
@@ -56,15 +56,15 @@
           </template>
         </el-table-column>
 
-        <el-table-column class-name="status-col" :label="$t('状态')" width="80">
+        <el-table-column class-name="status-col" :label="$t('attachment.status')" width="80">
           <template slot-scope="{row}">
             <el-tag :type="row.status | statusFilter" size="mini">
-              {{ (row.status == 1) ? $t('启用') : $t('禁用') }}
+              {{ (row.status == 1) ? $t('attachment.open') : $t('attachment.close') }}
             </el-tag>
           </template>
         </el-table-column>
 
-        <el-table-column align="center" :label="$t('操作')" width="280">
+        <el-table-column align="center" :label="$t('attachment.action')" width="280">
           <template slot-scope="scope">
             <el-button 
               v-waves
@@ -75,7 +75,7 @@
               icon="el-icon-info" 
               @click="handleDetail(scope.$index, scope.row)"
             >
-              {{ $t('详情') }}
+              {{ $t('attachment.detail') }}
             </el-button>
 
             <el-button 
@@ -86,7 +86,7 @@
               icon="el-icon-download" 
               @click="handleDownload(scope.row.id)"
             >
-              {{ $t('下载') }}
+              {{ $t('attachment.download') }}
             </el-button>
 
             <el-button 
@@ -98,7 +98,7 @@
               icon="el-icon-delete" 
               @click="handleDelete(scope.$index, scope.row)"
             >
-              {{ $t('删除') }}
+              {{ $t('attachment.delete') }}
             </el-button>
           </template>
         </el-table-column>
@@ -107,11 +107,11 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog :title="$t('附件详情')" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('attachment.attachment_detail')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-tooltip placement="top" :content="$t('回到顶部')">
+    <el-tooltip placement="top" :content="$t('common.goto_top')">
       <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
     </el-tooltip>
   </div>
@@ -172,12 +172,12 @@ export default {
         limit: 10
       },
       statusOptions: [
-        { key: 'open', display_name: this.$t('启用') },
-        { key: 'close', display_name: this.$t('禁用') }
+        { key: 'open', display_name: this.$t('attachment.search_open') },
+        { key: 'close', display_name: this.$t('attachment.search_close') }
       ],
       sortOptions: [
-        { key: 'create_time__ASC', label: this.$t('正序') },
-        { key: 'create_time__DESC', label: this.$t('倒叙') }
+        { key: 'create_time__ASC', label: this.$t('attachment.search_asc') },
+        { key: 'create_time__DESC', label: this.$t('attachment.search_desc') }
       ],
       detail: {
         dialogVisible: false,
@@ -223,82 +223,82 @@ export default {
 
         this.detail.data = [
           {
-            name: this.$t('ID'),
+            name: this.$t('attachment.detail_id'),
             content: data.id,
             type: 'text'
           },
           {
-            name: this.$t('属于'),
+            name: this.$t('attachment.detail_belong'),
             content: data.belong_type + ' [ ' + data.belong_id + ' ]',
             type: 'text'
           },
           {
-            name: this.$t('文件名'),
+            name: this.$t('attachment.detail_name'),
             content: data.name,
             type: 'text'
           },
           {
-            name: this.$t('存储位置'),
+            name: this.$t('attachment.detail_path'),
             content: data.path,
             type: 'text'
           },
           {
-            name: this.$t('文件Mime'),
+            name: this.$t('attachment.detail_mime'),
             content: data.mime,
             type: 'text'
           },
           {
-            name: this.$t('文件类型'),
+            name: this.$t('attachment.detail_type'),
             content: data.extension,
             type: 'text'
           },
           {
-            name: this.$t('文件大小'),
+            name: this.$t('attachment.detail_size'),
             content: data.size,
             type: 'size'
           },
           {
-            name: this.$t('文件md5'),
+            name: this.$t('attachment.detail_md5'),
             content: data.md5,
             type: 'text'
           },
           {
-            name: this.$t('文件sha1'),
+            name: this.$t('attachment.detail_sha1'),
             content: data.sha1,
             type: 'text'
           },
           {
-            name: this.$t('存储驱动'),
+            name: this.$t('attachment.detail_driver'),
             content: data.driver,
             type: 'text'
           },
           {
-            name: this.$t('附件URL'),
+            name: this.$t('attachment.detail_url'),
             content: data.url,
             type: 'text'
           },
           {
-            name: this.$t('激活状态'),
+            name: this.$t('attachment.detail_status'),
             content: data.status + "",
             type: 'boolen'
           },
           {
-            name: this.$t('最后更新'),
+            name: this.$t('attachment.detail_update_time'),
             content: data.update_time,
             type: 'time'
           },
           {
-            name: this.$t('更新IP'),
+            name: this.$t('attachment.detail_update_ip'),
             content: data.update_ip,
             type: 'text'
           },
           {
-            name: this.$t('添加时间'),
+            name: this.$t('attachment.detail_create_time'),
             content: data.create_time,
             type: 'time'
           },
           {
-            name: this.$t('添加IP'),
+            name: this.$t('attachment.detail_create_ip'),
             content: data.create_ip,
             type: 'text'
           }
@@ -310,7 +310,7 @@ export default {
     handleDownload(id) {
       if (id == '') {
         this.$message({
-          message: this.$t('请选择要下载的附件'),
+          message: this.$t('attachment.download_tip'),
           type: 'error',
           duration: 3 * 1000
         })
@@ -326,9 +326,9 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要删除该附件吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('attachment.delete_tip_content'), this.$t('attachment.delete_tip_title'), {
+        confirmButtonText: this.$t('attachment.delete_tip_ok'),
+        cancelButtonText: this.$t('attachment.delete_tip_cancel'),
         type: 'warning'
       }).then(() => {
         thiz.loading.delete = row.id

@@ -3,7 +3,7 @@
     <pan-thumb :image="data.avatar" />
 
     <el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
-      {{ $t('选择头像') }}
+      {{ $t('admin.select_avatar') }}
     </el-button>
 
     <image-cropper

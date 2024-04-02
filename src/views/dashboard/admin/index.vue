@@ -2,7 +2,7 @@
   <div class="dashboard-container">
 
     <el-card class="admin-tip">
-      {{ $t('{nickname} {nowTimeCall}好，当前的时间为：{nowTime}', {
+      {{ $t('dashboard.now_time', {
         nickname: nickname,
         nowTimeCall: nowTimeCall,
         nowTime: nowTime
@@ -57,7 +57,7 @@ export default {
       nickname: '',
 
       nowTime: '',
-      nowTimeCall: this.$t('晚上'),
+      nowTimeCall: this.$t('dashboard.night'),
 
       timer: '',
 
@@ -97,13 +97,13 @@ export default {
       var date = dateObj.getDate()
       var day = dateObj.getDay()
       var weeks = [
-        this.$t('星期日'), 
-        this.$t('星期一'), 
-        this.$t('星期二'), 
-        this.$t('星期三'), 
-        this.$t('星期四'), 
-        this.$t('星期五'), 
-        this.$t('星期六')
+        this.$t('dashboard.sunday'), 
+        this.$t('dashboard.monday'), 
+        this.$t('dashboard.tuesday'), 
+        this.$t('dashboard.wednesday'), 
+        this.$t('dashboard.thursdday'), 
+        this.$t('dashboard.friday'), 
+        this.$t('dashboard.saturday')
       ]
       var week = weeks[day]
       var hour = dateObj.getHours()
@@ -111,10 +111,10 @@ export default {
       var second = dateObj.getSeconds()
       var timeValue = '' + (
         (hour >= 12) 
-        ? ((hour >= 18) ? this.$t('晚上') : this.$t('下午')) 
-        : ((hour >= 8) ? this.$t('上午') : this.$t('凌晨'))
+        ? ((hour >= 18) ? this.$t('dashboard.night') : this.$t('dashboard.afternoon')) 
+        : ((hour >= 8) ? this.$t('dashboard.morning') : this.$t('dashboard.midnight'))
       )
-      var nowTime = this.$t('{year}年{month}月{day}日 {hour}:{minute}:{second} {week}', {
+      var nowTime = this.$t('dashboard.now_time_show', {
         year: this.dateFilter(year),
         month: this.dateFilter(month),
         day: this.dateFilter(date),

@@ -8,16 +8,16 @@
         <h1 class="text-jumbo text-ginormous">
           Oops!
         </h1>
-        <h2>你没有权限去该页面</h2>
-        <h6>你可以进行以下操作解决你的问题</h6>
+        <h2>{{ $t('err401.title') }}</h2>
+        <h6>{{ $t('err401.content') }}</h6>
         <ul class="list-unstyled">
           <li class="link-type">
             <router-link to="/dashboard">
-              回首页
+              {{ $t('err401.go_home') }}
             </router-link>
           </li>
           <li class="link-type">
-            <a href="javascript:;" @click.prevent="logout">退出重新登录</a>
+            <a href="javascript:;" @click.prevent="logout">{{ $t('err401.relogin') }}</a>
           </li>
         </ul>
       </el-col>

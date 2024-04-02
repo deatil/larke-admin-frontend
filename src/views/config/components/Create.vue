@@ -1,54 +1,54 @@
 <template>
   <el-form ref="form" :model="data" :rules="rules" label-width="100px">
-    <el-form-item :label="$t('分组')" prop="group">
-      <el-select v-model="data.group" :placeholder="$t('选择分组')" clearable>
+    <el-form-item :label="$t('config.form_group')" prop="group">
+      <el-select v-model="data.group" :placeholder="$t('config.form_select_group')" clearable>
         <el-option v-for="item in groupOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
     </el-form-item>
 
-    <el-form-item :label="$t('类型')" prop="type">
-      <el-select v-model="data.type" :placeholder="$t('选择类型')" clearable>
+    <el-form-item :label="$t('config.form_type')" prop="type">
+      <el-select v-model="data.type" :placeholder="$t('config.form_select_type')" clearable>
         <el-option v-for="item in typeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
     </el-form-item>
 
-    <el-form-item :label="$t('标题')" prop="title">
-      <el-input v-model.trim="data.title" :placeholder="$t('请填写标题')" />
+    <el-form-item :label="$t('config.form_title')" prop="title">
+      <el-input v-model.trim="data.title" :placeholder="$t('config.form_enter_title')" />
     </el-form-item>
-    <el-form-item :label="$t('名称')" prop="name">
-      <el-input v-model.trim="data.name" :placeholder="$t('请填写名称，填写大小写字母、数字、下划线及其组合')" />
-    </el-form-item>
-
-    <el-form-item :label="$t('配置项')" prop="options">
-      <el-input v-model="data.options" type="textarea" rows="6" :placeholder="$t('请填写配置项')" />
-    </el-form-item>
-    <el-form-item :label="$t('配置值')" prop="value">
-      <el-input v-model="data.value" type="textarea" rows="6" :placeholder="$t('请填写配置值')" />
-    </el-form-item>
-    <el-form-item :label="$t('描述')" prop="description">
-      <el-input v-model.trim="data.description" type="textarea" rows="6" :placeholder="$t('请填写描述')" />
+    <el-form-item :label="$t('config.form_name')" prop="name">
+      <el-input v-model.trim="data.name" :placeholder="$t('config.form_enter_name')" />
     </el-form-item>
 
-    <el-form-item :label="$t('排序')" prop="listorder">
-      <el-input v-model.trim="data.listorder" :placeholder="$t('请填写排序')" />
+    <el-form-item :label="$t('config.form_options')" prop="options">
+      <el-input v-model="data.options" type="textarea" rows="6" :placeholder="$t('config.form_enter_options')" />
+    </el-form-item>
+    <el-form-item :label="$t('config.form_options_value')" prop="value">
+      <el-input v-model="data.value" type="textarea" rows="6" :placeholder="$t('config.form_enter_options_value')" />
+    </el-form-item>
+    <el-form-item :label="$t('config.form_description')" prop="description">
+      <el-input v-model.trim="data.description" type="textarea" rows="6" :placeholder="$t('config.form_enter_description')" />
     </el-form-item>
 
-    <el-form-item :label="$t('显示')" prop="is_show">
+    <el-form-item :label="$t('config.form_listorder')" prop="listorder">
+      <el-input v-model.trim="data.listorder" :placeholder="$t('config.form_enter_listorder')" />
+    </el-form-item>
+
+    <el-form-item :label="$t('config.form_show')" prop="is_show">
       <el-radio-group v-model="data.is_show">
-        <el-radio :label="1">{{ $t('启用') }}</el-radio>
-        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
+        <el-radio :label="1">{{ $t('config.form_show_enable') }}</el-radio>
+        <el-radio :label="0">{{ $t('config.form_show_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
 
-    <el-form-item label="状态" prop="status">
+    <el-form-item :label="$t('config.form_status')" prop="status">
       <el-radio-group v-model="data.status">
-        <el-radio :label="1">{{ $t('启用') }}</el-radio>
-        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
+        <el-radio :label="1">{{ $t('config.form_status_enable') }}</el-radio>
+        <el-radio :label="0">{{ $t('config.form_status_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('config.form_save') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -73,16 +73,16 @@ export default {
       loading: false,
       rules: {
         type: [
-          { required: true, message: this.$t('类型不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('config.rules_type_required'), trigger: 'blur' }
         ],
         title: [
-          { required: true, message: this.$t('标题不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('config.rules_title_required'), trigger: 'blur' }
         ],
         name: [
-          { required: true, message: this.$t('名称不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('config.rules_name_required'), trigger: 'blur' }
         ],
         listorder: [
-          { required: true, message: this.$t('排序不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('config.rules_listorder_required'), trigger: 'blur' }
         ]
       },
       data: {
@@ -98,25 +98,25 @@ export default {
         status: 1
       },
       groupOptions: [
-        { key: 'other', display_name: this.$t('未分组') }
+        { key: 'other', display_name: this.$t('config.form_group_none') }
       ],
       typeOptions: [
-        { key: 'text', display_name: this.$t('文本') },
-        { key: 'textarea', display_name: this.$t('文本框') },
-        { key: 'array', display_name: this.$t('数组') },
-        { key: 'number', display_name: this.$t('数字') },
-        { key: 'radio', display_name: this.$t('单选') },
-        { key: 'checkbox', display_name: this.$t('复选') },
-        { key: 'select', display_name: this.$t('下拉') },
-        { key: 'switch', display_name: this.$t('开关') },
-        { key: 'image', display_name: this.$t('单图') },
-        { key: 'rate', display_name: this.$t('评分') },
-        { key: 'color', display_name: this.$t('颜色') },
-        { key: 'slider', display_name: this.$t('滑块') },
-        { key: 'time', display_name: this.$t('时间') },
-        { key: 'date', display_name: this.$t('日期') },
-        { key: 'range-time', display_name: this.$t('时间范围') },
-        { key: 'range-date', display_name: this.$t('日期范围') }
+        { key: 'text', display_name: this.$t('config.form_type_text') },
+        { key: 'textarea', display_name: this.$t('config.form_type_textarea') },
+        { key: 'array', display_name: this.$t('config.form_type_array') },
+        { key: 'number', display_name: this.$t('config.form_type_number') },
+        { key: 'radio', display_name: this.$t('config.form_type_radio') },
+        { key: 'checkbox', display_name: this.$t('config.form_type_checkbox') },
+        { key: 'select', display_name: this.$t('config.form_type_select') },
+        { key: 'switch', display_name: this.$t('config.form_type_switch') },
+        { key: 'image', display_name: this.$t('config.form_type_image') },
+        { key: 'rate', display_name: this.$t('config.form_type_rate') },
+        { key: 'color', display_name: this.$t('config.form_type_color') },
+        { key: 'slider', display_name: this.$t('config.form_type_slider') },
+        { key: 'time', display_name: this.$t('config.form_type_time') },
+        { key: 'date', display_name: this.$t('config.form_type_date') },
+        { key: 'range-time', display_name: this.$t('config.form_type_range_time') },
+        { key: 'range-date', display_name: this.$t('config.form_type_range_date') }
       ]
     }
   },
@@ -137,7 +137,7 @@ export default {
         })
         this.groupOptions.push({
           key: 'other',
-          display_name: this.$t('未分组')
+          display_name: this.$t('config.form_group_none')
         })
       })
     },
@@ -157,7 +157,7 @@ export default {
           thiz.loading = false
 
           this.$message({
-            message: this.$t('添加配置成功'),
+            message: this.$t('config.form_create_success'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {

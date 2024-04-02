@@ -17,7 +17,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" :label="$t('扩展')">
+      <el-table-column width="120px" :label="$t('extension.table_title')">
         <template slot-scope="scope">
 
           <div class="extension-title">
@@ -39,14 +39,14 @@
         </template>
       </el-table-column>
 
-      <el-table-column min-width="100px" :label="$t('简介')">
+      <el-table-column min-width="100px" :label="$t('extension.table_description')">
         <template slot-scope="scope">
           <div style="margin-bottom:3px;">
             <span>{{ scope.row.description }}</span>
           </div>
 
           <div>
-            <el-tooltip effect="dark" :content="$t('当前扩展适配系统版本')" placement="top">
+            <el-tooltip effect="dark" :content="$t('extension.table_adaptation')" placement="top">
               <el-tag type="info" size="mini" style="margin-right:10px;">
                 <i class="el-icon-goblet-square-full" />&nbsp;
                 <span>{{ scope.row.adaptation }}</span>
@@ -54,13 +54,13 @@
             </el-tooltip>
 
             <template v-if="scope.row.upgrade == 1">
-              <el-tooltip effect="dark" :content="$t('当前扩展版本')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_version')" placement="top">
                 <el-tag type="primary" size="mini" style="margin-right:10px;">
                   v{{ scope.row.install.version }}
                 </el-tag>
               </el-tooltip>
 
-              <el-tooltip effect="dark" :content="$t('扩展可更新版本')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_new_version')" placement="top">
                 <el-tag type="danger" size="mini" style="margin-right:10px;">
                   up{{ scope.row.version }}
                 </el-tag>
@@ -68,7 +68,7 @@
             </template>
 
             <template v-else>
-              <el-tooltip effect="dark" :content="$t('当前扩展版本')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_version')" placement="top">
                 <el-tag type="primary" size="mini" style="margin-right:10px;">
                   v{{ scope.row.version }}
                 </el-tag>
@@ -78,7 +78,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column min-width="100px" :label="$t('作者')">
+      <el-table-column min-width="100px" :label="$t('extension.table_authors')">
         <template slot-scope="scope">
           <div v-for="item in scope.row.authors.slice(0, 1)" :key="item.name" class="extension-author">
             <div class="author-name">
@@ -103,7 +103,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" :label="$t('操作')" width="100">
+      <el-table-column align="center" :label="$t('extension.table_actions')" width="100">
         <template slot-scope="scope">
           <el-button v-waves 
             :disabled="!checkPermission(['larke-admin.extension.install'])" 
@@ -112,7 +112,7 @@
             size="mini" 
             @click="handleInstall(scope.$index, scope.row)"
           >
-            {{ $t('安装') }}
+            {{ $t('extension.table_install') }}
           </el-button>
 
           <el-button v-waves 
@@ -122,7 +122,7 @@
             size="mini" 
             @click="handleUpgrade(scope.$index, scope.row)"
           >
-            {{ $t('更新') }}
+            {{ $t('extension.table_upgrade') }}
           </el-button>
         </template>
       </el-table-column>
@@ -190,16 +190,16 @@ export default {
     },
     handleInstall(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要安装该扩展({name})吗？', {
+      this.$confirm(this.$t('extension.confirm_install', {
         name: row.name
-      }), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      }), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         const loading = thiz.$loading({
           lock: true,
-          text: this.$t('扩展安装中...'),
+          text: this.$t('extension.confirm_installing'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -208,7 +208,7 @@ export default {
           loading.close()
 
           this.$message({
-            message: this.$t('安装扩展成功'),
+            message: this.$t('extension.confirm_install_success'),
             type: 'success',
             duration: 3 * 1000,
             onClose() {
@@ -222,16 +222,16 @@ export default {
     },
     handleUpgrade(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要更新该扩展({name})吗？', {
+      this.$confirm(this.$t('extension.confirm_upgrade', {
         name: row.name
-      }), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      }), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         const loading = thiz.$loading({
           lock: true,
-          text: this.$t('扩展更新中...'),
+          text: this.$t('extension.confirm_upgradeing'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -240,7 +240,7 @@ export default {
           loading.close()
 
           this.$message({
-            message: this.$t('更新扩展成功'),
+            message: this.$t('extension.confirm_upgrade_success'),
             type: 'success',
             duration: 3 * 1000,
             onClose() {

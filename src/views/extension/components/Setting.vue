@@ -7,7 +7,7 @@
   >
     <template slot>
       <el-form-item>
-        <el-button type="primary" @click="submit">{{ $t('提交') }}</el-button>
+        <el-button type="primary" @click="submit">{{ $t('extension.settings_save') }}</el-button>
       </el-form-item>
     </template>
   </dynamic-form>
@@ -89,7 +89,7 @@ export default {
         config: data
       }).then(() => {
         this.$message({
-          message: this.$t('扩展配置更新成功'),
+          message: this.$t('extension.settings_save_success'),
           type: 'success',
           duration: 3 * 1000,
           onClose() {

@@ -1,10 +1,10 @@
 <template>
   <el-form v-loading="detailLoading" ref="form" :model="data" label-width="100px">
-    <el-form-item :label="$t('管理员账号')" prop="name">
+    <el-form-item :label="$t('admin.access_title')" prop="name">
       <el-input v-model.trim="name" readonly />
     </el-form-item>
 
-    <el-form-item :label="$t('分组')" prop="access">
+    <el-form-item :label="$t('admin.access_group')" prop="access">
       <el-tree
         ref="tree"
         class="admin-access"
@@ -21,7 +21,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" :loading="loading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="submit">{{ $t('common.save') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -124,7 +124,7 @@ export default {
         thiz.loading = false
 
         this.$message({
-          message: this.$t('账号授权成功'),
+          message: this.$t('admin.access_success'),
           type: 'success',
           duration: 2 * 1000,
           onClose() {

@@ -3,8 +3,8 @@
 
     <el-alert
       type="info"
-      :title="$t('修改头像注意')"
-      :description="$t('选择头像提交后将会自动提交修改头像为选择头像')"
+      :title="$t('profile.updata_avatar_tip')"
+      :description="$t('profile.auto_update_avatar')"
       class="profile-avatar-tip"
       show-icon
       :closable="false"
@@ -13,7 +13,7 @@
     <pan-thumb :image="user.avatar" />
 
     <el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
-      {{ $t('选择头像') }}
+      {{ $t('profile.select_avatar') }}
     </el-button>
 
     <image-cropper
@@ -67,7 +67,7 @@ export default {
         avatar: resData.id
       }).then(response => {
         this.$message({
-          message: this.$t('更新头像成功'),
+          message: this.$t('profile.update_avatar_success'),
           type: 'success',
           duration: 5 * 1000
         })

@@ -38,6 +38,10 @@ export default {
     captcha: '验证码',
     refreshCaptcha: '刷新验证码',
     refreshCaptchaTip: '点击刷新验证码',
+
+    'rules_username_required': '请输入你的用户名',
+    'rules_password_required': '密码不能少于6位',
+    'rules_captcha_required': '请输入四位数验证码',
   },
   tagsView: {
     refresh: '刷新',
@@ -52,12 +56,43 @@ export default {
     fixedHeader: '固定 Header',
     sidebarLogo: '侧边栏 Logo'
   },
-
-  '清空缓存': '清空缓存',
-  '清空网站缓存成功': '清空网站缓存成功',
-  '提示': '提示',
-  '确定': '确定',
-  '取消': '取消',
   
-  '提交': '提交',
+  err401: {
+      'title': '你没有权限去该页面',
+      'content': '你可以进行以下操作解决你的问题',
+      'relogin': '退出重新登录',
+  },
+  
+  err404: {
+      'content': '点击链接刷新重试或者返回首页',
+  },
+
+  // 公用
+  common: {
+      'go_back': '返回',
+      'go_home': '回首页',
+      
+      'tips': '提示',
+      'ok': '确定',
+      'cancel': '取消',
+      'save': '提交',
+
+      'enable' : '启用',
+      'disable': '禁用',
+      
+      'detail': '详情',
+      'edit': '编辑',
+      'delete': '删除',
+
+      'goto_top': '回到顶部',
+      
+      'clear_cache': '清空缓存',
+      'clear_cache_success': '清空网站缓存成功',
+      'confirm_clear_cache': '确认要清空网站缓存吗？',
+      'clear_cache_doing': '清空网站缓存中...',
+      
+      'confirm_logout': '确认要退出登录吗？',
+      
+      'close_page': '关闭页面',
+  },
 }

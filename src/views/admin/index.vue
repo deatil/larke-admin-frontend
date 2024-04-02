@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>{{ $t('管理员') }}</span>
+        <span>{{ $t('admin.search_title') }}</span>
       </div>
 
       <div class="filter-container">
-        <el-input v-model="listQuery.searchword" :placeholder="$t('请输入关键字')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.searchword" :placeholder="$t('admin.search_searchword')" clearable style="width: 200px;margin-right: 10px;" class="filter-item" @keyup.enter.native="handleFilter" />
 
-        <el-select v-model="listQuery.status" :placeholder="$t('状态')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
+        <el-select v-model="listQuery.status" :placeholder="$t('admin.search_status')" clearable class="filter-item" style="width: 130px;margin-right: 10px;">
           <el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
 
@@ -17,19 +17,19 @@
         </el-select>
 
         <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-          {{ $t('搜索') }}
+          {{ $t('admin.search_btn') }}
         </el-button>
 
         <el-button v-waves :disabled="!checkPermission(['larke-admin.admin.create'])" class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">
-          {{ $t('添加账号') }}
+          {{ $t('admin.search_create_passport') }}
         </el-button>
 
         <el-button v-waves v-permission="['larke-admin.admin.reset-permission']" class="filter-item" type="success" icon="el-icon-refresh" @click="handleResetPermission">
-          {{ $t('更新权限缓存') }}
+          {{ $t('admin.search_clear_cache') }}
         </el-button>
 
         <el-button v-waves v-permission="['larke-admin.admin.delete']" class="filter-item" type="danger" icon="el-icon-switch-button" @click="handleLogout">
-          {{ $t('账号退出') }}
+          {{ $t('admin.search_passport_logout') }}
         </el-button>
       </div>
 
@@ -42,19 +42,19 @@
         highlight-current-row
         style="width: 100%"
       >
-        <el-table-column width="150px" :label="$t('账号')">
+        <el-table-column width="150px" :label="$t('admin.table_name')">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column min-width="100px" :label="$t('昵称')">
+        <el-table-column min-width="100px" :label="$t('admin.table_nickname')">
           <template slot-scope="{row}">
             <span>{{ row.nickname }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column width="180px" align="left" :label="$t('添加时间')">
+        <el-table-column width="180px" align="left" :label="$t('admin.table_create_time')">
           <template slot-scope="scope">
             <span>
               <i class="el-icon-time" />&nbsp;
@@ -63,7 +63,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column class-name="status-col" :label="$t('状态')" width="80">
+        <el-table-column class-name="status-col" :label="$t('admin.table_status')" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -77,7 +77,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="left" :label="$t('操作')" width="320">
+        <el-table-column align="left" :label="$t('admin.table_actions')" width="320">
           <template slot-scope="scope">
             <div>
               <el-button 
@@ -88,7 +88,7 @@
                 icon="el-icon-setting" 
                 @click="handleAccess(scope.$index, scope.row)"
               >
-                {{ $t('设置分组') }}
+                {{ $t('admin.table_setting_group') }}
               </el-button>
 
               <el-button 
@@ -99,7 +99,7 @@
                 icon="el-icon-key" 
                 @click="handlePassword(scope.$index, scope.row)"
               >
-                {{ $t('密码') }}
+                {{ $t('admin.table_password') }}
               </el-button>
 
               <el-button 
@@ -111,7 +111,7 @@
                 icon="el-icon-info" 
                 @click="handleDetail(scope.$index, scope.row)"
               >
-                {{ $t('详情') }}
+                {{ $t('admin.table_detail') }}
               </el-button>
             </div>
 
@@ -124,7 +124,7 @@
                 icon="el-icon-edit" 
                 @click="handleEdit(scope.$index, scope.row)"
               >
-                {{ $t('编辑') }}
+                {{ $t('admin.table_update') }}
               </el-button>
 
               <el-button 
@@ -136,7 +136,7 @@
                 icon="el-icon-delete" 
                 @click="handleDelete(scope.$index, scope.row)"
               >
-                {{ $t('删除') }}
+                {{ $t('admin.table_delete') }}
               </el-button>
             </div>
           </template>
@@ -146,21 +146,21 @@
       <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     </el-card>
 
-    <el-dialog :title="$t('账号详情')" :visible.sync="detail.dialogVisible">
+    <el-dialog :title="$t('admin.dialog_detail')" :visible.sync="detail.dialogVisible">
       <detail :data="detail.data" />
     </el-dialog>
 
-    <el-dialog :title="$t('添加账号')" :visible.sync="create.dialogVisible">
+    <el-dialog :title="$t('admin.dialog_create')" :visible.sync="create.dialogVisible">
       <create :item="create" />
     </el-dialog>
 
-    <el-dialog :title="$t('编辑账号')" :visible.sync="edit.dialogVisible">
+    <el-dialog :title="$t('admin.dialog_edit')" :visible.sync="edit.dialogVisible">
       <edit :item="edit" />
     </el-dialog>
 
-    <el-dialog :title="$t('更改密码')" :visible.sync="password.dialogVisible">
+    <el-dialog :title="$t('admin.dialog_password')" :visible.sync="password.dialogVisible">
       <el-form>
-        <el-form-item :label="$t('新密码')">
+        <el-form-item :label="$t('admin.dialog_password_newpassword')">
           <el-input v-model="password.newpassword" type="password" />
         </el-form-item>
         <el-form-item>
@@ -168,18 +168,18 @@
             type="primary" 
             :loading="loading.password"
             @click="changePassword">
-            {{ $t('确认') }}
+            {{ $t('common.ok') }}
           </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
-    <el-dialog :title="$t('退出账号')" :visible.sync="logout.dialogVisible">
+    <el-dialog :title="$t('admin.dialog_logout')" :visible.sync="logout.dialogVisible">
       <el-form>
-        <el-form-item :label="$t('账号的RefreshToken')">
+        <el-form-item :label="$t('admin.dialog_logout_refreshToken')">
           <el-input v-model="logout.refreshToken" type="textarea" rows="6" placeholder="请输入账号的RefreshToken" />
           <div class="text-grey"> 
-            {{ $t('退出账号主要是将刷新Token加入到黑名单，防止再次登录') }}
+            {{ $t('admin.dialog_logout_tips') }}
           </div>
         </el-form-item>
         <el-form-item>
@@ -187,17 +187,17 @@
             type="primary" 
             :loading="loading.logout"
             @click="onLogout">
-              {{ $t('确认退出') }}
+              {{ $t('admin.dialog_logout_ok') }}
             </el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
-    <el-dialog :title="$t('设置分组')" :visible.sync="access.dialogVisible">
+    <el-dialog :title="$t('admin.dialog_access')" :visible.sync="access.dialogVisible">
       <access :item="access" />
     </el-dialog>
 
-    <el-tooltip placement="top" :content="$t('回到顶部')">
+    <el-tooltip placement="top" :content="$t('common.goto_top')">
       <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
     </el-tooltip>
   </div>
@@ -257,12 +257,12 @@ export default {
         limit: 10
       },
       statusOptions: [
-        { key: 'open', display_name: this.$t('启用') },
-        { key: 'close', display_name: this.$t('禁用') }
+        { key: 'open', display_name: this.$t('admin.table_enable') },
+        { key: 'close', display_name: this.$t('admin.table_disable') }
       ],
       sortOptions: [
-        { key: 'create_time__ASC', label: this.$t('正序'),  },
-        { key: 'create_time__DESC', label: this.$t('倒叙'),  }
+        { key: 'create_time__ASC', label: this.$t('admin.table_asc'),  },
+        { key: 'create_time__DESC', label: this.$t('admin.table_desc'),  }
       ],
       create: {
         dialogVisible: false
@@ -343,58 +343,58 @@ export default {
 
         this.detail.data = [
           {
-            name: this.$t('ID'),
+            name: this.$t('admin.detail_id'),
             content: data.id,
             type: 'text'
           },
           {
-            name: this.$t('账号'),
+            name: this.$t('admin.detail_name'),
             content: data.name,
             type: 'text'
           },
           {
-            name: this.$t('昵称'),
+            name: this.$t('admin.detail_nickname'),
             content: data.nickname,
             type: 'text'
           },
           {
-            name: this.$t('邮箱'),
+            name: this.$t('admin.detail_email'),
             content: data.email,
             type: 'text'
           },
           {
-            name: this.$t('简介'),
+            name: this.$t('admin.detail_introduce'),
             content: data.introduce,
             type: 'text'
           },
           {
-            name: this.$t('分组'),
+            name: this.$t('admin.detail_groups'),
             content: data.groups,
             type: 'arr2str',
             arrkey: 'title'
           },
           {
-            name: this.$t('头像'),
+            name: this.$t('admin.detail_avatar'),
             content: data.avatar,
             type: 'image'
           },
           {
-            name: this.$t('加入时间'),
+            name: this.$t('admin.detail_create_time'),
             content: data.create_time,
             type: 'time'
           },
           {
-            name: this.$t('最近活动'),
+            name: this.$t('admin.detail_last_active'),
             content: data.last_active,
             type: 'time'
           },
           {
-            name: this.$t('最近活动IP'),
+            name: this.$t('admin.detail_last_ip'),
             content: data.last_ip,
             type: 'text'
           },
           {
-            name: this.$t('激活状态'),
+            name: this.$t('admin.detail_status'),
             content: data.status + "",
             type: 'boolen'
           }
@@ -407,7 +407,7 @@ export default {
       if (data.status == 1) {
         enableAdmin(data.id).then(() => {
           this.$message({
-            message: this.$t('管理员启用成功'),
+            message: this.$t('admin.table_enable_success'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -415,7 +415,7 @@ export default {
       } else {
         disableAdmin(data.id).then(() => {
           this.$message({
-            message: this.$t('管理员禁用成功'),
+            message: this.$t('admin.table_disable_success'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -424,9 +424,9 @@ export default {
     },
     handleDelete(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要删除该管理员吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('admin.confirm_delete'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         thiz.loading.delete = row.id
@@ -435,7 +435,7 @@ export default {
           thiz.loading.delete = ''
 
           this.$message({
-            message: this.$t('删除管理员成功'),
+            message: this.$t('admin.confirm_delete_success'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {
@@ -458,7 +458,7 @@ export default {
 
       if (this.password.newpassword == '') {
         this.$message({
-          message: this.$t('密码不能为空'),
+          message: this.$t('admin.password_not_empty'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -476,7 +476,7 @@ export default {
         this.loading.password = false
 
         this.$message({
-          message: this.$t('管理员密码修改成功'),
+          message: this.$t('admin.password_change_success'),
           type: 'success',
           duration: 5 * 1000,
           onClose() {
@@ -491,14 +491,14 @@ export default {
     handleResetPermission() {
       const thiz = this
 
-      this.$confirm(this.$t('确认要更新权限缓存吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('admin.confirm_update_chache'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         const loading = thiz.$loading({
           lock: true,
-          text: this.$t('更新权限缓存中...'),
+          text: this.$t('admin.confirm_updateing_cache'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -507,7 +507,7 @@ export default {
           loading.close()
 
           this.$message({
-            message: this.$t('更新权限缓存成功'),
+            message: this.$t('admin.confirm_update_chache_success'),
             type: 'success',
             duration: 3 * 1000,
           })
@@ -524,7 +524,7 @@ export default {
 
       if (this.logout.refreshToken == '') {
         this.$message({
-          message: this.$t('refreshToken 不能为空'),
+          message: this.$t('admin.refreshToken_not_empty'),
           type: 'error',
           duration: 5 * 1000
         })
@@ -540,7 +540,7 @@ export default {
         this.loading.logout = false
 
         this.$message({
-          message: this.$t('管理员退出成功'),
+          message: this.$t('admin.logout_success'),
           type: 'success',
           duration: 5 * 1000,
           onClose() {

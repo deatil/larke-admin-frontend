@@ -1,30 +1,30 @@
 <template>
   <el-form v-loading="detailLoading" ref="form" :model="data" :rules="rules" label-width="100px">
-    <el-form-item :label="$t('账号')" prop="name">
-      <el-input v-model.trim="data.name" :placeholder="$t('请填写账号')" />
+    <el-form-item :label="$t('admin.form_passport')" prop="name">
+      <el-input v-model.trim="data.name" :placeholder="$t('admin.form_enter_passport')" />
     </el-form-item>
-    <el-form-item :label="$t('昵称')" prop="nickname">
-      <el-input v-model.trim="data.nickname" :placeholder="$t('请填写昵称')" />
+    <el-form-item :label="$t('admin.form_nickname')" prop="nickname">
+      <el-input v-model.trim="data.nickname" :placeholder="$t('admin.form_enter_nickname')" />
     </el-form-item>
-    <el-form-item :label="$t('邮箱')" prop="email">
-      <el-input v-model.trim="data.email" :placeholder="$t('请填写邮箱')" />
+    <el-form-item :label="$t('admin.form_email')" prop="email">
+      <el-input v-model.trim="data.email" :placeholder="$t('admin.form_enter_email')" />
     </el-form-item>
-    <el-form-item :label="$t('简介')" prop="name">
-      <el-input v-model.trim="data.introduce" type="textarea" rows="6" :placeholder="$t('请填写简介')" />
+    <el-form-item :label="$t('admin.form_introduce')" prop="name">
+      <el-input v-model.trim="data.introduce" type="textarea" rows="6" :placeholder="$t('admin.form_enter_introduce')" />
     </el-form-item>
-    <el-form-item :label="$t('头像')">
+    <el-form-item :label="$t('admin.form_avatar')">
       <div style="width: 100%;">
         <avatar :data="data" />
       </div>
     </el-form-item>
-    <el-form-item :label="$t('状态')" prop="status">
+    <el-form-item :label="$t('admin.form_status')" prop="status">
       <el-radio-group v-model="data.status">
-        <el-radio :label="1">{{ $t('启用') }}</el-radio>
-        <el-radio :label="0">{{ $t('禁用') }}</el-radio>
+        <el-radio :label="1">{{ $t('admin.form_status_enable') }}</el-radio>
+        <el-radio :label="0">{{ $t('admin.form_status_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" :loading="submitLoading" @click="submit">{{ $t('提交') }}</el-button>
+      <el-button type="primary" :loading="submitLoading" @click="submit">{{ $t('common.save') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -51,13 +51,13 @@ export default {
       id: '',
       rules: {
         name: [
-          { required: true, message: this.$t('账号不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_name_required'), trigger: 'blur' }
         ],
         nickname: [
-          { required: true, message: this.$t('昵称不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_nickname_required'), trigger: 'blur' }
         ],
         email: [
-          { required: true, message: this.$t('邮箱不能为空'), trigger: 'blur' }
+          { required: true, message: this.$t('admin.rules_email_required'), trigger: 'blur' }
         ]
       },
       data: {
@@ -127,7 +127,7 @@ export default {
           thiz.submitLoading = false
 
           this.$message({
-            message: this.$t('编辑管理员信息成功'),
+            message: this.$t('admin.update_success'),
             type: 'success',
             duration: 5 * 1000,
             onClose() {

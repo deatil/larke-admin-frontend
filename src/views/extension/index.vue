@@ -2,13 +2,13 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="clearfix">
-        <span>{{ $t('扩展管理') }}</span>
+        <span>{{ $t('extension.search_title') }}</span>
       </div>
 
       <div class="filter-container">
         <el-input 
           v-model="listQuery.searchword" 
-          :placeholder="$t('请输入关键字')" 
+          :placeholder="$t('extension.search_searchword')" 
           clearable 
           style="width: 200px;margin-right: 10px;" 
           class="filter-item" 
@@ -16,7 +16,7 @@
 
         <el-select 
           v-model="listQuery.status" 
-          :placeholder="$t('状态')" 
+          :placeholder="$t('extension.search_status')" 
           clearable 
           class="filter-item" 
           style="width: 130px;margin-right: 10px;">
@@ -40,7 +40,7 @@
         </el-select>
 
         <el-button v-waves class="filter-item" style="margin-right: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
-          {{ $t('搜索') }}
+          {{ $t('extension.search_btn') }}
         </el-button>
 
         <el-upload
@@ -51,11 +51,16 @@
           :auto-upload="false"
           :show-file-list="false"
         >
-          <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.upload'])" slot="trigger" :loading="uploadLoading" type="primary" icon="el-icon-upload">{{ $t('上传扩展') }}</el-button>
+          <el-button v-waves 
+            :disabled="!checkPermission(['larke-admin.extension.upload'])" 
+            slot="trigger" 
+            :loading="uploadLoading" 
+            type="primary" 
+            icon="el-icon-upload">{{ $t('extension.search_upload') }}</el-button>
         </el-upload>        
 
         <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.local'])" class="filter-item" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
-          {{ $t('安装/更新') }}
+          {{ $t('extension.search_install') }}
         </el-button>
 
         <el-button v-waves 
@@ -65,7 +70,7 @@
           type="danger" 
           icon="el-icon-refresh" 
           @click="handleRefresh">
-          {{ $t('刷新') }}
+          {{ $t('extension.search_refresh') }}
         </el-button> 
       </div>
 
@@ -78,7 +83,7 @@
         highlight-current-row
         style="width: 100%"
       >
-        <el-table-column width="200px" :label="$t('扩展')">
+        <el-table-column width="200px" :label="$t('extension.table_title')">
           <template slot-scope="scope">
             <div class="extension-box">
               <div class="extension-icon" @click="handleShowIcon(scope.$index, scope.row)">
@@ -106,21 +111,21 @@
           </template>
         </el-table-column>
 
-        <el-table-column min-width="100px" :label="$t('简介')">
+        <el-table-column min-width="100px" :label="$t('extension.table_description')">
           <template slot-scope="scope">
             <div class="extension-introduce">
               <span>{{ scope.row.description }}</span>
             </div>
 
             <div style="margin-top:3px;">
-              <el-tooltip effect="dark" :content="$t('当前扩展适配系统版本')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_adaptation')" placement="top">
                 <el-tag type="info" size="mini" style="margin-right:10px;">
                   <i class="el-icon-goblet-square-full" />&nbsp;
                   <span>{{ scope.row.adaptation }}</span>
                 </el-tag>
               </el-tooltip>
 
-              <el-tooltip effect="dark" :content="$t('当前扩展版本')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_version')" placement="top">
                 <el-tag type="primary" size="mini" style="margin-right:10px;">
                   v{{ scope.row.version }}
                 </el-tag>
@@ -129,7 +134,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column min-width="100px" :label="$t('作者')">
+        <el-table-column min-width="100px" :label="$t('extension.table_authors')">
           <template slot-scope="scope">
             <div v-for="item in scope.row.authorlist.slice(0, 1)" :key="item.name" class="extension-author">
               <div>
@@ -157,7 +162,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="75px" align="center" :label="$t('排序')">
+        <el-table-column width="75px" align="center" :label="$t('extension.table_listorder')">
           <template slot-scope="{row, $index}">
             <div @click.stop="{{ editableChangeBtn($index, 'editListorderInput') }}">
               <el-input
@@ -173,10 +178,10 @@
           </template>
         </el-table-column>        
 
-        <el-table-column width="160px" align="left" :label="$t('安装时间')">
+        <el-table-column width="160px" align="left" :label="$t('extension.table_installtime')">
           <template slot-scope="scope">
             <div class="extension-installtime">
-              <el-tooltip effect="dark" :content="$t('扩展安装时间')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_installtime_tips')" placement="top">
                 <span>
                   <i class="el-icon-time" />&nbsp;
                   {{ scope.row.installtime | parseTime('{y}-{m}-{d} {h}:{i}') }}
@@ -189,7 +194,7 @@
               class="extension-upgradetime"
               style="margin-top:3px;"
             >
-              <el-tooltip effect="dark" :content="$t('扩展最后更新时间')" placement="top">
+              <el-tooltip effect="dark" :content="$t('extension.table_upgradetime')" placement="top">
                 <span>
                   <i class="el-icon-refresh" />&nbsp;
                   {{ scope.row.upgradetime | parseTime('{y}-{m}-{d} {h}:{i}') }}
@@ -199,7 +204,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column class-name="status-col" :label="$t('状态')" width="80">
+        <el-table-column class-name="status-col" :label="$t('extension.table_status')" width="80">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -213,7 +218,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="left" :label="$t('操作')" width="200">
+        <el-table-column align="left" :label="$t('extension.table_actions')" width="200">
           <template slot-scope="scope">
             <div>
               <el-button 
@@ -224,7 +229,7 @@
                 icon="el-icon-info" 
                 @click="handleDetail(scope.$index, scope.row)"
               >  
-                {{ $t('详情') }}
+                {{ $t('extension.table_detail') }}
               </el-button>
 
               <el-button 
@@ -235,7 +240,7 @@
                 icon="el-icon-delete" 
                 @click="handleUninstall(scope.$index, scope.row)"
               >                
-                {{ $t('卸载') }}
+                {{ $t('extension.table_uninstall') }}
               </el-button>
             </div>
 
@@ -249,7 +254,7 @@
                 icon="el-icon-edit" 
                 @click="handleConfig(scope.$index, scope.row)"
               >
-                {{ $t('配置') }}
+                {{ $t('extension.table_config') }}
               </el-button>
 
               <el-button 
@@ -260,7 +265,7 @@
                 icon="el-icon-cpu" 
                 @click="handleCommand(scope.$index, scope.row)"
               >
-                {{ $t('脚本') }}
+                {{ $t('extension.table_command') }}
               </el-button>
             </div>
           </template>
@@ -277,7 +282,7 @@
     </el-dialog>
 
     <el-dialog
-      :title="$t('扩展详情')"
+      :title="$t('extension.dialog_detail')"
       append-to-body
       :visible.sync="detail.dialogVisible"
     >
@@ -286,7 +291,7 @@
 
     <el-dialog
       v-if="local.dialogVisible"
-      :title="$t('本地扩展')"
+      :title="$t('extension.dialog_local')"
       append-to-body
       :visible.sync="local.dialogVisible"
     >
@@ -295,7 +300,7 @@
 
     <el-dialog
       v-if="setting.dialogVisible"
-      :title="$t('扩展设置')"
+      :title="$t('extension.dialog_setting')"
       append-to-body
       :visible.sync="setting.dialogVisible"
     >
@@ -304,14 +309,14 @@
 
     <el-dialog
       v-if="command.dialogVisible"
-      :title="$t('扩展脚本')"
+      :title="$t('extension.dialog_command')"
       append-to-body
       :visible.sync="command.dialogVisible"
     >
       <command :item="command" />
     </el-dialog>
 
-    <el-tooltip placement="top" :content="$t('回到顶部')">
+    <el-tooltip placement="top" :content="$t('common.goto_top')">
       <back-to-top :custom-style="backToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
     </el-tooltip>
   </div>
@@ -381,12 +386,12 @@ export default {
         limit: 10
       },
       statusOptions: [
-        { key: 'open', display_name: this.$t('启用') },
-        { key: 'close', display_name: this.$t('禁用') }
+        { key: 'open', display_name: this.$t('extension.search_status_enable') },
+        { key: 'close', display_name: this.$t('extension.search_status_disable') }
       ],
       sortOptions: [
-        { key: 'create_time__ASC', label: this.$t('正序') },
-        { key: 'create_time__DESC', label: this.$t('倒叙') }
+        { key: 'create_time__ASC', label: this.$t('extension.search_sort_asc') },
+        { key: 'create_time__DESC', label: this.$t('extension.search_sort_desc') }
       ],
       uploadLoading: false,
       uploadFile: null,
@@ -449,11 +454,11 @@ export default {
     },
     handleRefresh() {
       const thiz = this
-      this.confirmTip(thiz.$t('确认要刷新本地扩展缓存吗？'), function() {
+      this.confirmTip(thiz.$t('extension.confirm_refresh'), function() {
         thiz.loading.refresh = true
 
         refreshLocal().then(response => {
-          thiz.successTip(thiz.$t('刷新本地扩展缓存成功!'), function() {
+          thiz.successTip(thiz.$t('extension.confirm_refresh_success'), function() {
             thiz.listQuery.page = 1
             thiz.getList()
 
@@ -469,7 +474,7 @@ export default {
 
       if (!isZip) {
         this.uploadLoading = false
-        this.$message.error(this.$t('上传扩展只能是zip格式!'));
+        this.$message.error(this.$t('extension.confirm_upload_error'));
         return false;
       }
 
@@ -480,7 +485,7 @@ export default {
       
       const thiz = this
       upload(formData).then(response => {
-        thiz.successTip(thiz.$t('扩展上传成功'))
+        thiz.successTip(thiz.$t('extension.confirm_upload_success'))
 
         thiz.uploadLoading = false
         thiz.uploadFile = null
@@ -488,7 +493,7 @@ export default {
         thiz.uploadLoading = false
 
         if (err.code == 411) {
-          thiz.confirmTip(thiz.$t('扩展已经存在，是否上传覆盖？', {
+          thiz.confirmTip(thiz.$t('extension.confirm_upload_force', {
             "message": err.message,
           }), function() {
             thiz.reUpload()
@@ -502,7 +507,7 @@ export default {
       formData.append('force', 1) 
 
       upload(formData).then(response => {
-        this.successTip(this.$t('扩展上传成功'))
+        this.successTip(this.$t('extension.confirm_upload_success'))
 
         this.uploadFile = null
       })
@@ -537,7 +542,7 @@ export default {
 
       updateSort(data.name, data.listorder).then(() => {
         this.$message({
-          message: this.$t('扩展排序更新成功'),
+          message: this.$t('extension.confirm_sort_success'),
           type: 'success',
           duration: 2 * 1000
         })
@@ -551,77 +556,77 @@ export default {
 
       this.detail.data = [
         {
-          name: this.$t('扩展包名'),
+          name: this.$t('extension.detail_name'),
           content: data.name,
           type: 'text'
         },
         {
-          name: this.$t('扩展名称'),
+          name: this.$t('extension.detail_title'),
           content: data.title,
           type: 'text'
         },
         {
-          name: this.$t('当前版本'),
+          name: this.$t('extension.detail_version'),
           content: data.version,
           type: 'text'
         },
         {
-          name: this.$t('适配系统版本'),
+          name: this.$t('extension.detail_adaptation'),
           content: data.adaptation,
           type: 'text'
         },
         {
-          name: this.$t('描述'),
+          name: this.$t('extension.detail_description'),
           content: data.description,
           type: 'text'
         },
         {
-          name: this.$t('关键字'),
+          name: this.$t('extension.detail_keywordlist'),
           content: data.keywordlist,
           type: 'json',
           depth: 2
         },    
         {
-          name: this.$t('项目主页'),
+          name: this.$t('extension.detail_homepage'),
           content: data.homepage,
           type: 'text'
         },              
         {
-          name: this.$t('作者'),
+          name: this.$t('extension.detail_authorlist'),
           content: data.authorlist,
           type: 'json',
           depth: 3
         },      
         {
-          name: this.$t('依赖扩展'),
+          name: this.$t('extension.detail_requires'),
           content: data.requires,
           type: 'json',
           depth: 3
         },
         {
-          name: this.$t('扩展绑定类'),
+          name: this.$t('extension.detail_class_name'),
           content: data.class_name,
           type: 'text'
         },
 
         {
-          name: this.$t('安装时间'),
+          name: this.$t('extension.detail_installtime'),
           content: data.installtime,
           type: 'time'
         },
         {
-          name: this.$t('最后更新'),
+          name: this.$t('extension.detail_upgradetime'),
           content: data.upgradetime,
           type: 'time'
         },
 
         {
-          name: this.$t('排序'),
+          name: this.$t('extension.detail_listorder'),
           content: data.listorder,
           type: 'text'
         },
         {
-          name: this.$t('激活状态'),
+          name: this.$t('extension.detail_status'),
           content: data.status + "",
           type: 'boolen'
         }
@@ -633,7 +638,7 @@ export default {
       if (data.status == 1) {
         enable(data.name).then(() => {
           this.$message({
-            message: this.$t('扩展启用成功'),
+            message: this.$t('extension.enable_success'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -641,7 +646,7 @@ export default {
       } else {
         disable(data.name).then(() => {
           this.$message({
-            message: this.$t('扩展禁用成功'),
+            message: this.$t('extension.disable_success'),
             type: 'success',
             duration: 2 * 1000
           })
@@ -650,14 +655,14 @@ export default {
     },
     handleUninstall(index, row) {
       const thiz = this
-      this.$confirm(this.$t('确认要卸载该扩展吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('extension.confirm_uninstall'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(() => {
         const loading = thiz.$loading({
           lock: true,
-          text: this.$t('扩展卸载中...'),
+          text: this.$t('extension.confirm_uninstalling'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -668,7 +673,7 @@ export default {
           loading.close()
 
           this.$message({
-            message: this.$t('卸载扩展成功'),
+            message: this.$t('extension.confirm_uninstall_success'),
             type: 'success',
             duration: 2 * 1000
           })

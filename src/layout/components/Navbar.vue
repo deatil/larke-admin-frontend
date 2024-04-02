@@ -32,7 +32,7 @@
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item @click.native="clearCache">
-            {{ $t('清空缓存') }}
+            {{ $t('common.clear_cache') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">{{ $t('navbar.logOut') }}</span>
@@ -78,14 +78,14 @@ export default {
     clearCache() {
       const thiz = this
 
-      this.$confirm(this.$t('确认要清空网站缓存吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('common.confirm_clear_cache'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(async () => {
         const loading = thiz.$loading({
           lock: true,
-          text: this.$t('清空网站缓存中...'),
+          text: this.$t('common.clear_cache_doing'),
           spanner: '',
           background: 'rgba(0, 0, 0, 0.7)'
         })
@@ -95,7 +95,7 @@ export default {
             loading.close()
 
             this.$message({
-              message: thiz.$t('清空网站缓存成功'),
+              message: thiz.$t('common.clear_cache_success'),
               type: 'success',
               duration: 3 * 1000
             })
@@ -108,9 +108,9 @@ export default {
     logout() {
       const thiz = this
 
-      this.$confirm(this.$t('确认要退出登录吗？'), this.$t('提示'), {
-        confirmButtonText: this.$t('确定'),
-        cancelButtonText: this.$t('取消'),
+      this.$confirm(this.$t('common.confirm_logout'), this.$t('common.tips'), {
+        confirmButtonText: this.$t('common.ok'),
+        cancelButtonText: this.$t('common.cancel'),
         type: 'warning'
       }).then(async () => {
         await thiz.$store.dispatch('user/logout')
