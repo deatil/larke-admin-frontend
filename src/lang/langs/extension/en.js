@@ -1,5 +1,8 @@
 export default {
   'extension': {
+    'title': 'Extension',
+    'local_extension': 'Local extension',
+
     'command_alert_title': 'Tips',
     'command_alert_content': 'command is for installing local extension',
     'command_title': 'title',

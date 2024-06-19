@@ -26,7 +26,21 @@ const route =  {
           'larke-admin.extension.index'
         ]
       }
-    }
+    },
+    // 本地扩展
+    {
+      path: '/extension/local',
+      component: () => import('@/views/extension/local'),
+      name: 'LocalExtension',
+      meta: {
+        title: 'localExtension',
+        activeMenu: '/extension/index',
+        roles: [
+          'larke-admin.extension.local'
+        ]
+      },
+      hidden: true
+    },
   ]
 }
 

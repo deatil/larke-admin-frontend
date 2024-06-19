@@ -59,7 +59,12 @@
             icon="el-icon-upload">{{ $t('extension.search_upload') }}</el-button>
         </el-upload>        
 
-        <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.local'])" class="filter-item" type="warning" icon="el-icon-folder" @click="handleLocalExtension">
+        <el-button v-waves 
+          :disabled="!checkPermission(['larke-admin.extension.local'])" 
+          class="filter-item" 
+          type="warning" 
+          icon="el-icon-folder" 
+          @click="handleLocalExtension">
           {{ $t('extension.search_install') }}
         </el-button>
 
@@ -290,15 +295,6 @@
     </el-dialog>
 
     <el-dialog
-      v-if="local.dialogVisible"
-      :title="$t('extension.dialog_local')"
-      append-to-body
-      :visible.sync="local.dialogVisible"
-    >
-      <local :item="local" />
-    </el-dialog>
-
-    <el-dialog
       v-if="setting.dialogVisible"
       :title="$t('extension.dialog_setting')"
       append-to-body
@@ -333,7 +329,6 @@ import Pagination from '@/components/Pagination' // Secondary package based on e
 import BackToTop from '@/components/BackToTop'
 
 import Detail from '@/components/Larke/Detail'
-import Local from './components/Local'
 import Setting from './components/Setting'
 import Command from './components/Command'
 import {
@@ -354,7 +349,6 @@ export default {
     LangSelect, 
     Pagination, 
     Detail, 
-    Local, 
     Setting, 
     Command 
   },
@@ -403,9 +397,6 @@ export default {
       detail: {
         dialogVisible: false,
         data: []
-      },
-      local: {
-        dialogVisible: false
       },
       sort: {
         editable: [],
@@ -685,7 +676,7 @@ export default {
       })
     },
     handleLocalExtension() {
-      this.local.dialogVisible = true
+      this.$router.replace('/extension/local')
     },
     handleConfig(index, row) {
       this.setting.dialogVisible = true

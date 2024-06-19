@@ -1,5 +1,8 @@
 export default {
   'extension': {
+    'title': '扩展管理',
+    'local_extension': '本地扩展',
+
     'command_alert_title': '特别注意',
     'command_alert_content': '扩展脚本是为了非composer扩展可以下载依赖使用的脚本，如果使用composer下载的扩展可不用使用该脚本。使用 \'注册仓库\' 后只需要执行命令 \'composer require vendor/package\' 即可',
     'command_title': '扩展',
