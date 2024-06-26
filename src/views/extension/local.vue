@@ -14,6 +14,16 @@
           @click="handleExtension">
           {{ $t('extension.title') }}
         </el-button>
+
+        <el-button v-waves 
+          :disabled="!checkPermission(['larke-admin.extension.refresh'])" 
+          :loading="loading.refresh"
+          class="filter-item" 
+          type="danger" 
+          icon="el-icon-refresh" 
+          @click="handleRefresh">
+          {{ $t('extension.search_refresh') }}
+        </el-button> 
       </div>
 
       <el-table
@@ -25,7 +35,7 @@
         highlight-current-row
         style="width: 100%"
       >
-        <el-table-column align="center" width="70px" label="Icon">
+        <el-table-column align="center" width="70px" label="">
           <template slot-scope="scope">
             <div class="extension-icon" @click="handleShowIcon(scope.$index, scope.row)">
               <img :src="scope.row.icon" style="width:90%;" />
@@ -160,6 +170,7 @@ import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 import {
   getLocalList,
+  refreshLocal,
   install,
   upgrade
 } from '@/api/extension'
@@ -185,7 +196,10 @@ export default {
         title: '',
         img: '',
         dialogVisible: false
-      }
+      },
+      loading: {
+        refresh: false,
+      },
     }
   },
   created() {
@@ -202,6 +216,20 @@ export default {
     },
     handleExtension() {
       this.$router.replace('/extension/index')
+    },
+    handleRefresh() {
+      const thiz = this
+      this.confirmTip(thiz.$t('extension.confirm_refresh'), function() {
+        thiz.loading.refresh = true
+
+        refreshLocal().then(response => {
+          thiz.successTip(thiz.$t('extension.confirm_refresh_success'), function() {
+            thiz.getList()
+
+            thiz.loading.refresh = false
+          });
+        })
+      })
     },
     handleShowIcon(index, row) {
       this.icon.title = row.title
