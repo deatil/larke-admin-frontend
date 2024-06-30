@@ -5,10 +5,11 @@ export default {
 
     icons: '图标',
 
-    system: '系统配置',
+    system: '系统设置',
     setting: '网站设置',
     config: '配置管理',
     menu: '菜单管理',
+
     attachment: '附件管理',
 
     permission: '权限管理',

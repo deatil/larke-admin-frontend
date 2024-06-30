@@ -12,8 +12,7 @@ const route =  {
     roles: [
       'larke-admin.config.setting',
       'larke-admin.config.index',
-      'larke-admin.menu.index',
-      'larke-admin.attachment.index'
+      'larke-admin.menu.index'
     ] // you can set roles in root nav
   },
   children: [
@@ -55,20 +54,6 @@ const route =  {
         icon: 'list',
         roles: [
           'larke-admin.menu.index'
-        ]
-      }
-    },
-
-    // 附件管理
-    {
-      path: '/attachment/index',
-      component: () => import('@/views/attachment/index'),
-      name: 'Attachment',
-      meta: {
-        title: 'attachment',
-        icon: 'el-icon-paperclip',
-        roles: [
-          'larke-admin.attachment.index'
         ]
       }
     }

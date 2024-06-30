@@ -8,6 +8,7 @@ import Layout from '@/layout'
 
 /* 系统菜单 */
 import system from './system/system'
+import attachment from './system/attachment'
 import permission from './system/permission'
 import extension from './system/extension'
 
@@ -97,9 +98,8 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   system,
-
+  attachment,
   permission,
-
   extension,
 
   // 404 page must be placed at the end !!!

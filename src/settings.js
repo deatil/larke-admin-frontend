@@ -5,7 +5,7 @@ module.exports = {
    * @type {string} 
    * @description Laeke-Admin frontend version
    */
-  version: '1.8.1',
+  version: '2.0.0',
 
   /**
    * @type {boolean} true | false

@@ -7,6 +7,7 @@ English | [简体中文](./README-build.zh-CN.md)
 ## Introduction
 
 The program is based on [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin).
+build on `pnpm`
 
 ## Features
 
@@ -87,10 +88,10 @@ cd /public/admin
 vi .env.development and .env.production VUE_APP_BASE_API
 
 # install dependency
-npm install
+pnpm install
 
 # develop
-npm run dev
+pnpm run dev
 ```
 
 This will automatically open http://localhost:9527
@@ -99,26 +100,26 @@ This will automatically open http://localhost:9527
 
 ```bash
 # build for test environment
-npm run build:stage
+pnpm run build:stage
 
 # build for production environment
-npm run build:prod
+pnpm run build:prod
 ```
 
 ## Advanced
 
 ```bash
 # preview the release environment effect
-npm run preview
+pnpm run preview
 
 # preview the release environment effect + static resource analysis
-npm run preview -- --report
+pnpm run preview -- --report
 
 # code format check
-npm run lint
+pnpm run lint
 
 # code format check and auto fix
-npm run lint -- --fix
+pnpm run lint -- --fix
 ```
 
 Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information

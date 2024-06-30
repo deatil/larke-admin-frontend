@@ -4,6 +4,7 @@ export default {
 
   /** 这些为系统菜单 */
   System: 110000,
-  Permission: 110010,
+  Attachment: 110020,
+  Permission: 110030,
   LocalExtension: 110050,
 }

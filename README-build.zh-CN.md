@@ -7,6 +7,7 @@
 ## 简介
 
 本项目是基于 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin) 的前端项目，部分功能为了适配 larke-admin 进行了优化和调整。
+编译工具为 `pnpm`
 
 ## 功能
 
@@ -87,13 +88,13 @@ cd /public/admin
 编辑 .env.development 和 .env.production 环境变量里的 VUE_APP_BASE_API 的接口地址为后端 api 接口地址
 
 # 安装依赖
-npm install
+pnpm install
 
 # 建议不要直接使用 cnpm 安装依赖，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
-npm install --registry=https://registry.npm.taobao.org
+pnpm install --registry=https://registry.npm.taobao.org
 
 # 启动服务
-npm run dev
+pnpm run dev
 ```
 
 浏览器访问 http://localhost:9527
@@ -102,27 +103,29 @@ npm run dev
 
 ```bash
 # 构建测试环境
-npm run build:stage
+pnpm run build:stage
 
 # 构建生产环境
-npm run build:prod
+pnpm run build:prod
 ```
 
 ## 其它
 
 ```bash
 # 预览发布环境效果
-npm run preview
+pnpm run preview
 
 # 预览发布环境效果 + 静态资源分析
-npm run preview -- --report
+pnpm run preview -- --report
 
 # 代码格式检查
-npm run lint
+pnpm run lint
 
 # 代码格式检查并自动修复
-npm run lint -- --fix
+pnpm run lint -- --fix
 ```
+
+如果出现 `uv_os_gethostname` 问题，可以搜索在出错依赖库入口文件添加 `os.hostname = () => "localhost";` 解决
 
 更多文档信息可以查看 [使用文档](https://panjiachen.github.io/vue-element-admin-site/zh/)
 

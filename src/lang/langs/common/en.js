@@ -8,6 +8,7 @@ export default {
     setting: 'Setting',
     config: 'Config',
     menu: 'Menu',
+    
     attachment: 'Attachment',
 
     permission: 'Permission',

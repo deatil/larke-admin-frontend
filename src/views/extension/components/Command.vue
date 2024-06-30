@@ -30,7 +30,7 @@
       <el-input v-model="data.require" type="textarea" rows="3" :placeholder="$t('extension.command_require_tip')" />
     </el-form-item>
 
-    <el-form-item label="extension.command_repository_remove">
+    <el-form-item :label="$t('extension.command_repository_remove')">
         <el-button v-waves :disabled="!checkPermission(['larke-admin.extension.repository-remove']) || !data.has_repository" class="filter-item" size="mini" type="danger" @click="handleRepository('remove')">
           {{ $t('extension.command_repository_remove_btn') }}
         </el-button> 
