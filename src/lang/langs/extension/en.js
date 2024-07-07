@@ -22,6 +22,7 @@ export default {
     'table_title': 'Extension',
     'table_description': 'Desc',
     'table_adaptation': 'Adaptation',
+    'table_installed': 'Installed',
     'table_version': 'Version',
     'table_new_version': 'NewVersion',
     'table_authors': 'Authors',

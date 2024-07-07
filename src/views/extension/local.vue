@@ -72,6 +72,24 @@
             </div>
 
             <div>
+              <template v-if="scope.row.installed == 1">
+                <template v-if="scope.row.status == 1">
+                  <el-tooltip effect="dark" :content="$t('extension.table_installed')" placement="top">
+                    <el-tag type="primary" size="mini" style="margin-right:10px;">
+                      <i class="el-icon-circle-check" />
+                    </el-tag>
+                  </el-tooltip>
+                </template>
+
+                <template v-else>
+                  <el-tooltip effect="dark" :content="$t('extension.table_installed')" placement="top">
+                    <el-tag type="danger" size="mini" style="margin-right:10px;">
+                      <i class="el-icon-circle-check" />
+                    </el-tag>
+                  </el-tooltip>
+                </template>
+              </template>
+
               <el-tooltip effect="dark" :content="$t('extension.table_adaptation')" placement="top">
                 <el-tag type="info" size="mini" style="margin-right:10px;">
                   <i class="el-icon-goblet-square-full" />&nbsp;
@@ -261,6 +279,7 @@ export default {
             duration: 3 * 1000,
             onClose() {
               thiz.item.dialogVisible = false
+              thiz.getList()
             }
           })
         }).catch((err) => {
@@ -293,6 +312,7 @@ export default {
             duration: 3 * 1000,
             onClose() {
               thiz.item.dialogVisible = false
+              thiz.getList()
             }
           })
         }).catch((err) => {

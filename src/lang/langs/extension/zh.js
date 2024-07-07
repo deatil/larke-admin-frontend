@@ -22,6 +22,7 @@ export default {
     'table_title': '扩展',
     'table_description': '简介',
     'table_adaptation': '当前扩展适配系统版本',
+    'table_installed': '已安装',
     'table_version': '当前扩展版本',
     'table_new_version': '扩展可更新版本',
     'table_authors': '作者',
