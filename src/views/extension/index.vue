@@ -300,7 +300,7 @@
       append-to-body
       :visible.sync="setting.dialogVisible"
     >
-      <setting :item="setting" />
+      <setting :item="setting" @pushConfig="pushConfig" />
     </el-dialog>
 
     <el-dialog
@@ -405,6 +405,7 @@ export default {
       },
       setting: {
         dialogVisible: false,
+        index: null,
         name: '',
         data: [],
         config: {}
@@ -438,6 +439,14 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    pushConfig(conf) {
+      const data = JSON.parse(conf)
+      const index = this.setting.index
+
+      if (index) {
+        this.list[index].config_datas = data
+      }
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -680,6 +689,7 @@ export default {
     },
     handleConfig(index, row) {
       this.setting.dialogVisible = true
+      this.setting.index = index
       this.setting.name = row.name
       this.setting.data = row.configs
       this.setting.config = row.config_datas

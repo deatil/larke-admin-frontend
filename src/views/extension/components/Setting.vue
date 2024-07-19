@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import waves from '@/directive/waves' // waves directive
 import DynamicForm from '@/components/DynamicForm/form'
 import { formatExtensionFormItem } from '@/utils'
 import {
@@ -27,7 +28,7 @@ import {
 export default {
   name: 'ExtensionSetting',
   components: { DynamicForm },
-  directives: { },
+  directives: { waves },
   props: {
     item: {
       type: Object,
@@ -98,6 +99,8 @@ export default {
         config: data
       }).then(() => {
         thiz.loading.submit = false
+
+        thiz.$emit("pushConfig", data)
 
         this.$message({
           message: this.$t('extension.settings_save_success'),
