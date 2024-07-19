@@ -7,7 +7,11 @@
   >
     <template slot>
       <el-form-item>
-        <el-button type="primary" @click="submit">{{ $t('extension.settings_save') }}</el-button>
+        <el-button 
+          type="primary" 
+          v-waves
+          :loading="loading.submit"
+          @click="submit">{{ $t('extension.settings_save') }}</el-button>
       </el-form-item>
     </template>
   </dynamic-form>
@@ -39,7 +43,10 @@ export default {
         value: {},
         columnMinWidth: '100px'
       },
-      inputs: {}
+      inputs: {},
+      loading: {
+        submit: false,
+      },
     }
   },
   created() {
@@ -85,9 +92,13 @@ export default {
     submit() {
       const thiz = this
       const data = JSON.stringify(this.inputs)
+
+      this.loading.submit = true
       updateConfig(this.item.name, {
         config: data
       }).then(() => {
+        thiz.loading.submit = false
+
         this.$message({
           message: this.$t('extension.settings_save_success'),
           type: 'success',
@@ -97,6 +108,8 @@ export default {
             thiz.item.dialogVisible = false
           }
         })
+      }).catch(() => {
+        thiz.loading.submit = false
       })
     }
   }
