@@ -16,11 +16,24 @@
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
+    
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">{{ $t('tagsView.refresh') }}</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">{{ $t('tagsView.close') }}</li>
-      <li @click="closeOthersTags">{{ $t('tagsView.closeOthers') }}</li>
-      <li @click="closeAllTags(selectedTag)">{{ $t('tagsView.closeAll') }}</li>
+      <li @click="refreshSelectedTag(selectedTag)">
+        <i class="el-icon-refresh" />
+        {{ $t('tagsView.refresh') }}
+      </li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
+        <i class="el-icon-switch-button" />
+        {{ $t('tagsView.close') }}
+      </li>
+      <li @click="closeOthersTags">
+        <i class="el-icon-circle-close" />
+        {{ $t('tagsView.closeOthers') }}
+      </li>
+      <li @click="closeAllTags(selectedTag)">
+        <i class="el-icon-folder-delete" />
+        {{ $t('tagsView.closeAll') }}
+      </li>
     </ul>
   </div>
 </template>
