@@ -16,6 +16,7 @@ export default {
     'form_enter_description': '请填写分组描述',
     'form_listorder': '排序',
     'form_enter_listorder': '请填写排序',
+    'form_listorder_tip': '排序值越大越靠前',
     'form_status': '状态',
     'form_status_enable': '启用',
     'form_status_disable': '禁用',

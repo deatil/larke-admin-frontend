@@ -16,6 +16,7 @@ export default {
     'form_enter_description': 'enter desc',
     'form_listorder': 'Sort',
     'form_enter_listorder': 'enter sort',
+    'form_listorder_tip': 'group is top when sort is large',
     'form_status': 'Status',
     'form_status_enable': 'Enable',
     'form_status_disable': 'Disable',

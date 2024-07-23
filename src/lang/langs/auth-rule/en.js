@@ -15,6 +15,7 @@ export default {
     'form_enter_description': 'enter desc',
     'form_listorder': 'Sort',
     'form_enter_listorder': 'enter sort',
+    'form_listorder_tip': 'rule is top when sort is large',
     'form_need_auth': 'NeedAuth',
     'form_need_auth_enable': 'Enable',
     'form_need_auth_disable': 'Disable',

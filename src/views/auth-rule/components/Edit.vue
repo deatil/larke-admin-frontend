@@ -40,6 +40,9 @@
     </el-form-item>
     <el-form-item :label="$t('auth_rule.form_listorder')" prop="listorder">
       <el-input v-model.trim="data.listorder" :placeholder="$t('auth_rule.form_enter_listorder')" />
+      <div class="text-grey">         
+        {{ $t('auth_rule.form_listorder_tip') }}
+      </div>
     </el-form-item>
     <el-form-item :label="$t('auth_rule.form_need_auth')" prop="is_need_auth">
       <el-radio-group v-model="data.is_need_auth">

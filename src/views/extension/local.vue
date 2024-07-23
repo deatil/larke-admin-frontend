@@ -273,13 +273,14 @@ export default {
         install(row.name).then(() => {
           loading.close()
 
+          thiz.getList()
+
           this.$message({
             message: this.$t('extension.confirm_install_success'),
             type: 'success',
             duration: 3 * 1000,
             onClose() {
               thiz.item.dialogVisible = false
-              thiz.getList()
             }
           })
         }).catch((err) => {
@@ -306,13 +307,14 @@ export default {
         upgrade(row.name).then((res) => {
           loading.close()
 
+          thiz.getList()
+
           this.$message({
             message: this.$t('extension.confirm_upgrade_success'),
             type: 'success',
             duration: 3 * 1000,
             onClose() {
               thiz.item.dialogVisible = false
-              thiz.getList()
             }
           })
         }).catch((err) => {

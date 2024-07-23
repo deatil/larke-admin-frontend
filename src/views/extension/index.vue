@@ -374,7 +374,7 @@ export default {
       listLoading: true,
       listQuery: {
         searchword: '',
-        order: 'create_time__ASC',
+        order: 'listorder__DESC',
         status: '',
         page: 1,
         limit: 10
@@ -385,7 +385,9 @@ export default {
       ],
       sortOptions: [
         { key: 'create_time__ASC', label: this.$t('extension.search_sort_asc') },
-        { key: 'create_time__DESC', label: this.$t('extension.search_sort_desc') }
+        { key: 'create_time__DESC', label: this.$t('extension.search_sort_desc') },
+        { key: 'listorder__ASC', label: this.$t('extension.search_order_asc') },
+        { key: 'listorder__DESC', label: this.$t('extension.search_order_desc') },
       ],
       uploadLoading: false,
       uploadFile: null,

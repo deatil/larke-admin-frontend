@@ -16,9 +16,11 @@
           :value="item.key" />
       </el-select>
     </el-form-item>
+
     <el-form-item :label="$t('auth_group.form_title')" prop="title">
       <el-input v-model.trim="data.title" :placeholder="$t('auth_group.form_enter_title')" />
     </el-form-item>
+
     <el-form-item :label="$t('auth_group.form_description')" prop="description">
       <el-input 
         v-model.trim="data.description" 
@@ -26,15 +28,21 @@
         rows="6" 
         :placeholder="$t('auth_group.form_enter_description')" />
     </el-form-item>
+
     <el-form-item :label="$t('auth_group.form_listorder')" prop="listorder">
       <el-input v-model.trim="data.listorder" :placeholder="$t('auth_group.form_enter_listorder')" />
+      <div class="text-grey">         
+        {{ $t('auth_group.form_listorder_tip') }}
+      </div>
     </el-form-item>
+
     <el-form-item :label="$t('auth_group.form_status')" prop="status">
       <el-radio-group v-model="data.status">
         <el-radio :label="1">{{ $t('auth_group.form_status_enable') }}</el-radio>
         <el-radio :label="0">{{ $t('auth_group.form_status_disable') }}</el-radio>
       </el-radio-group>
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" :loading="loading" @click="submit">{{ $t('auth_group.form_save') }}</el-button>
     </el-form-item>
