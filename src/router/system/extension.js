@@ -34,12 +34,13 @@ const route =  {
       name: 'LocalExtension',
       meta: {
         title: 'localExtension',
-        activeMenu: '/extension/index',
+        icon: 'el-icon-folder-opened',
+        activeMenu: '/extension/local',
         roles: [
           'larke-admin.extension.local'
         ]
       },
-      hidden: true
+      hidden: false
     },
   ]
 }

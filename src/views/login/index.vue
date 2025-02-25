@@ -82,7 +82,7 @@
       </el-form>
 
       <div class="copyright">
-          Copyright @ 2024 <a target="_blank" href="http://github.com/deatil/larke-admin">Larke-admin</a>
+          Copyright @ 2025 <a target="_blank" href="http://github.com/deatil/larke-admin">Larke-admin</a>
       </div>
     </div>
   </div>
